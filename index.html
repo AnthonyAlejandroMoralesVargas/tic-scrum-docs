@@ -314,7 +314,16 @@
 
     <div id="image-modal" class="modal">
       <span class="close-modal">&times;</span>
-      <img class="modal-content" id="img-ampliada" />
+
+      <div class="zoom-controls">
+        <button id="btn-zoom-out" title="Alejar">-</button>
+        <button id="btn-zoom-reset" title="Restaurar tamaño">100%</button>
+        <button id="btn-zoom-in" title="Acercar">+</button>
+      </div>
+
+      <div class="modal-img-container" id="modal-img-container">
+        <img class="modal-content" id="img-ampliada" />
+      </div>
     </div>
     <script src="app.js"></script>
   </body>

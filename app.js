@@ -10,6 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalImg = document.getElementById('img-ampliada');
     const btnCerrarModal = document.querySelector('.close-modal');
 
+    // Botones de Zoom
+    const btnZoomIn = document.getElementById('btn-zoom-in');
+    const btnZoomOut = document.getElementById('btn-zoom-out');
+    const btnZoomReset = document.getElementById('btn-zoom-reset');
+
+    let anchoActual = 90; // Empezamos al 90% del tamaño de la pantalla
+    const zoomPaso = 25;  // Cuánto crece/se reduce por cada clic (25%)
+
     // 0. Guardar la portada inicial en memoria
     const htmlPortadaInicial = visor.innerHTML;
 
@@ -61,18 +69,49 @@ document.addEventListener('DOMContentLoaded', () => {
     visor.addEventListener('click', (e) => {
         if (e.target.classList.contains('n8n-image')) {
             modal.style.display = "block";
-            modalImg.src = e.target.src; // Le pasamos la misma ruta de la imagen clickeada al modal
+            modalImg.src = e.target.src;
+            
+            // Restauramos el zoom por defecto al abrir una nueva imagen
+            anchoActual = 90;
+            modalImg.style.width = `${anchoActual}%`;
         }
     });
 
-    // Cerrar modal al hacer clic en la "X"
+    // Control: Acercar
+    btnZoomIn.addEventListener('click', (e) => {
+        e.stopPropagation(); // Evita que el clic cierre el modal
+        anchoActual += zoomPaso;
+        modalImg.style.width = `${anchoActual}%`;
+    });
+
+    // Control: Alejar
+    btnZoomOut.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (anchoActual > 40) { // Límite para que no se haga microscópica
+            anchoActual -= zoomPaso;
+            modalImg.style.width = `${anchoActual}%`;
+        }
+    });
+
+    // Control: Restaurar 100%
+    btnZoomReset.addEventListener('click', (e) => {
+        e.stopPropagation();
+        anchoActual = 90;
+        modalImg.style.width = `${anchoActual}%`;
+        
+        // Centramos las barras de desplazamiento (scroll)
+        containerImg.scrollTop = 0;
+        containerImg.scrollLeft = 0;
+    });
+
+    // Cerrar Modal al hacer clic en la X
     btnCerrarModal.addEventListener('click', () => {
         modal.style.display = "none";
     });
 
-    // Cerrar modal al hacer clic fuera de la imagen (en el fondo oscuro)
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+    // Cerrar Modal al hacer clic en el fondo oscuro (fuera de la imagen)
+    containerImg.addEventListener('click', (e) => {
+        if (e.target === containerImg) {
             modal.style.display = "none";
         }
     });
