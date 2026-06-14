@@ -1,0 +1,766 @@
+{
+  "name": "Product Planning - Flujo Refinamiento",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1647?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        -48
+      ],
+      "id": "dc2ea8ac-362c-4ff2-9138-c68cf593d73e",
+      "name": "1. Cargar Entrevistas",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1615?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        128
+      ],
+      "id": "d5f0f6cc-4253-4373-81c1-4f213c69beec",
+      "name": "1. Cargar Perfiles Persona",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1617?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        304
+      ],
+      "id": "7ba2ed3a-869c-43ef-aa93-a027937d8118",
+      "name": "1. Cargar Story Mapping",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1619?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        464
+      ],
+      "id": "592da473-8b50-4b03-b8ca-0a8d0b3b230c",
+      "name": "1. Cargar Journey Map",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1645?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        48,
+        656
+      ],
+      "id": "fcaeec41-6d7a-4a0e-a41e-4686277ae9e1",
+      "name": "1. Cargar Feedback Prueba Usuario",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- 1. FUNCIÓN PARA OBTENER CONTENIDO DE WIKIS AZURE ---\nconst getWikiContent = (nodeName) => {\n  try {\n    // Intenta obtener el primer item del nodo\n    const node = $(nodeName).first();\n    // Retorna el contenido o string vacío si falla\n    return node ? node.json.content : \"\";\n  } catch (error) {\n    return \"\";\n  }\n};\n\n// --- 2. FUNCIÓN PARA OBTENER Y LIMPIAR RESPUESTA GEMINI ---\nconst getGeminiContent = (nodeName) => {\n  try {\n    const node = $(nodeName).first();\n    \n    // Validamos que exista la estructura profunda de Gemini\n    if (!node || !node.json.candidates || !node.json.candidates[0].content) {\n        return \"Información no disponible (Estructura Gemini no encontrada)\";\n    }\n\n    // 1. Extraer el texto crudo\n    const rawContent = node.json.candidates[0].content.parts[0].text;\n\n    // 2. Limpiar etiquetas Markdown (Tu lógica de Regex)\n    // Esto quita ```json, ```markdown, o ``` simples al inicio y final\n    const cleanString = rawContent\n      .replace(/^```[a-z]*\\s*/i, '') // Quita ```json o ```markdown al inicio\n      .replace(/\\s*```$/, '');        // Quita ``` al final\n\n    // 3. Retornar texto limpio\n    // NOTA: Si esperas un JSON objeto, cambia la línea de abajo por: return JSON.parse(cleanString);\n    // Pero para el reporte del video (que es texto), retornamos el string.\n    return cleanString.trim();\n\n  } catch (error) {\n    return \"Error procesando respuesta de Gemini: \" + error.message;\n  }\n};\n\n// --- 3. EJECUCIÓN: OBTENER DATOS DE LOS NODOS ---\n\n// Wikis de Azure\nconst entrevistas = getWikiContent('1. Cargar Entrevistas');\nconst personas = getWikiContent('1. Cargar Perfiles Persona');\nconst storyMap = getWikiContent('1. Cargar Story Mapping');\nconst journeyMap = getWikiContent('1. Cargar Journey Map');\nconst pruebaUsuario = getWikiContent('1. Cargar Feedback Prueba Usuario');\nconst productPlanning = getWikiContent('2. Cargar documento product planning');\n\n// Respuesta de Gemini (Video) usando la nueva función\nconst analisisPrototipo = getGeminiContent('1. Analista Funcional Video');\n\n// --- 4. RETORNO DEL OBJETO UNIFICADO ---\nreturn [{\n  json: {\n    fecha_proceso: new Date().toISOString(),\n    \n    // Contexto Wiki\n    contexto_entrevistas: entrevistas,\n    contexto_personas: personas,\n    contexto_story_map: storyMap,\n    contexto_journey_map: journeyMap,\n    contexto_prueba_usuario: pruebaUsuario,\n    contexto_product_planning: productPlanning,\n    \n    // Contexto Gemini (Limpio)\n    contexto_analisis_prototipo: analisisPrototipo\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        320
+      ],
+      "id": "ac0fd1da-5200-436e-a069-d0c6eec511aa",
+      "name": "Sanitizar archivos"
+    },
+    {
+      "parameters": {},
+      "id": "c3dcd03a-2e8b-4243-a6b5-77388ddedfa1",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "/home/node/.n8n-files/prototipo.mp4",
+        "dataPropertyName": "Prototipo___Sprint_X"
+      },
+      "id": "792759ec-7e83-45c8-a1e8-8682314b1a72",
+      "name": "Leer Video Server",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        176
+      ],
+      "notes": "Nombre de propiedad con 3 guiones bajos para coincidir con el Formulario"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "response",
+              "name": "response",
+              "value": "=✅ Refinamiento Completado.\n\nSe ha analizado el impacto del Discovery en la planificación original.\n\n📄 [Ver Refinamiento en Wiki]({{ $('6. Guardar Product Planning').item.json._links.html.href }})",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9fb0b701-ae46-4c78-8bea-6fa6417d8cc4",
+      "name": "Respuesta al Orquestador",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2432,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-robotics-er-1.5-preview",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1312,
+        672
+      ],
+      "id": "974597e3-2668-44b9-a08a-ce3b21557d8a",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "knGyeqknTHPgTr17",
+          "name": "Gemini Scrum"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $execution.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1456,
+        688
+      ],
+      "id": "5b24d818-5e87-4152-9ff4-c3d631831567",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyBjzhihZAR1EiLbJjUaGXOAI6EGZINCyLo"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n(() => {\n  const docs = $('Subir video prototipo a Google').item.json;\n  const promptText = `\nObjetivo:\nAnalizar el video del prototipo de alta fidelidad para extraer y documentar las funcionalidades, flujos de usuario y propuestas de valor, convirtiendo la información visual en una especificación funcional textual que sirva de base para la planificación del producto.\n\nRol:\nActúa como un Analista Funcional Senior y Experto en UX con capacidad para realizar ingeniería inversa de prototipos de software. Tienes un ojo crítico para detectar reglas de negocio implícitas en interfaces gráficas y eres capaz de traducir interacciones visuales en requisitos técnicos claros.\n\nContexto:\nEstás trabajando en el proyecto \"PoliTutorías\" (plataforma de tutorías académicas). Se te proporcionará un archivo de video (MP4) que representa el incremento del producto o prototipo del último Sprint.\nActualmente, el Product Backlog y el Roadmap del proyecto son de muy alto nivel y carecen de detalles técnicos o criterios de aceptación. Tu salida será utilizada por otros Agentes de IA (Product Owner y Release Manager) para validar si las Épicas actuales cubren lo que se muestra en el video y para decidir en qué Release debe ir cada funcionalidad.\n\nAcción:\nAnaliza el video paso a paso y realiza las siguientes tareas de extracción:\n\n1. Identificación de Flujos: Describe narrativamente los recorridos del usuario (User Journeys) que se observan (ej: \"El usuario se loguea, busca una materia, filtra por calificación y agenda...\").\n2. Inventario de Funcionalidades (Features): Lista cada capacidad funcional explícita que aparece en pantalla (ej: \"Sistema de notificaciones\", \"Carga de archivos PDF\", \"Chat en tiempo real\", \"Pasarela de pagos\").\n3. Detección de Reglas de Negocio: Deduce las reglas lógicas mostradas (ej: \"No se puede agendar si no hay saldo\", \"El tutor debe aceptar la solicitud manual o automáticamente\").\n4. Análisis de Valor (Wow Factors): Identifica qué elementos visuales o de interacción justifican las \"Áreas de Valor\" (Diferenciadores o Habilitadores) del producto.\n\nSalida:\nGenera ÚNICAMENTE un reporte en formato Markdown con la siguiente estructura estricta:\n\n# Análisis Funcional del Prototipo\n\n## 1. Resumen Ejecutivo del Incremento\n[Breve descripción de 2-3 líneas sobre qué cubre este prototipo a nivel general]\n\n## 2. Flujos de Usuario Críticos (User Journeys)\n* **[Nombre del Flujo 1]:** [Descripción paso a paso de la interacción]\n* **[Nombre del Flujo 2]:** [Descripción paso a paso de la interacción]\n\n## 3. Inventario de Funcionalidades Detectadas\n| Feature Detectada | Complejidad Observada | Evidencia Visual |\n| :--- | :--- | :--- |\n| [Nombre Feature] | [Alta/Media/Baja] | [Ej: \"Se ve un botón de 'Pagar' y una confirmación de banco\"] |\n\n## 4. Elementos de Valor (Justificación de Áreas de Valor)\n* **Diferenciadores:** [Qué hace que el producto destaque según el video]\n* **Habilitadores:** [Qué funcionalidades básicas permiten que el negocio opere]\n\n## 5. Brechas o Riesgos Técnicos\n[Lista funcionalidades que se ven en el video pero que parecen complejas de implementar o que requieren backend robusto no visible]\n`;\n  return {\n    contents: [\n      {\n        parts: [\n          {\n            text: promptText\n          },\n          {\n            fileData: {\n              mimeType: \"video/mp4\",\n              fileUri: docs.file.uri || \"ERROR: NO_VIDEO_URI\" // Fallback para depuración\n            }\n          }\n        ]\n      }\n    ]\n  };\n})()\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        864
+      ],
+      "id": "843e3bc4-5ab3-47b0-baca-179bd6bbd035",
+      "name": "1. Analista Funcional Video",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:  Lee el Product Planning para tener contexto del Producto ({{ $('Sanitizar archivos').item.json.contexto_product_planning || \"N/A\" }}). Soy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y quiero investigar si es necesario actualizar el product planning con la nueva información obtenida por el componente de Discovery (Persona que realizó DCU). Dicho componente genero los siguientes artefactos:\n\n- Análisis de entrevistas a estudiantes y tutores ({{ $('Sanitizar archivos').item.json.contexto_entrevistas || \"N/A\" }})\n\n- Perfiles Persona ({{ $('Sanitizar archivos').item.json.contexto_personas || \"N/A\" }})\n\n- Story Mapping ({{ $('Sanitizar archivos').item.json.contexto_story_map || \"N/A\" }})\n\n- Journey Map ({{ $('Sanitizar archivos').item.json.contexto_journey_map || \"N/A\" }})\n\n- Análisis pruebas de usuario ({{ $('Sanitizar archivos').item.json.contexto_prueba_usuario || \"N/A\" }})\n\nDebido a limitaciones de la tecnología no te puedo compartir el prototipo directamente, así que apoyado por la IA se generó un análisis del prototipo:\n\n- Análisis del Prototipo ({{ $('Sanitizar archivos').item.json.contexto_analisis_prototipo || \"N/A\" }})\n\n\nAcción:\n- Cruzar la información de la planificación con el Discovery para determinar si es necesario actualizar las secciones 1.1. Áreas de Valor y 1.2. Visión con las áreas de valor.\n\n- En el caso, que si sea necesario generar la debida actualización de la/las secciones, basándote estrictamente en la información proporcionada del Discovery para hacer las actualizaciones. Incluye una justificación comparativa del porque se debe actualizar la sección.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a actualizar las secciones \"1.1 Áreas de Valor\" y \"1.2 Visión\" del documento del Product Planning cruzando la planificación actual con la realidad del los usuarios descubierta por el Discovery.\n\nRol: \nActúa como un Product Owner con gran experiencia en trabajar alinear el Discovery con el Delivery del Producto. Tiene el criterio y visión estratégica suficiente para saber cuando si es necesario actualizar y cuando no los artefactos de SCRUM.\n\nLista de áreas de valor y subcategorías:\n- Entry conditions: Achieve parity, Deliver minimum features, Compliance.\n- Enablement: Target new market, Enable sales.\n- Differentiator: Differentiate from competitors, Delight customer.\n- Spoiler: Eliminate competitor differentiator, Raise parity bar.\n- Cost reducer: Shorten time to market, Reduce costs/people.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 1. Visión del producto\n\n### 1.1 Áreas de valor\n> **Estado:** [Indicar si se ACTUALIZÓ o se MANTUVO]\n> **Justificación del cambio:** [Explicación estratégica basada en el Discovery y Prototipo]\n\n| Área | Subcategoría | Justificación Interna (Valor) |\n|---|---|---|\n| [Tipo de Área] | [Subcategoría Específica] | [Por qué aporta valor] |\n| ... | ... | ... |\n\n### 1.2 Visión con las áreas de valor\n> **Estado:** [Indicar si se ACTUALIZÓ o se MANTUVO]\n> **Justificación del cambio:** [Explicación estratégica basada en el Discovery y Prototipo]\n\n- **Para:** [cliente objetivo]\n- **Que:** [problema que necesita ser resuelto]\n- **El:** [Nombre del producto]\n- **Es una:** [Categoría del producto]\n- **Que beneficio:** [Beneficio clave / Razón para comprar]\n- **A diferencia de:** [Alternativa o competencia principal]\n- **Nuestro producto:** [diferencia principal validada por el prototipo]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        976,
+        320
+      ],
+      "id": "3b9188a0-0831-4d38-8374-36f2eba707be",
+      "name": "3. Agente Estratega"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: Teniendo en cuenta la Nueva Visión que se definió en el paso anterior. Tamibién,te adjunto el product backlog de alto nivel actual, centrate solo en la sección 2 ({{ $('Sanitizar archivos').item.json.contexto_product_planning || \"N/A\" }}). Soy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y quiero investigar si es necesario actualizar el product planning con la nueva información obtenida por el componente de Discovery (Persona que realizó DCU). Dicho componente genero los siguientes artefactos:\n\n- Análisis de entrevistas a estudiantes y tutores ({{ $('Sanitizar archivos').item.json.contexto_entrevistas || \"N/A\" }})\n\n- Perfiles Persona ({{ $('Sanitizar archivos').item.json.contexto_personas || \"N/A\" }})\n\n- Story Mapping ({{ $('Sanitizar archivos').item.json.contexto_story_map || \"N/A\" }})\n\n- Journey Map ({{ $('Sanitizar archivos').item.json.contexto_journey_map || \"N/A\" }})\n\n- Análisis pruebas de usuario ({{ $('Sanitizar archivos').item.json.contexto_prueba_usuario || \"N/A\" }})\n\nDebido a limitaciones de la tecnología no te puedo compartir el prototipo directamente, así que apoyado por la IA se generó un análisis del prototipo:\n\n- Análisis del Prototipo ({{ $('Sanitizar archivos').item.json.contexto_analisis_prototipo || \"N/A\" }})\n\n\nAcción:\n- Cruzar la información de la planificación con el Discovery para determinar si es necesario actualizar la sección 2.\n\n- En el caso, que si sea necesario generar la debida actualización de la sección, básate estrictamente en la información proporcionada del Discovery para hacer las actualizaciones.Incluye una justificación comparativa del porque se debe actualizar la sección y una bandera que indique si el product backlog requirió actualización o no.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a actualizar la sección \"2. Product Backlog de alto nivel\" del Product Planning cruzando la planificación actual con la realidad de los usuarios descubierta por el Discovery.\n\nRol: \nActúa como un Product Owner con gran experiencia en trabajar alinear el Discovery con el Delivery del Producto. Tiene el criterio y visión estratégica suficiente para saber cuando si es necesario actualizar y cuando no los artefactos de SCRUM.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 2. Product Backlog de alto nivel\n> **Estado:** [Indicar si se ACTUALIZÓ o se MANTUVO]\n> **Justificación del cambio:** [Explica la razón estratégica. Ej: 'Se agregaron 2 nuevas épicas para cubrir la necesidad de confianza detectada en el Journey Map...']\n\n| Nro. | Título | Historia de Usuario |\n|---|---|---|\n| [Mismo ID o Nuevo] | [Título Épica] | [Formato: Como <rol> quiero <acción> para <beneficio>] |\n| ... | ... | ... |\n\nREGLAS DE ACTUALIZACIÓN:\n1. Si el backlog antiguo tiene épicas válidas, MANTENLAS.\n2. Si el Prototipo muestra una funcionalidad nueva (ej: Pagos, Chat) que no existe en el backlog, crea una NUEVA ÉPICA con un ID secuencial o \"EP-NEW\".\n3. Las Historias de Usuario deben ser funcionales y orientadas al valor."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1344,
+        320
+      ],
+      "id": "0a99b0cc-8e07-4d0d-82d5-69a511a30d9a",
+      "name": "4. Agente Táctico"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: Basado en el Backlog que acabamos de actualizar en el paso anterior {{ $('4. Agente Táctico').item.json.output }}. También,te adjunto el product backlog de alto nivel actual, centrate solo en la sección 2 ({{ $('Sanitizar archivos').item.json.contexto_product_planning || \"N/A\" }}). Soy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y quiero investigar si es necesario actualizar el product planning con la nueva información obtenida por el componente de Discovery (Persona que realizó DCU). Dicho componente genero los siguientes artefactos:\n\n- Análisis de entrevistas a estudiantes y tutores ({{ $('Sanitizar archivos').item.json.contexto_entrevistas || \"N/A\" }})\n\n- Story Mapping ({{ $('Sanitizar archivos').item.json.contexto_story_map || \"N/A\" }})\n\n- Journey Map ({{ $('Sanitizar archivos').item.json.contexto_journey_map || \"N/A\" }})\n\n- Análisis pruebas de usuario ({{ $('Sanitizar archivos').item.json.contexto_prueba_usuario || \"N/A\" }})\n\n\nAcción:\n- Cruzar la información de la planificación con el Discovery para determinar si es necesario actualizar la sección 3.\n\n- En el caso, que si sea necesario actualiza el 'Market Map' (Objetivo del release a nivel de negocio) y el 'Feature Map' (Funcionalidades mínimas liberables para el release). Básate estrictamente en la información proporcionada del Discovery para hacer las actualizaciones. Incluye una justificación comparativa del porque se debe actualizar la sección y una bandera que indique si el product backlog requirió actualización o no.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a actualizar la sección \"3. Product Roadmap\" del Product Planning cruzando la planificación actual con la realidad de los usuarios descubierta por el Discovery.\n\nRol: \nActúa como un Product Owner con gran experiencia en trabajar alinear el Discovery con el Delivery del Producto. Tiene el criterio y visión estratégica suficiente para saber cuando si es necesario actualizar y cuando no los artefactos de SCRUM.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 3. Product Roadmap (Releases)\n> **Estado:** [Indicar si se ACTUALIZÓ o se MANTUVO]\n> **Justificación:** [Explica por qué moviste funcionalidades de un release a otro]\n\n| | Release 1 | Release 2 | Release 3 |\n|---|---|---|---|\n| Market Map | [Objetivo Principal R1] | [Objetivo Principal R2] | [Objetivo Principal R3] |\n| Feature Map | [Lista de Épicas Clave] | [Lista de Épicas Clave] | [Lista de Épicas Clave] |\n| Architecture Map | [Ej: MVC, Monolito] | [Ej: Microservicios] | [Ej: Cloud Native/IA] |\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1696,
+        320
+      ],
+      "id": "c7b30402-215a-4444-87d3-11849a65611b",
+      "name": "5. Agente Planificador"
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1476?includeContent=true&api-version=6.0\n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        512,
+        320
+      ],
+      "id": "99e179a5-fdad-4238-9def-282a928a61fb",
+      "name": "2. Cargar Product Planning actual",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        320,
+        256
+      ],
+      "id": "b523443f-88ec-4845-91df-74dc78682252",
+      "name": "Merge entrada datos"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/upload/v1beta/files",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyBjzhihZAR1EiLbJjUaGXOAI6EGZINCyLo"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Goog-Upload-Command",
+              "value": "start, upload, finalize"
+            },
+            {
+              "name": "X-Goog-Upload-Header-Content-Meta-Data",
+              "value": "{\"mime_type\": \"video/mp4\", \"display_name\": \"Prototipo Discovery Sprint 1\"}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "video/mp4"
+            },
+            {
+              "name": "X-Goog-Upload-File-Name",
+              "value": "Prototipo_Discovery_Sprint_1.mp4"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "Prototipo___Sprint_X",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -352,
+        288
+      ],
+      "id": "bcfcae2f-347f-4354-968e-796dd2f5a6fe",
+      "name": "Subir video prototipo a Google"
+    },
+    {
+      "parameters": {
+        "formTitle": "Artefactos Discovery",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Prototipo - Sprint X",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -688,
+        448
+      ],
+      "id": "7ea89433-7b89-4be3-905b-ad8d8a6c7bdc",
+      "name": "1. Cargar artefactos de Discovery",
+      "webhookId": "8896e60c-dc23-4f3e-9917-d25f02ff0cd1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a32da865-0f46-49dc-919e-c49ae45c5a92",
+              "name": "wiki_content",
+              "value": "=> Redactado por: Anthony Morales  \n> Fecha: {{ $now.format('yyyy-MM-dd') }} \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional\n\n{{ $('3. Agente Estratega').item.json.output }} \n{{ $('4. Agente Táctico').item.json.output }}  \n{{ $('5. Agente Planificador').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2032,
+        320
+      ],
+      "id": "09163186-015b-4693-8e74-c64408d065cf",
+      "name": "Generar archivo .md Product Planning"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Product Planning Release 1 (IA)/Product-Planning-V4.0-(IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.wiki_content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2240,
+        320
+      ],
+      "id": "d7205c22-c034-48b8-a2d1-e3e3112bca50",
+      "name": "6. Guardar Product Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "1. Cargar Entrevistas": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Cargar Perfiles Persona": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "1. Cargar Story Mapping": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "1. Cargar Journey Map": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "1. Cargar Feedback Prueba Usuario": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Sanitizar archivos": {
+      "main": [
+        [
+          {
+            "node": "3. Agente Estratega",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Leer Video Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Video Server": {
+      "main": [
+        [
+          {
+            "node": "Subir video prototipo a Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "3. Agente Estratega",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "4. Agente Táctico",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "5. Agente Planificador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "3. Agente Estratega",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "4. Agente Táctico",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "5. Agente Planificador",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Analista Funcional Video": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "3. Agente Estratega": {
+      "main": [
+        [
+          {
+            "node": "4. Agente Táctico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Agente Táctico": {
+      "main": [
+        [
+          {
+            "node": "5. Agente Planificador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Agente Planificador": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Product Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Cargar Product Planning actual": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar archivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge entrada datos": {
+      "main": [
+        [
+          {
+            "node": "2. Cargar Product Planning actual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subir video prototipo a Google": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar Entrevistas",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Perfiles Persona",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Story Mapping",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Journey Map",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Feedback Prueba Usuario",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Analista Funcional Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Cargar artefactos de Discovery": {
+      "main": [
+        [
+          {
+            "node": "Subir video prototipo a Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Product Planning": {
+      "main": [
+        [
+          {
+            "node": "6. Guardar Product Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. Guardar Product Planning": {
+      "main": [
+        [
+          {
+            "node": "Respuesta al Orquestador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "267c13ab-d57b-4272-9762-ec538a780c16",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "44db048c1710059c55d6133241e5b020ba8aec7b8b293c7aeaaff2b17b3a5235"
+  },
+  "id": "Kds3So92oei9noy4",
+  "tags": []
+}

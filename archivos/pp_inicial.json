@@ -1,0 +1,416 @@
+{
+  "name": "Product Planning - Fujo Creación Inicial",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f39493dd-ffcc-4452-908a-629d2757d168",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        192
+      ],
+      "id": "a9a89084-f809-446f-b18c-3e7341577380",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-robotics-er-1.5-preview",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        448
+      ],
+      "id": "40b81d75-0b22-47af-8cd4-586e594b3097",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "knGyeqknTHPgTr17",
+          "name": "Gemini Scrum"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $execution.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1168,
+        448
+      ],
+      "id": "3331d490-c718-49d4-beba-5af2fab2e422",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        96
+      ],
+      "id": "2b702b39-7ea0-4d2b-beb9-4c5f234b0716",
+      "name": "Sanitizar archivo"
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1728?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        256,
+        96
+      ],
+      "id": "d7f8a4ea-1b6b-4b3f-9fd2-0d5aa0e516f8",
+      "name": "1. Cargar ejemplo de Product Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\nLa idea de PoliTutorías es tener un espacio donde estudiantes de la Escuela Politécnica Nacional puedan encontrar tutorías que los ayuden a aprender o reforzar sus conocimientos en alguna asignatura. Los estudiantes puedan conocer el precio de la tutoría, la disponibilidad del tutor, las modalidades en las que esta disponible la tutoría, conocer sobre el tutor que imparte la tutoría y las reseñas que los estudiantes le dejan al tutor. De igual manera, para los tutores tengan un espacio donde llevar un control acerca de su agenda de tutorías que permita revisar que horas esta libre y que otras ya esta ocupado, de igual manera los tutores puedan tener voz y puedan generar reseñas sobre los estudiantes que contrataron sus servicios de tal forma que otros tutores puedan observar esta reputación de los estudiantes y puedan decidir adecuadamente si aceptar o no alguna solicitud de tutoría. A diferencia de otros sitios como Learning Center USFQ que no sabes si la persona con la que vas a agendar una tutoría realmente domina las materias de la asignatura y pierdas tiempo y dinero. \nPara realizar estas tareas lee las secciones 1.1 y 1.2 del documento de ejemplo \"Ejemplo_Product_Planning.pdf\" para familiarizarte con el formato, tono y estilo:\n\n{{ $('Sanitizar archivo').item.json.content }}\n\nAcción:\n- Seleccionar 3 áreas de valor para el nuevo producto Politutorías junto con su correspondiente subcategoría adjuntando una justificación para saber cómo eso representa valor a los stakeholders.\n\n- Generar la visión de Politutorías siguiendo el formato de Geoffrey Moore\n",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a seleccionar las áreas de valor y definir la visión del producto bajo el formato de Geoffrey Moore.\n\nRol:\nEres Product Owner experto en el marco de trabajo ágil de Scrum, con amplia experiencia en definición del Envisioning de productos de software.\n\nLista de áreas de valor y subcategorías:\n- Entry conditions: Achieve parity, Deliver minimum features, Compliance.\n- Enablement: Target new market, Enable sales.\n- Differentiator: Differentiate from competitors, Delight customer.\n- Spoiler: Eliminate competitor differentiator, Raise parity bar.\n- Cost reducer: Shorten time to market, Reduce costs/people.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 1. Visión del producto\n\n### 1.1 Áreas de valor\n\n| Área | Subcategoría | Justificación Interna (Valor) |\n|---|---|---|\n| [Tipo de Área] | [Subcategoría Específica] | [Por qué aporta valor] |\n| ... | ... | ... |\n\n### 1.2 Visión con las áreas de valor\n\n- **Para:** [cliente objetivo]\n- **Que:** [problema que necesita ser resuelto]\n- **El:** [Nombre del producto]\n- **Es una:** [Categoría del producto]\n- **Que:** [Beneficio clave / Razón para comprar]\n- **A diferencia de:** [Alternativa o competencia principal]\n- **Nuestro producto:** [diferencia principal validada por el prototipo]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        704,
+        96
+      ],
+      "id": "c0bb749a-9bfe-4c78-8253-830556ee53e1",
+      "name": "2. Agente Estratega"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\nPreviamente se seleccionaron las áreas de valor y se definió la visión del producto. Ahora, para definir el Product Backlog de alto nivel lee la sección 2 del documento de ejemplo \"Ejemplo_Product_Planning.pdf\" para familiarizarte con el formato, tono y estilo:\n{{ $('Sanitizar archivo').item.json.content }}\n\nAcción: \n- Generar de 6 a 9 Historias Épicas y su respectiva descripción en el formato de Gherkin. Abordando las funcionalidades principales de PoliTutorías.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a generar Epics en formato de Gherkin para el nuevo producto PoliTutorías.\n\nRol:\nEres Product Owner experto en el marco de trabajo ágil de Scrum, con amplia experiencia en definición del Envisioning de productos de software.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 2. Product Backlog de alto nivel\n\n| Nro. | Título | Historia de Usuario |\n|---|---|---|\n| [EPXX] | [Título Épica] | [Formato: Como <rol> quiero <acción> para <beneficio>] |\n| ... | ... | ... |"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1056,
+        96
+      ],
+      "id": "eafb6e14-6400-4685-b348-dc7b52ceeeab",
+      "name": "3. Agente Táctico"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\n\nPreviamente se seleccionaron las áreas de valor, se definió la visión del producto y se generó el product backlog de alto nivel (Epics). Ahora, para definir el Product Roadmap de alto nivel lee la sección 3 del documento de ejemplo \"Ejemplo_Product_Planning.pdf\" para familiarizarte con el formato, tono y estilo:\n{{ $('Sanitizar archivo').item.json.content }}\n\nCabe mencionar que es un grupo conformado por 6 personas. Donde a cada uno le corresponde un componente: Scrum, DevOps, Agile Testing, Discovery, Frontend y Backed. Los responsables del desarrollo son Backend y Frontend, pero dependiendo del sprint algún otro componente puede cooperar con el desarrollo. Además, el primer release tendrá una duración de 2 meses, con sprints de 2 semanas (trabajando solo días laborables)\n\nAcción:\n\n- Generar el Marketp Map, Feature/Benefit map y el Architecture Map para tres diferentes releases.\n",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a generar el Product Roadmap para el nuevo producto PoliTutorías. Que esta compuesto por tres partes: Market Map (Objetivo del release), Feature/Benefit Map (Funcionalidades mínimas liberables del release) y Architectura Map (Arquitectura a utilizar para desarrollar software)\n\nRol:\nEres Product Owner experto en el marco de trabajo ágil de Scrum, con amplia experiencia en definición del Envisioning de productos de software.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 3. Product Roadmap (Releases)\n\n| | Release 1 | Release 2 | Release 3 |\n|---|---|---|---|\n| Market Map | [Objetivo Principal R1] | [Objetivo Principal R2] | [Objetivo Principal R3] |\n| Feature Map | [Lista de Épicas Clave] | [Lista de Épicas Clave] | [Lista de Épicas Clave] |\n| Architecture Map | [Ej: MVC, Monolito] | [Ej: Microservicios] | [Ej: Cloud Native/IA] |\n\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1392,
+        96
+      ],
+      "id": "e422d18a-6efe-42b0-9b82-861ae6272eea",
+      "name": "4. Agente Planificador"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "status",
+              "name": "status",
+              "value": "completed",
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "name": "wiki_url",
+              "value": "={{ $json.remoteUrl || $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "response",
+              "name": "tool_response",
+              "value": "=El Product Planning se ha creado correctamente. La Wiki está disponible en: {{ $json.remoteUrl || $json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e076171f-2251-4767-a1d0-91c8d75040ff",
+      "name": "Respuesta al Orquestador",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2192,
+        96
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "480eaa84-2f15-45de-86a8-d1c5956cef9e",
+              "name": "wiki_content",
+              "value": "=> Redactado por: Anthony Morales   \n> Fecha: {{ $now.format('yyyy-MM-dd') }}  \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional  \n{{ $('2. Agente Estratega').item.json.output }}  \n{{ $('3. Agente Táctico').item.json.output }}   \n{{ $('4. Agente Planificador').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1744,
+        96
+      ],
+      "id": "e43f4ed6-838b-4178-a4ce-fecb4f919103",
+      "name": "Generar archivo .md Product Planning"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Product Planning Release 1 (IA)/Product-Planning-V0.0-(IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.wiki_content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1968,
+        96
+      ],
+      "id": "2f625821-8a7c-4a39-835b-50aff6b3f8ff",
+      "name": "5. Guardar Product Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar ejemplo de Product Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar ejemplo de Product Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "2. Agente Estratega",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "3. Agente Táctico",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "4. Agente Planificador",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "2. Agente Estratega",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "3. Agente Táctico",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "4. Agente Planificador",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitizar archivo": {
+      "main": [
+        [
+          {
+            "node": "2. Agente Estratega",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Cargar ejemplo de Product Planning": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar archivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Agente Estratega": {
+      "main": [
+        [
+          {
+            "node": "3. Agente Táctico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Agente Táctico": {
+      "main": [
+        [
+          {
+            "node": "4. Agente Planificador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Agente Planificador": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Product Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Product Planning": {
+      "main": [
+        [
+          {
+            "node": "5. Guardar Product Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Guardar Product Planning": {
+      "main": [
+        [
+          {
+            "node": "Respuesta al Orquestador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "c92ba67d-7dff-424a-9d33-e8c28626bb74",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "44db048c1710059c55d6133241e5b020ba8aec7b8b293c7aeaaff2b17b3a5235"
+  },
+  "id": "oSPMRYMNSN0XSbv2HMrNH",
+  "tags": []
+}
