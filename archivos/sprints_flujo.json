@@ -1,0 +1,417 @@
+{
+  "name": "F 8. Sprint Planning (Part 1) final",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1657?includeContent=true&api-version=6.0\n",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        432,
+        -16
+      ],
+      "id": "64069a45-b271-4bca-ae4e-65d8b84a5795",
+      "name": "1. Cargar el documento release planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "JrSalsodD6UACzVV",
+          "name": "Azure Scrum"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1655?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        432,
+        256
+      ],
+      "id": "a2e00428-17a5-44bd-8d59-4748c043c617",
+      "name": "2. Cargar el documento product backlog (Refinado, estimado y priorizado)",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "JrSalsodD6UACzVV",
+          "name": "Azure Scrum"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Función helper para obtener el contenido de forma segura\n// Si el nodo falló o no tiene datos, devuelve un string vacío para no romper el flujo\nconst getWikiContent = (nodeName) => {\n  try {\n    const node = $(nodeName).first();\n    return node ? node.json.content : \"\";\n  } catch (error) {\n    return \"\";\n  }\n};\n\n// --- EXTRAER DATOS LIMPIOS ---\n\n// 1. Obtenemos el texto Markdown de las Wikis\nconst release_planning = getWikiContent('1. Cargar el documento release planning');\nconst product_backlog = getWikiContent('2. Cargar el documento product backlog (Refinado, estimado y priorizado)');\n\n\n// --- RETORNAR OBJETO UNIFICADO ---\nreturn [{\n  json: {\n    // Metadatos para tu control\n    fecha_proceso: new Date().toISOString(),\n    \n    // Contexto de Texto combinando todo o separado por claves\n    contexto_release_planning: release_planning,\n    contexto_product_backlog: product_backlog,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        848,
+        128
+      ],
+      "id": "c4a4befb-1c52-4ca9-9858-ef761e5b0dc8",
+      "name": "Sanitizar archivos"
+    },
+    {
+      "parameters": {},
+      "id": "2c494713-0b0d-4393-8448-053ce3fdf495",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        128,
+        -16
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "89ebd899-2963-4167-9f31-d4782d7e120f",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        128,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ============================================================\n// CÁLCULO DE CAPACIDAD (HÍBRIDO)\n// ============================================================\nconst input = $input.first().json;\n\n// 1. DEFINIR EQUIPO (Agente vs Default)\nlet equipo = input.equipo_config;\n\nif (!equipo || !Array.isArray(equipo) || equipo.length === 0) {\n    // DEFAULT (Si el agente no mandó nada)\n    equipo = [\n      { nombre: \"David\",     dias_disponibles: 11, dias_scrum: 7, horas_min: 2, horas_max: 3 },\n      { nombre: \"Emilio\",    dias_disponibles: 11, dias_scrum: 5, horas_min: 3, horas_max: 4 },\n      { nombre: \"José\",      dias_disponibles: 11, dias_scrum: 5, horas_min: 3, horas_max: 4 },\n      { nombre: \"Sebastián\",      dias_disponibles: 11, dias_scrum: 8, horas_min: 2, horas_max: 3 },\n      { nombre: \"Estefano\",      dias_disponibles: 11, dias_scrum: 6, horas_min: 1, horas_max: 2 },\n      { nombre: \"Anthony\",      dias_disponibles: 11, dias_scrum: 5, horas_min: 1, horas_max: 2 },\n    ];\n}\n\n// 2. CÁLCULO ESTRICTO\nlet granTotalMin = 0;\nlet granTotalMax = 0;\n\nconst equipoFormateado = equipo.map(m => {\n  const diasNetos = Math.max(0, m.dias_disponibles - m.dias_scrum);\n  const esfuerzoMin = diasNetos * m.horas_min;\n  const esfuerzoMax = diasNetos * m.horas_max;\n\n  granTotalMin += esfuerzoMin;\n  granTotalMax += esfuerzoMax;\n\n  return {\n    persona: m.nombre,\n    columna_dias_disponibles: m.dias_disponibles,\n    columna_dias_scrum: m.dias_scrum,\n    columna_horas_dia: `${m.horas_min} a ${m.horas_max}`,\n    columna_esfuerzo: `${esfuerzoMin} a ${esfuerzoMax}`\n  };\n});\n\n// 3. RETORNO\nreturn [{\n    json: {\n      tabla_capacidad: equipoFormateado,\n      resumen_total: {\n        rango_total_texto: `${granTotalMin} a ${granTotalMax}`,\n        min_horas: granTotalMin,\n        max_horas: granTotalMax\n      }\n    }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1072,
+        128
+      ],
+      "id": "52a80f04-d320-46b4-93ab-bb376ae3a7ce",
+      "name": "3. Calcular la capacidad del equipo"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "response",
+              "name": "response",
+              "value": "=✅ Sprint Planning (Sprint 1) completado.\n\nSe ha calculado la capacidad del equipo y seleccionado el Sprint Backlog.\n\n📄 [Ver Sprint Planning en Wiki]({{ $('. Guardar Sprint Planning').item.json._links.html.href }})",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7376f7db-e053-4cf7-9106-a156aa341bbf",
+      "name": "Respuesta al Orquestador",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2048,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-robotics-er-1.6-preview",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        384
+      ],
+      "id": "b22bddea-645c-46d7-9177-80fc0dbf1f82",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "EwwFELL0RJBbeU0j",
+          "name": "Gemini Testing"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $execution.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1392,
+        384
+      ],
+      "id": "00d51e48-b16c-4474-a8df-9719094bbfb7",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: \nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y estoy enfocándome en planificar el sprint 4 del release 1.\n\nCon este rol solo estoy encargado de redactar el objetivo comercial y seleccionar las HUs alineadas a dicho objetivo, yo no tengo que redactar criterios de aceptación ni tampoco tareas de implementación.\n\nEl product backlog actual es:\n{{ $('Sanitizar archivos').item.json.contexto_product_backlog }}\n\nEl Release Planning actual es:\n{{ $('Sanitizar archivos').item.json.contexto_release_planning }}\n\nLa velocidad histórica del equipo es:\n38 a 42 Story Points.\n\nLa capacidad (horas-esfuerzo) del equipo es:\n{{\n$json.tabla_capacidad.map(p =>\n`| ${p.persona} | ${p.columna_dias_disponibles} | ${p.columna_dias_scrum} | ${p.columna_horas_dia} | ${p.columna_esfuerzo} |`\n).join('\\n')\n}}\n\n{{\n`| ${$json.resumen_total.rango_total_texto} | ${$json.resumen_total.min_horas} | ${$json.resumen_total.max_horas} |`\n}}\nAcción:\n- Refinar el objetivo comercial para el sprint 4. Recuerda que el objetivo comercial es concreto y conciso y no supera las 15 palabras.\n- Seleccionar las HUs que se alineen estratégicamente con el objetivo comercial del primer sprint.\n",
+        "options": {
+          "systemMessage": "=Objetivo: \nNecesito tu ayuda para:\n- Refinar el objetivo del sprint mapping para el sprint 4\n- Seleccionar las HUs alineadas a este objetivo comercial refinado\n\nRestricciones: \nEl cálculo de la capacidad ya esta realizado. Solo completas la información con la información proporcionada como contexto.\n\nRol:\nEres un Product Owner que tiene experiencia redactando objetivos comerciales(nivel abstracción negocio) y seleccionando HUs de manera estratégica.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\n## 1. Sprint Goal\n\n[Objetivo refinado del sprint]\n\n---\n\n## 2. Capacidad del Equipo (Effort-Hours)\n\n| Person | Days Available (Less Personal Time) | Days for Other Scrum Activities | Hours per Day | Available Effort-Hours |\n|---|---|---|---|---|\n| Persona 1 | X | X | X | X |\n| Persona 2 | X | X | X | X |\n| **Total** | | | | **XX Hours** |\n\n---\n\n## 3. Sprint Backlog\n\n### Nro. HUXX Título: \n\n| Sección | Descripción |\n|---|---|\n| **Estimación** |  SP |\n| **Historia de Usuario** | Como , quiero , para r. |\n\n#### Criterios de aceptación HUXX\n\n| Escenario | Descripción |\n|---|---|\n| | |\n\n#### Tareas HUXX\n\n| No. | Tarea | Effort-Hours |\n|---|---|---|\n| | | H |\n\n---\n\n### Nro. HUXX Título: \n\n| Sección | Descripción |\n|---|---|\n| **Estimación** |  SP |\n| **Historia de Usuario** | Como , quiero , para r. |\n\n#### Criterios de aceptación HUXX\n\n| Escenario | Descripción |\n|---|---|\n| | |\n\n#### Tareas HUXX\n\n| No. | Tarea | Effort-Hours |\n|---|---|---|\n| | | H |\n\n---\n\n... [el resto de HUs]\n\n\n## Resumen del Sprint Backlog\n\n| Historia de usuario | Título | Story Points (SP) |\n|---|---|---|\n| HUXX | Registro de tutorías |  SP |\n| HUXX | Ranking de tutores |  SP |\n| **Suma total de SP** | | **** |"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1296,
+        128
+      ],
+      "id": "e95fa43d-5976-4943-b73d-6eecdbf2b28c",
+      "name": "4. Agente Selección"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        672,
+        128
+      ],
+      "id": "7045d328-96d2-4c75-9abc-3382def90384",
+      "name": "Merge entrada datos"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b2fa3ef9-fcbf-4110-bece-ad65b86a0f66",
+              "name": "content_sprint_planning",
+              "value": "=> Redactado por: Anthony Morales  \n> Fecha: {{ $now.format('yyyy-MM-dd') }} \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional\n\n{{ $('4. Agente Selección').item.json.output }}  \n",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1648,
+        128
+      ],
+      "id": "2cc29b22-a0d2-4752-ac6d-c626d4621721",
+      "name": "Generar archivo .md Sprint Planning"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Sprint Planning Release 1 (IA)/Sprint-Planning-4.1-Draft (IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.content_sprint_planning }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1856,
+        128
+      ],
+      "id": "69459fed-1005-4f45-911f-1b10291567ac",
+      "name": ". Guardar Sprint Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "JrSalsodD6UACzVV",
+          "name": "Azure Scrum"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "1. Cargar el documento release planning": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Cargar el documento product backlog (Refinado, estimado y priorizado)": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Sanitizar archivos": {
+      "main": [
+        [
+          {
+            "node": "3. Calcular la capacidad del equipo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar el documento release planning",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2. Cargar el documento product backlog (Refinado, estimado y priorizado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar el documento release planning",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "2. Cargar el documento product backlog (Refinado, estimado y priorizado)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Calcular la capacidad del equipo": {
+      "main": [
+        [
+          {
+            "node": "4. Agente Selección",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "4. Agente Selección",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "4. Agente Selección",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Agente Selección": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Sprint Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge entrada datos": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar archivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Sprint Planning": {
+      "main": [
+        [
+          {
+            "node": ". Guardar Sprint Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    ". Guardar Sprint Planning": {
+      "main": [
+        [
+          {
+            "node": "Respuesta al Orquestador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "6fba1c43-3f29-4eac-9b39-825ea7a3fd94",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "44db048c1710059c55d6133241e5b020ba8aec7b8b293c7aeaaff2b17b3a5235"
+  },
+  "id": "HCSziJpmrmOwt8mp",
+  "tags": []
+}
