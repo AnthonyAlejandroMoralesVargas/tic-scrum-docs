@@ -66,14 +66,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Lógica del VISOR DE IMÁGENES (Delegación de eventos)
     // Escuchamos los clics dentro del visor, si el elemento clickeado tiene la clase 'n8n-image', abrimos el modal
+   // 4. Lógica del VISOR DE IMÁGENES y REDIRECCIÓN DE ÍNDICE (Delegación de eventos)
     visor.addEventListener('click', (e) => {
+        // --- A. Lógica existente para el visor de imágenes ---
         if (e.target.classList.contains('n8n-image')) {
             modal.style.display = "block";
             modalImg.src = e.target.src;
             
-            // Restauramos el zoom por defecto al abrir una nueva imagen
+            // Restauramos el zoom por defecto
             anchoActual = 90;
             modalImg.style.width = `${anchoActual}%`;
+        }
+
+        // --- B. NUEVA LÓGICA: Clic en el índice de la portada ---
+        // closest() busca si hicimos clic en la fila o dentro de un <td> de esa fila
+        const filaIndice = e.target.closest('.indice-item');
+        
+        if (filaIndice) {
+            // Extraemos a qué ID de menú debemos apuntar
+            const idObjetivo = filaIndice.getAttribute('data-target');
+            const elementoMenu = document.getElementById(idObjetivo);
+            
+            if (elementoMenu) {
+                // 1. Simulamos el clic en el ítem del menú para cargar el contenido
+                elementoMenu.click();
+                
+                // 2. Buscamos la sección padre en el menú y la desplegamos visualmente
+                const submenuPadre = elementoMenu.closest('.submenu');
+                if (submenuPadre) {
+                    const tituloSeccion = submenuPadre.previousElementSibling;
+                    if (tituloSeccion && !tituloSeccion.classList.contains('abierto')) {
+                        tituloSeccion.classList.add('abierto');
+                        submenuPadre.classList.add('activo');
+                    }
+                }
+                
+                // 3. (Opcional) Si la barra lateral estaba oculta, la mostramos
+                if (sidebar.classList.contains('oculta') && window.innerWidth >= 768) {
+                    sidebar.classList.remove('oculta');
+                }
+            }
         }
     });
 

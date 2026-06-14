@@ -310,6 +310,25 @@ ul {
     text-align: center;
     color: var(--accent);
 }
+/* --- EFECTOS CLICK PARA EL ÍNDICE DE LA PORTADA --- */
+.intro-table .indice-item {
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s;
+}
+
+.intro-table .indice-item:hover {
+    background-color: rgba(224, 150, 32, 0.1);
+    /* Fondo amarillo muy sutil basado en tu acento */
+}
+
+.intro-table .indice-item td {
+    transition: color 0.2s;
+}
+
+.intro-table .indice-item:hover td {
+    color: var(--bg-dark);
+    font-weight: 500;
+}
 
 /* Animación de entrada suave */
 @keyframes fadeIn {
