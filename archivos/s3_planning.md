@@ -345,7 +345,6 @@ Gestionar solicitudes de tutorías y consultar agenda de tutorías.
 | HU15                                      | 11.00H                         |
 | **Total Sum of effort – Hours Estimates** | 88H                            |
 
-###
 
 | Historia de usuario  | Título                              | Story Points (SP) |
 | -------------------- | ----------------------------------- | ----------------- |

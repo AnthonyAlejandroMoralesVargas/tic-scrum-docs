@@ -410,7 +410,6 @@ Conocer al tutor y filtrar las ofertas.
 | HU16                                      | 10.75H                         |
 | **Total Sum of effort – Hours Estimates** | 78.30H                         |
 
-###
 
 | Historia de usuario  | Título                                  | Story Points (SP) |
 | -------------------- | --------------------------------------- | ----------------- |

@@ -315,7 +315,6 @@ Finalizar las tutorías agendadas y registrar reseñas.
 | HU22                                      | 10.20H                         |
 | **Total Sum of effort – Hours Estimates** | 58.85H                         |
 
-###
 
 | Historia de usuario  | Título                                | Story Points (SP) |
 | -------------------- | ------------------------------------- | ----------------- |

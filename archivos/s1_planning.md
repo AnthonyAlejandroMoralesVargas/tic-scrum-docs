@@ -191,7 +191,6 @@ Publicar y encontrar ofertas de tutoría.
 | HU17                                      | 9.25H                          |
 | **Total Sum of effort – Hours Estimates** | 44.25H                         |
 
-###
 
 | **Historia de usuario** | **Título**                             | **Story Points (SP)** |
 | ----------------------- | -------------------------------------- | --------------------- |
