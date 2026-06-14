@@ -10,9 +10,13 @@
   <body>
     <header class="top-nav">
       <button id="btn-toggle" class="menu-btn">☰</button>
-      <div class="logo">
-        Poli<span>Tutorías</span>
-        <span class="subtitle">| Anexos de Tesis</span>
+      <div class="logo-container" id="logo-btn">
+        <img
+          src="archivos/logo_politutorias.png"
+          alt="Logo PoliTutorías"
+          class="logo-img"
+        />
+        <span class="subtitle">Anexos de Tesis</span>
       </div>
     </header>
 
@@ -105,7 +109,7 @@
                     data-tipo="md"
                     data-md="archivos/s1_planning.md"
                   >
-                   Documento Sprint Planning
+                    Documento Sprint Planning
                   </li>
                   <li
                     class="menu-item"
@@ -141,7 +145,7 @@
                     data-tipo="md"
                     data-md="archivos/s2_planning.md"
                   >
-                   Documento Sprint Planning
+                    Documento Sprint Planning
                   </li>
                   <li
                     class="menu-item"
@@ -177,7 +181,7 @@
                     data-tipo="md"
                     data-md="archivos/s3_planning.md"
                   >
-                   Documento Sprint Planning
+                    Documento Sprint Planning
                   </li>
                   <li
                     class="menu-item"
@@ -213,7 +217,7 @@
                     data-tipo="md"
                     data-md="archivos/s4_planning.md"
                   >
-                   Documento Sprint Planning
+                    Documento Sprint Planning
                   </li>
                   <li
                     class="menu-item"
@@ -238,7 +242,6 @@
                   </li>
                 </ul>
               </li>
-
             </ul>
           </li>
         </ul>
@@ -309,6 +312,10 @@
       </main>
     </div>
 
+    <div id="image-modal" class="modal">
+      <span class="close-modal">&times;</span>
+      <img class="modal-content" id="img-ampliada" />
+    </div>
     <script src="app.js"></script>
   </body>
 </html>

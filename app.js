@@ -3,15 +3,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnToggle = document.getElementById('btn-toggle');
     const menuItems = document.querySelectorAll('.menu-item');
     const visor = document.getElementById('visor-contenido');
-    const logo = document.querySelector('.logo');
+    
+    // Elementos del Nuevo Logo y Modal
+    const logoBtn = document.getElementById('logo-btn');
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('img-ampliada');
+    const btnCerrarModal = document.querySelector('.close-modal');
 
     // 0. Guardar la portada inicial en memoria
     const htmlPortadaInicial = visor.innerHTML;
 
-    // Lógica para regresar a la portada al hacer clic en el logo
-    logo.addEventListener('click', () => {
+    // Lógica para regresar a la portada al hacer clic en el nuevo logo
+    logoBtn.addEventListener('click', () => {
         visor.innerHTML = htmlPortadaInicial;
-        // Desmarcar cualquier elemento del menú que estuviera seleccionado
         menuItems.forEach(i => i.classList.remove('seleccionado'));
     });
 
@@ -25,10 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     titulosSeccion.forEach(titulo => {
         titulo.addEventListener('click', () => {
-            // Encuentra el <ul> hermano (el submenú)
             const submenu = titulo.nextElementSibling;
-            
-            // Alterna las clases para mostrar/ocultar y rotar la flecha
             titulo.classList.toggle('abierto');
             submenu.classList.toggle('activo');
         });
@@ -40,7 +41,6 @@ document.addEventListener('DOMContentLoaded', () => {
             menuItems.forEach(i => i.classList.remove('seleccionado'));
             item.classList.add('seleccionado');
 
-            // Cierra la barra lateral automáticamente en pantallas pequeñas (Opcional pero recomendado)
             if(window.innerWidth < 768) {
                 sidebar.classList.add('oculta');
             }
@@ -56,6 +56,28 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 4. Lógica del VISOR DE IMÁGENES (Delegación de eventos)
+    // Escuchamos los clics dentro del visor, si el elemento clickeado tiene la clase 'n8n-image', abrimos el modal
+    visor.addEventListener('click', (e) => {
+        if (e.target.classList.contains('n8n-image')) {
+            modal.style.display = "block";
+            modalImg.src = e.target.src; // Le pasamos la misma ruta de la imagen clickeada al modal
+        }
+    });
+
+    // Cerrar modal al hacer clic en la "X"
+    btnCerrarModal.addEventListener('click', () => {
+        modal.style.display = "none";
+    });
+
+    // Cerrar modal al hacer clic fuera de la imagen (en el fondo oscuro)
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    // Funciones de renderizado (Markdown y n8n)
     function cargarMarkdown(rutaArchivo) {
         fetch(rutaArchivo)
             .then(respuesta => {
@@ -65,9 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(texto => {
                 visor.innerHTML = marked.parse(texto);
             })
-            .catch(error => {
-                mostrarError(error.message, rutaArchivo);
-            });
+            .catch(error => mostrarError(error.message, rutaArchivo));
     }
 
     function cargarN8N(rutaImg, rutaJson, titulo) {
@@ -75,8 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="n8n-container">
                 <h2>${titulo}</h2>
                 <hr>
-                <h3>Vista Panorámica del Flujo</h3>
-                <img src="${rutaImg}" alt="Imagen del flujo no encontrada en: ${rutaImg}" class="n8n-image" onerror="this.style.display='none';">
+                <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;"><em>Haz clic sobre la imagen para ampliarla.</em></p>
+                <img src="${rutaImg}" alt="Imagen del flujo" class="n8n-image" onerror="this.style.display='none';">
                 
                 <h3>Código JSON Exportado</h3>
                 <pre class="json-viewer" id="caja-json">Cargando JSON...</pre>

@@ -358,3 +358,96 @@ ul {
     font-family: monospace;
     font-size: 0.9rem;
 }
+/* --- ESTILOS DEL NUEVO LOGO --- */
+.logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.logo-container:hover {
+    opacity: 0.8;
+}
+
+.logo-img {
+    height: 40px;
+    /* Ajusta este valor según las proporciones de tu logo */
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-container .subtitle {
+    font-size: 1rem;
+    color: #a0aabf;
+    margin-left: 15px;
+    padding-left: 15px;
+    border-left: 1px solid #a0aabf;
+    /* Línea separadora elegante */
+}
+
+/* --- ESTILOS DEL VISOR DE IMÁGENES (MODAL) --- */
+.n8n-image {
+    cursor: zoom-in;
+    transition: transform 0.2s ease;
+}
+
+.n8n-image:hover {
+    transform: scale(1.02);
+    /* Pequeño efecto al pasar el mouse indicando que es clickeable */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal {
+    display: none;
+    /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000;
+    padding-top: 50px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(23, 36, 61, 0.95);
+    /* Azul oscuro de tu marca con opacidad */
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 5px;
+    animation: zoomIn 0.4s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
