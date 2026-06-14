@@ -8,54 +8,64 @@ Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pér
 
 ### 2. Insights Principales
 
-**Insight 1: Adaptación del "Pair Programming" al paradigma de IA**
+### Insight 1: Adaptación del "Pair Programming" al paradigma de IA
 
 - **Descripción:** El equipo ha reconocido que la generación masiva de código por IA requiere un nuevo nivel de inspección. Han decidido implementar una variación del _Pair Programming_ donde un humano actúa como _Driver_ (orquestando la IA) y otro como _Navigator/Reviewer_ (auditando el contexto arquitectónico).
+
 - **Evidencia observada:** Propuesta aceptada: _"Adoptar la práctica de pair programming para la revisión de código generado con IA... para que uno mismo no sea juez y parte."_
+
 - **Impacto en el equipo/proyecto:** Convierte a la IA de un "desarrollador autónomo y riesgoso" a una herramienta controlada, protegiendo la calidad del Incremento y mitigando la deuda técnica.
+
 - **Recomendación ágil:** Formalizar este acuerdo incluyéndolo explícitamente en la **Definición de Terminado (DoD)**. Ningún código generado por IA debe integrarse a la rama principal sin la revisión (Pull Request/Code Review) de un "Navigator" humano.
 
-###
-
-**Insight 2: El Anti-patrón de la "Confianza Ciega" y omisión de Calidad (DoD)**
+### Insight 2: El Anti-patrón de la "Confianza Ciega" y omisión de Calidad (DoD)
 
 - **Descripción:** La velocidad de la IA ha seducido al equipo para saltarse fundamentos de ingeniería, asumiendo que las respuestas de la IA son estructuralmente perfectas, lo que introduce vulnerabilidades y errores lógicos.
+
 - **Evidencia observada:** _"Dejar de asumir que la IA siempre devolverá la estructura de datos perfecta. Debemos dejar de omitir las validaciones de formato..."_
+
 - **Impacto en el equipo/proyecto:** Ingreso de defectos al sistema que rompen la integración, requiriendo múltiples revisiones y desperdiciando el tiempo ganado por el uso de la IA.
+
 - **Recomendación ágil:** Implementar un enfoque de _Test-Driven Development (TDD)_ estricto en las validaciones. Las pruebas unitarias de formato deben fallar intencionalmente hasta que el código (humano o de IA) demuestre que maneja los casos de error correctamente.
 
-###
-
-**Insight 3: Pérdida de contexto del Producto por "Amnesia de la IA"**
+### Insight 3: Pérdida de contexto del Producto por "Amnesia de la IA"
 
 - **Descripción:** Emilio (Backend) realizó un diagnóstico técnico brillante sobre por qué la IA destruye código funcional: al distribuir el trabajo entre varios desarrolladores (_backups_), las sesiones de los agentes pierden el historial y, debido al límite de tokens (compactación), la IA "olvida" los _endpoints_ construidos en Sprints pasados.
+
 - **Evidencia observada:** Emilio: _"A medida que ya se iba adaptando hacia otras HU... la memoria que se establecía de cada agente se iba perdiendo y por eso se establecía el sobreescrito del código."_
+
 - **Impacto en el equipo/proyecto:** Regresión constante del producto. Funcionalidades de Sprints anteriores se rompen, violando el principio Scrum de mantener un Incremento potencialmente entregable en todo momento.
+
 - **Recomendación ágil:** La arquitectura de la aplicación debe protegerse mediante pruebas de regresión automatizadas en el pipeline de CI/CD. Si la IA elimina un _endpoint_ antiguo, el pipeline debe bloquear el despliegue inmediatamente.
 
-###
-
-**Insight 4: Silos de Discovery y diseño basado solo en "Happy Paths"**
+### Insight 4: Silos de Discovery y diseño basado solo en "Happy Paths"\*\*
 
 - **Descripción:** Los prototipos de UX/UI se están diseñando y aprobando considerando únicamente el escenario ideal, dejando vacíos sobre cómo debe reaccionar el sistema ante errores o acciones atípicas del usuario.
+
 - **Evidencia observada:** _"No profundizar en todos los escenarios de comportamiento en el prototipo. Ejemplo: cuando se envía una reseña sin comentario."_
+
 - **Impacto en el equipo/proyecto:** Genera bloqueos o suposiciones incorrectas durante el desarrollo (Front/Back) que resultan en una mala experiencia de usuario.
+
 - **Recomendación ágil:** Fomentar la práctica de los **"Tres Amigos" (Negocio/UX, Desarrollo, QA)** o el _Shift-Left Testing_. El QA y los desarrolladores deben revisar y cuestionar el prototipo antes de que pase a la columna de desarrollo, buscando activamente los flujos alternativos y de error.
 
-###
-
-**Insight 5: Madurez en Colaboración (_Swarming_) y CI/CD**
+### Insight 5: Madurez en Colaboración (_Swarming_) y CI/CD\*\*
 
 - **Descripción:** A diferencia del Sprint 2, donde los _backups_ no sabían qué hacer, el equipo ahora se autoorganiza fluidamente para cubrirse mutuamente y utilizar integraciones continuas.
+
 - **Evidencia observada:** _"Compromiso y colaboración de los componentes en el apoyo de desarrollo... uso riguroso de pipelines de CI/CD para los despliegues."_
+
 - **Impacto en el equipo/proyecto:** Minimiza el impacto del factor "ausencia", reduce los silos de conocimiento y acelera el _Time to Market_ de la resolución de bugs.
+
 - **Recomendación ágil:** Celebrar y mantener esta práctica. El Scrum Master debe asegurar que esta fluidez se refleje de manera transparente en el tablero para proteger la carga de trabajo del equipo.
 
 ### 3. Patrones Detectados
 
 - **Inspección Técnica Profunda:** El equipo no se queda en quejas superficiales ("la IA falló"); analizan la raíz sistémica ("el gestor de memoria compactó los tokens").
+
 - **Evolución del Trabajo en Enjambre:** Ha pasado de ser una idea a una realidad operativa ("apoyo por parte de los componentes de backup").
+
 - **Liderazgo Facilitador Directivo:** El Scrum Master (Julio) sigue dirigiendo fuertemente la mecánica de la ceremonia (agrupar, pedir votos, sugerir soluciones), lo que indica que el equipo, aunque maduro técnicamente, aún confía la facilitación del proceso a una figura de autoridad.
+
 - **Ausencia de Documentación Asíncrona:** Patrón emergente de falta de documentación para despliegues a producción, síntoma de un equipo enfocado excesivamente en la codificación rápida.
 
 ### 4. Evaluación de Madurez Scrum
@@ -80,7 +90,9 @@ Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pér
 ### 6. Oportunidades de Mejora (Priorizadas para próximos Sprints)
 
 1.  **Actualizar la Definition of Done (DoD):** Incluir de forma obligatoria que todo código (especialmente el generado por IA) debe ser revisado por un humano distinto al que operó el _prompt_, verificando que no elimine lógica previa y contenga validaciones de entrada.
+
 2.  **Shift-Left Testing en Discovery:** Implementar una regla de "Revisión de Casos Borde". El diseño de Figma/Magic Patterns no puede entrar a la Sprint Planning si QA y Backend no han revisado y cuestionado los "caminos tristes" (errores, desconexiones, campos vacíos).
+
 3.  **Documentación Continua de Despliegues:** Crear un _Working Agreement_ donde cualquier cambio en la infraestructura o CI/CD deba ir acompañado de una actualización en un archivo `README.md` o Wiki, evitando la centralización del conocimiento de despliegue.
 
 ### 7. Conclusión General
