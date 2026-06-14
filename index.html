@@ -1,78 +1,220 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Anexos - PoliTutorías</title>
-    
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <header class="top-nav">
-        <div class="logo">Poli<span>Tutorías</span> <span class="subtitle">| Anexos de Tesis</span></div>
+      <button id="btn-toggle" class="menu-btn">☰</button>
+      <div class="logo">
+        Poli<span>Tutorías</span>
+        <span class="subtitle">| Anexos de Tesis</span>
+      </div>
     </header>
 
     <div class="app-container">
-        <aside class="sidebar">
-            <ul class="menu-root">
-                <li class="menu-section">
-                    <span class="section-title">Product Planning</span>
-                    <ul class="submenu">
-                        <li class="menu-item" data-tipo="n8n" data-json="archivos/pp_inicial.json" data-img="archivos/pp_inicial.png">Flujo Automatizado "Inicial"</li>
-                        <li class="menu-item" data-tipo="n8n" data-json="archivos/pp_refina.json" data-img="archivos/pp_refina.png">Flujo Automatizado "Refinamiento"</li>
-                        <li class="menu-item" data-tipo="md" data-md="archivos/pp_ultima_version.md">Documento Product Planning</li>
-                    </ul>
-                </li>
-
-                <li class="menu-section">
-                    <span class="section-title">Release Planning</span>
-                    <ul class="submenu">
-                        <li class="menu-item" data-tipo="n8n" data-json="archivos/rp_inicial.json" data-img="archivos/rp_inicial.png">Flujo Automatizado "Inicial"</li>
-                        <li class="menu-item" data-tipo="n8n" data-json="archivos/rp_refina.json" data-img="archivos/rp_refina.png">Flujo Automatizado "Refinamiento"</li>
-                        <li class="menu-item" data-tipo="md" data-md="archivos/rp_ultima_version.md">Documento Release Planning</li>
-                    </ul>
-                </li>
-
-                <li class="menu-section">
-                    <span class="section-title">Sprints</span>
-                    <ul class="submenu">
-                        <li class="menu-item" data-tipo="n8n" data-json="archivos/sprints_flujo.json" data-img="archivos/sprints_flujo.png">Flujo Automatizado General n8n</li>
-                        
-                        <li class="sprint-section">Sprint 1
-                            <ul class="submenu">
-                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_planning.md">Sprint Planning</li>
-                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_daily.md">Insights Daily Scrum</li>
-                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_review.md">Insights Sprint Review</li>
-                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_retro.md">Insights Retrospective + Tablero</li>
-                            </ul>
-                        </li>
-                        
-                        <li class="sprint-section">Sprint 2
-                            <ul class="submenu">
-                                <li class="menu-item" data-tipo="md" data-md="archivos/s2_planning.md">Documentos Sprint 2...</li>
-                            </ul>
-                        </li>
-                        
-                        <li class="sprint-section">Sprint 3</li>
-                        <li class="sprint-section">Sprint 4</li>
-                    </ul>
-                </li>
-            </ul>
-        </aside>
-
-        <main class="content-area">
-            <div id="visor-contenido">
-                <div class="placeholder-inicial">
-                    <h2>Bienvenido a los Anexos del Proyecto</h2>
-                    <p>Selecciona un elemento del menú lateral para cargar la documentación en formato Markdown, o las configuraciones de los flujos automatizados de n8n.</p>
-                </div>
+      <aside class="sidebar" id="sidebar">
+        <ul class="menu-root">
+          <li class="menu-section">
+            <div class="section-title">
+              Product Planning <span class="arrow">▼</span>
             </div>
-        </main>
+            <ul class="submenu">
+              <li
+                class="menu-item"
+                data-tipo="n8n"
+                data-json="archivos/pp_inicial.json"
+                data-img="archivos/pp_inicial.png"
+              >
+                Flujo Automatizado "Inicial"
+              </li>
+              <li
+                class="menu-item"
+                data-tipo="n8n"
+                data-json="archivos/pp_refina.json"
+                data-img="archivos/pp_refina.png"
+              >
+                Flujo Automatizado "Refinamiento"
+              </li>
+              <li
+                class="menu-item"
+                data-tipo="md"
+                data-md="archivos/pp_ultima_version.md"
+              >
+                Documento Product Planning
+              </li>
+            </ul>
+          </li>
+
+          <li class="menu-section">
+            <div class="section-title">
+              Release Planning <span class="arrow">▼</span>
+            </div>
+            <ul class="submenu">
+              <li
+                class="menu-item"
+                data-tipo="n8n"
+                data-json="archivos/rp_inicial.json"
+                data-img="archivos/rp_inicial.png"
+              >
+                Flujo Automatizado "Inicial"
+              </li>
+              <li
+                class="menu-item"
+                data-tipo="n8n"
+                data-json="archivos/rp_refina.json"
+                data-img="archivos/rp_refina.png"
+              >
+                Flujo Automatizado "Refinamiento"
+              </li>
+              <li
+                class="menu-item"
+                data-tipo="md"
+                data-md="archivos/rp_ultima_version.md"
+              >
+                Documento Release Planning
+              </li>
+            </ul>
+          </li>
+
+          <li class="menu-section">
+            <div class="section-title">
+              Sprints <span class="arrow">▼</span>
+            </div>
+            <ul class="submenu">
+              <li
+                class="menu-item"
+                data-tipo="n8n"
+                data-json="archivos/sprints_flujo.json"
+                data-img="archivos/sprints_flujo.png"
+              >
+                Flujo Automatizado General n8n
+              </li>
+
+              <li class="sprint-section">
+                <div class="sprint-title">
+                  Sprint 1 <span class="arrow">▼</span>
+                </div>
+                <ul class="submenu sprint-submenu">
+                  <li
+                    class="menu-item"
+                    data-tipo="md"
+                    data-md="archivos/s1_planning.md"
+                  >
+                    Sprint Planning
+                  </li>
+                  <li
+                    class="menu-item"
+                    data-tipo="md"
+                    data-md="archivos/s1_daily.md"
+                  >
+                    Insights Daily Scrum
+                  </li>
+                  <li
+                    class="menu-item"
+                    data-tipo="md"
+                    data-md="archivos/s1_review.md"
+                  >
+                    Insights Sprint Review
+                  </li>
+                  <li
+                    class="menu-item"
+                    data-tipo="md"
+                    data-md="archivos/s1_retro.md"
+                  >
+                    Insights Retrospective
+                  </li>
+                </ul>
+              </li>
+
+              <li class="sprint-section">
+                <div class="sprint-title">
+                  Sprint 2 <span class="arrow">▼</span>
+                </div>
+                <ul class="submenu sprint-submenu">
+                  <li
+                    class="menu-item"
+                    data-tipo="md"
+                    data-md="archivos/s2_planning.md"
+                  >
+                    Documentos Sprint 2...
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </aside>
+
+      <main class="content-area">
+        <div id="visor-contenido">
+          <div class="intro-page">
+            <p class="intro-sup">
+              TRABAJO DE INTEGRACIÓN CURRICULAR · ESCUELA POLITÉCNICA NACIONAL
+            </p>
+            <h1 class="intro-title">
+              Anexos — Flujos de Automatización con IA
+            </h1>
+            <p class="intro-sub">Proyecto PoliTutorías · Scrum</p>
+
+            <div class="intro-meta">
+              <div>
+                <strong>Autor:</strong> Anthony Alejandro Morales Vargas
+              </div>
+              <div><strong>Proyecto:</strong> PoliTutorías · DTIC-2025-B</div>
+              <div><strong>Herramienta:</strong> n8n + Google Gemini</div>
+              <div><strong>Sprints:</strong> 4 iteraciones</div>
+            </div>
+
+            <hr class="intro-divider" />
+
+            <div class="intro-desc-section">
+              <p class="intro-desc-label">Descripción</p>
+              <h2 class="intro-desc-title">Contenido de este anexo</h2>
+              <hr class="intro-divider-thin" />
+              <p class="intro-text">
+                El presente Anexo documenta los flujos de automatización con IA
+                desarrollados para asistir la implementación del marco Scrum en
+                la gestión de la construcción de un producto software. Además,
+                detalla los insights recolectados durante los eventos de cada
+                sprint a través del análisis de datos.
+              </p>
+            </div>
+
+            <table class="intro-table">
+              <thead>
+                <tr>
+                  <th colspan="2">ÍNDICE DE ANEXOS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-num">1</td>
+                  <td>Product Planning</td>
+                </tr>
+                <tr>
+                  <td class="col-num">2</td>
+                  <td>Release Planning</td>
+                </tr>
+                <tr>
+                  <td class="col-num">3</td>
+                  <td>Sprint Planning</td>
+                </tr>
+                <tr>
+                  <td class="col-num">4</td>
+                  <td>Insights por Sprint</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
     </div>
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
