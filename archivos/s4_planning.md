@@ -1,3 +1,5 @@
+# Sprint 4 – Sprint Planning
+
 ## 1. Sprint Goal
 
 Finalizar las tutorías agendadas y registrar reseñas.

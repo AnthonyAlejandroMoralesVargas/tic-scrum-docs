@@ -1,3 +1,5 @@
+# Sprint 3 – Sprint Planning
+
 ## 1. Sprint Goal
 
 Gestionar solicitudes de tutorías y consultar agenda de tutorías.

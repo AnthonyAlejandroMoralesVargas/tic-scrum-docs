@@ -94,6 +94,8 @@ Publicar ofertas y agendar tutorías acompañadas de la reputación del tutor
 | **HU36** | Integrar calendario EPN                         | 8               | Won't have                         |
 | **HU51** | Acceder a las grabaciones de la tutoría         | 5               | Won't have                         |
 
+
+
 ## 6. Sprint Mapping
 
 ### Sprint 1

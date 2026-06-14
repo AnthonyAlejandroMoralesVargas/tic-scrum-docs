@@ -1,3 +1,5 @@
+# Sprint 2 – Sprint Planning
+
 ## 1. Sprint Goal
 
 Conocer al tutor y filtrar las ofertas.

@@ -1,3 +1,5 @@
+# Sprint 1 – Sprint Planning
+
 ## 1. Sprint Goal
 
 Publicar y encontrar ofertas de tutoría.
