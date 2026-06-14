@@ -1,22 +1,34 @@
+// Función de seguridad para mostrar caracteres especiales en los prompts (<, >)
+function escaparHTML(texto) {
+    if (!texto) return 'No definido';
+    return texto
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.getElementById('sidebar');
     const btnToggle = document.getElementById('btn-toggle');
     const menuItems = document.querySelectorAll('.menu-item');
     const visor = document.getElementById('visor-contenido');
     
-    // Elementos del Nuevo Logo y Modal
+    // Elementos del Logo y Modal
     const logoBtn = document.getElementById('logo-btn');
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('img-ampliada');
     const btnCerrarModal = document.querySelector('.close-modal');
+    const containerImg = document.getElementById('modal-img-container');
 
     // Botones de Zoom
     const btnZoomIn = document.getElementById('btn-zoom-in');
     const btnZoomOut = document.getElementById('btn-zoom-out');
     const btnZoomReset = document.getElementById('btn-zoom-reset');
 
-    let anchoActual = 90; // Empezamos al 90% del tamaño de la pantalla
-    const zoomPaso = 25;  // Cuánto crece/se reduce por cada clic (25%)
+    let anchoActual = 90;
+    const zoomPaso = 25;
 
     // 0. Guardar la portada inicial en memoria
     const htmlPortadaInicial = visor.innerHTML;
@@ -25,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     logoBtn.addEventListener('click', () => {
         visor.innerHTML = htmlPortadaInicial;
         menuItems.forEach(i => i.classList.remove('seleccionado'));
+        history.pushState(null, null, ' '); // Limpia la URL
     });
 
     // 1. Lógica para ocultar/mostrar la barra lateral
@@ -34,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Lógica para desplegar submenús (Acordeón)
     const titulosSeccion = document.querySelectorAll('.section-title, .sprint-title');
-    
     titulosSeccion.forEach(titulo => {
         titulo.addEventListener('click', () => {
             const submenu = titulo.nextElementSibling;
@@ -53,6 +65,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 sidebar.classList.add('oculta');
             }
 
+            // --- Actualizar URL automáticamente al hacer clic ---
+            if (item.id) {
+                history.pushState(null, null, '#' + item.id);
+            }
+
             const tipo = item.getAttribute('data-tipo');
             visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando documento...</p>';
 
@@ -64,34 +81,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Lógica del VISOR DE IMÁGENES (Delegación de eventos)
-    // Escuchamos los clics dentro del visor, si el elemento clickeado tiene la clase 'n8n-image', abrimos el modal
-   // 4. Lógica del VISOR DE IMÁGENES y REDIRECCIÓN DE ÍNDICE (Delegación de eventos)
+    // 4. Lógica del VISOR DE IMÁGENES y CLIC EN ÍNDICE DE PORTADA
     visor.addEventListener('click', (e) => {
-        // --- A. Lógica existente para el visor de imágenes ---
+        // Clic en Imagen N8N
         if (e.target.classList.contains('n8n-image')) {
             modal.style.display = "block";
-            modalImg.src = e.target.src;
-            
-            // Restauramos el zoom por defecto
+            modalImg.src = e.target.src; 
             anchoActual = 90;
             modalImg.style.width = `${anchoActual}%`;
         }
 
-        // --- B. NUEVA LÓGICA: Clic en el índice de la portada ---
-        // closest() busca si hicimos clic en la fila o dentro de un <td> de esa fila
+        // Clic en el índice de la Portada
         const filaIndice = e.target.closest('.indice-item');
-        
         if (filaIndice) {
-            // Extraemos a qué ID de menú debemos apuntar
             const idObjetivo = filaIndice.getAttribute('data-target');
             const elementoMenu = document.getElementById(idObjetivo);
             
             if (elementoMenu) {
-                // 1. Simulamos el clic en el ítem del menú para cargar el contenido
-                elementoMenu.click();
+                elementoMenu.click(); // Ejecuta la carga del documento
                 
-                // 2. Buscamos la sección padre en el menú y la desplegamos visualmente
+                // Despliega el menú visualmente
                 const submenuPadre = elementoMenu.closest('.submenu');
                 if (submenuPadre) {
                     const tituloSeccion = submenuPadre.previousElementSibling;
@@ -101,7 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
                 
-                // 3. (Opcional) Si la barra lateral estaba oculta, la mostramos
                 if (sidebar.classList.contains('oculta') && window.innerWidth >= 768) {
                     sidebar.classList.remove('oculta');
                 }
@@ -109,46 +117,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Control: Acercar
+    // 5. Controles de Zoom para Modal
     btnZoomIn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Evita que el clic cierre el modal
+        e.stopPropagation();
         anchoActual += zoomPaso;
         modalImg.style.width = `${anchoActual}%`;
     });
 
-    // Control: Alejar
     btnZoomOut.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (anchoActual > 40) { // Límite para que no se haga microscópica
+        if (anchoActual > 40) { 
             anchoActual -= zoomPaso;
             modalImg.style.width = `${anchoActual}%`;
         }
     });
 
-    // Control: Restaurar 100%
     btnZoomReset.addEventListener('click', (e) => {
         e.stopPropagation();
         anchoActual = 90;
         modalImg.style.width = `${anchoActual}%`;
-        
-        // Centramos las barras de desplazamiento (scroll)
         containerImg.scrollTop = 0;
         containerImg.scrollLeft = 0;
     });
 
-    // Cerrar Modal al hacer clic en la X
-    btnCerrarModal.addEventListener('click', () => {
-        modal.style.display = "none";
-    });
-
-    // Cerrar Modal al hacer clic en el fondo oscuro (fuera de la imagen)
+    // Cerrar Modal
+    btnCerrarModal.addEventListener('click', () => { modal.style.display = "none"; });
     containerImg.addEventListener('click', (e) => {
-        if (e.target === containerImg) {
-            modal.style.display = "none";
-        }
+        if (e.target === containerImg) modal.style.display = "none";
     });
 
-    // Funciones de renderizado (Markdown y n8n)
+    // --- FUNCIONES DE RENDERIZADO (MD Y N8N) ---
     function cargarMarkdown(rutaArchivo) {
         fetch(rutaArchivo)
             .then(respuesta => {
@@ -161,18 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => mostrarError(error.message, rutaArchivo));
     }
 
-    // Función de seguridad para mostrar caracteres especiales en los prompts (<, >)
-    function escaparHTML(texto) {
-        if (!texto) return 'No definido';
-        return texto
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#039;");
-    }
-
-function cargarN8N(rutaImg, rutaJson, titulo) {
+    function cargarN8N(rutaImg, rutaJson, titulo) {
         visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando flujo, agentes y configuraciones...</p>';
 
         fetch(rutaJson)
@@ -181,19 +168,16 @@ function cargarN8N(rutaImg, rutaJson, titulo) {
                 return respuesta.json();
             })
             .then(datosJson => {
-                // 1. Extraer dinámicamente los Agentes de IA del JSON de n8n
                 let htmlAgentes = '';
-                // Filtramos solo los nodos que corresponden a Agentes de LangChain
                 const agentes = datosJson.nodes.filter(n => n.type === '@n8n/n8n-nodes-langchain.agent');
                 
                 if (agentes.length > 0) {
-                    htmlAgentes += `<h3 style="margin-top: 40px; margin-bottom: 15px;">Configuración de los Agentes</h3>`;
+                    // SE ASIGNA EL ID="agentes" PARA PODER HACER SCROLL HASTA AQUÍ
+                    htmlAgentes += `<h3 id="agentes" style="margin-top: 40px; margin-bottom: 15px;">Configuración de los Agentes</h3>`;
                     
                     agentes.forEach(ag => {
                         const nombreAgente = ag.name || 'Agente Desconocido';
-                        // En n8n, el System Message está en options.systemMessage
                         const sysPrompt = ag.parameters?.options?.systemMessage || '';
-                        // En n8n, el User Message / Prompt de la tarea está en text
                         const userPrompt = ag.parameters?.text || '';
                         
                         htmlAgentes += `
@@ -217,15 +201,13 @@ function cargarN8N(rutaImg, rutaJson, titulo) {
                     });
                 }
 
-                // 2. Construir la vista completa ordenando las secciones
                 visor.innerHTML = `
                     <div class="n8n-container">
                         <h2>${titulo}</h2>
                         <hr>
-                        
                         <h3>Vista Panorámica del Flujo</h3>
                         <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;"><em>Haz clic sobre la imagen para ampliarla.</em></p>
-                        <img src="${rutaImg}" alt="Imagen del flujo no encontrada en: ${rutaImg}" class="n8n-image" onerror="this.style.display='none';">
+                        <img src="${rutaImg}" alt="Imagen del flujo" class="n8n-image" onerror="this.style.display='none';">
                         
                         ${htmlAgentes}
                         
@@ -233,6 +215,17 @@ function cargarN8N(rutaImg, rutaJson, titulo) {
                         <pre class="json-viewer" id="caja-json">${escaparHTML(JSON.stringify(datosJson, null, 2))}</pre>
                     </div>
                 `;
+
+                // --- LÓGICA DE AUTO-SCROLL A UNA SECCIÓN ---
+                if (window.seccionPendienteScroll) {
+                    setTimeout(() => {
+                        const elementoScroll = document.getElementById(window.seccionPendienteScroll);
+                        if (elementoScroll) {
+                            elementoScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                        window.seccionPendienteScroll = null; // Se limpia luego de ejecutar
+                    }, 150);
+                }
             })
             .catch(error => {
                 mostrarError(error.message, rutaJson);
@@ -247,4 +240,36 @@ function cargarN8N(rutaImg, rutaJson, titulo) {
             </div>
         `;
     }
+
+    // --- LÓGICA DE ENRUTAMIENTO DESDE LA URL (DEEP LINKING) ---
+    function verificarHashEnURL() {
+        if (window.location.hash) {
+            // Separa la URL, ej: #pp-refina&agentes -> ["pp-refina", "agentes"]
+            const hashParts = window.location.hash.substring(1).split('&');
+            const menuId = hashParts[0];      
+            const seccionId = hashParts[1];   
+
+            const itemObjetivo = document.getElementById(menuId);
+            if (itemObjetivo) {
+                if (seccionId) {
+                    window.seccionPendienteScroll = seccionId;
+                }
+
+                // 1. Simular clic para cargar datos
+                itemObjetivo.click();
+
+                // 2. Desplegar menús padres visualmente
+                let submenu = itemObjetivo.closest('.submenu');
+                while (submenu) {
+                    submenu.classList.add('activo');
+                    const titulo = submenu.previousElementSibling;
+                    if (titulo) titulo.classList.add('abierto');
+                    submenu = submenu.parentElement.closest('.submenu'); 
+                }
+            }
+        }
+    }
+
+    // Ejecutamos la validación apenas cargue la página
+    verificarHashEnURL();
 });
