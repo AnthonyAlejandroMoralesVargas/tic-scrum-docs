@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anexos - PoliTutorías</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header class="top-nav">
+        <div class="logo">Poli<span>Tutorías</span> <span class="subtitle">| Anexos de Tesis</span></div>
+    </header>
+
+    <div class="app-container">
+        <aside class="sidebar">
+            <ul class="menu-root">
+                <li class="menu-section">
+                    <span class="section-title">Product Planning</span>
+                    <ul class="submenu">
+                        <li class="menu-item" data-tipo="n8n" data-json="archivos/pp_inicial.json" data-img="archivos/pp_inicial.png">Flujo Automatizado "Inicial"</li>
+                        <li class="menu-item" data-tipo="n8n" data-json="archivos/pp_refina.json" data-img="archivos/pp_refina.png">Flujo Automatizado "Refinamiento"</li>
+                        <li class="menu-item" data-tipo="md" data-md="archivos/pp_ultima_version.md">Documento Product Planning</li>
+                    </ul>
+                </li>
+
+                <li class="menu-section">
+                    <span class="section-title">Release Planning</span>
+                    <ul class="submenu">
+                        <li class="menu-item" data-tipo="n8n" data-json="archivos/rp_inicial.json" data-img="archivos/rp_inicial.png">Flujo Automatizado "Inicial"</li>
+                        <li class="menu-item" data-tipo="n8n" data-json="archivos/rp_refina.json" data-img="archivos/rp_refina.png">Flujo Automatizado "Refinamiento"</li>
+                        <li class="menu-item" data-tipo="md" data-md="archivos/rp_ultima_version.md">Documento Release Planning</li>
+                    </ul>
+                </li>
+
+                <li class="menu-section">
+                    <span class="section-title">Sprints</span>
+                    <ul class="submenu">
+                        <li class="menu-item" data-tipo="n8n" data-json="archivos/sprints_flujo.json" data-img="archivos/sprints_flujo.png">Flujo Automatizado General n8n</li>
+                        
+                        <li class="sprint-section">Sprint 1
+                            <ul class="submenu">
+                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_planning.md">Sprint Planning</li>
+                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_daily.md">Insights Daily Scrum</li>
+                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_review.md">Insights Sprint Review</li>
+                                <li class="menu-item" data-tipo="md" data-md="archivos/s1_retro.md">Insights Retrospective + Tablero</li>
+                            </ul>
+                        </li>
+                        
+                        <li class="sprint-section">Sprint 2
+                            <ul class="submenu">
+                                <li class="menu-item" data-tipo="md" data-md="archivos/s2_planning.md">Documentos Sprint 2...</li>
+                            </ul>
+                        </li>
+                        
+                        <li class="sprint-section">Sprint 3</li>
+                        <li class="sprint-section">Sprint 4</li>
+                    </ul>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="content-area">
+            <div id="visor-contenido">
+                <div class="placeholder-inicial">
+                    <h2>Bienvenido a los Anexos del Proyecto</h2>
+                    <p>Selecciona un elemento del menú lateral para cargar la documentación en formato Markdown, o las configuraciones de los flujos automatizados de n8n.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
