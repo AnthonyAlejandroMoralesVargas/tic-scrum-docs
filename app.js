@@ -129,19 +129,19 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => mostrarError(error.message, rutaArchivo));
     }
 
-    function cargarN8N(rutaImg, rutaJson, titulo) {
-        let htmlContenido = `
-            <div class="n8n-container">
-                <h2>${titulo}</h2>
-                <hr>
-                <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;"><em>Haz clic sobre la imagen para ampliarla.</em></p>
-                <img src="${rutaImg}" alt="Imagen del flujo" class="n8n-image" onerror="this.style.display='none';">
-                
-                <h3>Código JSON Exportado</h3>
-                <pre class="json-viewer" id="caja-json">Cargando JSON...</pre>
-            </div>
-        `;
-        visor.innerHTML = htmlContenido;
+    // Función de seguridad para mostrar caracteres especiales en los prompts (<, >)
+    function escaparHTML(texto) {
+        if (!texto) return 'No definido';
+        return texto
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+function cargarN8N(rutaImg, rutaJson, titulo) {
+        visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando flujo, agentes y configuraciones...</p>';
 
         fetch(rutaJson)
             .then(respuesta => {
@@ -149,10 +149,61 @@ document.addEventListener('DOMContentLoaded', () => {
                 return respuesta.json();
             })
             .then(datosJson => {
-                document.getElementById('caja-json').textContent = JSON.stringify(datosJson, null, 2);
+                // 1. Extraer dinámicamente los Agentes de IA del JSON de n8n
+                let htmlAgentes = '';
+                // Filtramos solo los nodos que corresponden a Agentes de LangChain
+                const agentes = datosJson.nodes.filter(n => n.type === '@n8n/n8n-nodes-langchain.agent');
+                
+                if (agentes.length > 0) {
+                    htmlAgentes += `<h3 style="margin-top: 40px; margin-bottom: 15px;">Configuración de los Agentes</h3>`;
+                    
+                    agentes.forEach(ag => {
+                        const nombreAgente = ag.name || 'Agente Desconocido';
+                        // En n8n, el System Message está en options.systemMessage
+                        const sysPrompt = ag.parameters?.options?.systemMessage || '';
+                        // En n8n, el User Message / Prompt de la tarea está en text
+                        const userPrompt = ag.parameters?.text || '';
+                        
+                        htmlAgentes += `
+                            <div class="agent-card">
+                                <div class="agent-header">
+                                    <span>${nombreAgente}</span>
+                                </div>
+                                <div class="agent-body">
+                                    ${sysPrompt ? `
+                                    <div class="prompt-label">Prompt de Sistema (System Message)</div>
+                                    <div class="prompt-content">${escaparHTML(sysPrompt)}</div>
+                                    ` : ''}
+                                    
+                                    ${userPrompt ? `
+                                    <div class="prompt-label">Prompt de Tarea (Contexto y Acción)</div>
+                                    <div class="prompt-content">${escaparHTML(userPrompt)}</div>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                // 2. Construir la vista completa ordenando las secciones
+                visor.innerHTML = `
+                    <div class="n8n-container">
+                        <h2>${titulo}</h2>
+                        <hr>
+                        
+                        <h3>Vista Panorámica del Flujo</h3>
+                        <p style="color: #666; font-size: 0.9em; margin-bottom: 10px;"><em>Haz clic sobre la imagen para ampliarla.</em></p>
+                        <img src="${rutaImg}" alt="Imagen del flujo no encontrada en: ${rutaImg}" class="n8n-image" onerror="this.style.display='none';">
+                        
+                        ${htmlAgentes}
+                        
+                        <h3 style="margin-top: 40px;">Código JSON Exportado</h3>
+                        <pre class="json-viewer" id="caja-json">${escaparHTML(JSON.stringify(datosJson, null, 2))}</pre>
+                    </div>
+                `;
             })
             .catch(error => {
-                document.getElementById('caja-json').innerHTML = `<span style="color: #e06c75;">Error: ${error.message}<br>Ruta buscada: ${rutaJson}</span>`;
+                mostrarError(error.message, rutaJson);
             });
     }
 

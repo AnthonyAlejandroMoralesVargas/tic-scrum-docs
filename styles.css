@@ -491,3 +491,55 @@ ul {
     border-radius: 20px;
     font-weight: bold;
 }
+/* --- ESTILOS PARA LA CONFIGURACIÓN DE AGENTES IA --- */
+.agent-card {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 25px;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.agent-header {
+    background-color: var(--bg-mid);
+    /* Azul intermedio PoliTutorías */
+    color: white;
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.agent-body {
+    padding: 20px;
+}
+
+.prompt-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    color: #7f8c8d;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+}
+
+.prompt-content {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-left: 3px solid #ccc;
+    font-family: 'Consolas', 'Courier New', monospace;
+    white-space: pre-wrap;
+    /* Respeta los saltos de línea del prompt */
+    font-size: 0.85rem;
+    color: #444;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    overflow-x: auto;
+}
+
+.prompt-content:last-child {
+    margin-bottom: 0;
+}
