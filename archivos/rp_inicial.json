@@ -1,0 +1,665 @@
+{
+  "name": "Release Planning - Flujo Creación Inicial",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1d5119f4-b334-4b7d-badc-45813426511e",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        -96
+      ]
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -160,
+        160
+      ],
+      "id": "69f06da0-6d83-4526-9eef-ce0c1c953f1b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-robotics-er-1.5-preview",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        400
+      ],
+      "id": "81e05665-2093-4a56-b644-4645440b43a9",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "knGyeqknTHPgTr17",
+          "name": "Gemini Scrum"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $execution.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        1536,
+        400
+      ],
+      "id": "537e6d7e-e7ba-4319-bdc8-3f8f66609412",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1730?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        288,
+        160
+      ],
+      "id": "b9953391-acd3-4096-a898-c949a05d8c04",
+      "name": "1. Cargar ejemplo de Release Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const getWikiContent = (nodeName) => {\n  try {\n    const node = $(nodeName).first();\n    return node ? node.json.content : \"\";\n  } catch (error) {\n    return \"\";\n  }\n};\n\n// --- EXTRAER DATOS LIMPIOS ---\nconst productPlanningBD = getWikiContent('1. Cargar Product Planning Before Discovery');\nconst releasePlanningEjemplo = getWikiContent('1. Cargar ejemplo de Release Planning');\n\n\n// --- RETORNAR OBJETO UNIFICADO ---\nreturn [{\n  json: {\n    // Metadatos para tu control\n    fecha_proceso: new Date().toISOString(),\n    \n    contexto_product_planning_bd: productPlanningBD,\n    contexto_release_planning_ejemplo: releasePlanningEjemplo,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        48
+      ],
+      "id": "ea3fd072-b333-43ce-b366-c1cdb1db7aab",
+      "name": "Sanitizar archivos"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de generar el Release Planning. La planificación del release es por fecha fija y los datos para el release 1 son:\n- Fecha Inicio Release: 10 de febrero de 2026.\n- Fecha Fin Release: 07 de abril de 2026.\n- Duración del Release: 8 semanas (2 meses)\n- Velocidad Histórica del Equipo: Rango de 38 a 42 Story Points por Sprint.\n- Cantidad de Sprints: 4.\n- Duración de cada sprint: 2 Semanas (Solo días laborables, inicia y termina los días martes).\n\nPara familizarte con el producto PoliTutorías lee el Product Planning: \n\n{{ $('Sanitizar archivos').item.json.contexto_product_planning_bd }}\n\nPara familiarizarte con el formato, tono y estilo de la salida esperada lee las secciones \"1. Release de fecha fija\", \"2.Rango de velocidad del equipo\" y \"3.Rango de Story Points del Release\" del ejemplo de release planning:\n\n{{ $('Sanitizar archivos').item.json.contexto_release_planning_ejemplo }}\n\nAcción:\n- Calcular las fechas exactas de inicio y fin para los 4 sprints consecutivos. (Recuerda: Sprint 1 termina el día que inicia Sprint 2)\n- Calcular el Rango Total del Release multiplicando la velocidad (Baja y Alta) por el número de sprints (4).\n",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a calcular fechas inicio y fin (release y sprints) y rango de Story Points del equipo para generar las secciones \"1. Release de fecha fija\", \"2. Rango de velocidad del equipo\" y \"Rango de Story Points del Release\"\n\nRol:\nEres un Product Owner que tiene experiencia planificando releases según la restricción por fecha fija (Fecha y presupuesto fijos, pero alcance flexible).\n\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 1. Release de fecha fija\n- **Fecha de inicio:** [YYYY-MM-DD]\n- **Fecha de fin:** [YYYY-MM-DD]\n- **Duración de cada sprint:** 2 semanas\n\n### Cronograma de Sprints:\n- **Sprint 1:** Del [Día Mes] al [Día Mes]\n- **Sprint 2:** Del [Día Mes] al [Día Mes]\n- **Sprint 3:** Del [Día Mes] al [Día Mes]\n- **Sprint 4:** Del [Día Mes] al [Día Mes]\n\n## 2. Rango de velocidad del equipo\n- **Velocidad Baja:** [Min] SP/Sprint\n- **Velocidad Alta:** [Max] SP/Sprint\n\n## 3. Rango de Story Points del Release\nSe estima que el equipo podrá completar entre **[Total Min]** y **[Total Max]** Story Points."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1072,
+        48
+      ],
+      "id": "ee341716-e7c2-4c96-9016-e37ffd70266f",
+      "name": "2. Agente Métricas"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de generar el Release Planning.\nEl equipo puede completar durante el release este rango de SP: \n{{ $('2. Agente Métricas').item.json.output }}\n\nPara familizarte con el producto PoliTutorías lee el Product Planning: \n\n{{ $('Sanitizar archivos').item.json.contexto_product_planning_bd }}\n\nPara familiarizarte con el formato, tono y estilo de la salida esperada lee las secciones \"4. Objetivo del Release\", y \"5. Conjunto de MRF\" del ejemplo de release planning:\n\n{{ $('Sanitizar archivos').item.json.contexto_release_planning_ejemplo }}\n\n\nAcción: \n- Desglosar las Épicas de alto nivel en HUs (Nuevo Product Backlog) evitando brechas/inconsistencias entre funcionalidades. Suficientes que superen el rango alto de SP del equipo.\n- Seleccionar las HUs que se alineen estratégicamente con el objetivo del primer release.\n- Ordenar el Product Backlog de manera lógica no colocando HUs dependientes de otra primero, a la par que asegura las HUs (MRFs) se entreguen durante los dos primeros sprints.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a bajar el nivel de abstracción de Epics -> HUs. Definir funcionales mínimas liberables (MRFs) y priorizar el product backlog.\n\nRol:\nEres un Product Owner que tiene en experiencia refinando, ordenando y priorizando estratégicamente product backlogs siguiendo la técnica de priorización de MoSCoW.\n\nREGLAS DE PRIORIZACIÓN (LÓGICA MoSCoW):\n1. **Must Have (MRF):** Funcionalidades Mínimas liberables alineadas al objetivo comercial del release. Están dentro del grupo Will Have. Su suma NO debe superar el 60-70% de la capacidad mínima.\n2. **Will Have:** Historias importantes. La suma acumulada (Must + Will) debe acercarse al **Límite Inferior (Baja Velocidad)** calculado en el paso 1.\n3. **Might Have:** Historias deseables. La suma acumulada (Must + Will + Might) debe llegar hasta el **Límite Superior (Alta Velocidad)**. Se encuentran entre el separador \" Will have (XX Story Points)\" y \" Won't have (+XX Story Points)\"\n4. **Won't Have:** Todo lo que exceda el Límite Superior se lista aquí.\n5. Recuerda que en el Product Backlog resultante solo hay dos separadores: Will have (XX Story Points) y Won't have (+XX Story Points).\n6. Las HUs etiquetadas como MRFs idealmente no deben superar el separador \" Will have (XX Story Points)\" pero por natulareza del proyecto puede acercarse pero no superar al separador \" Won't have (+XX Story Points)\"\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 4. Objetivo del Release\n> [Copia aquí el objetivo comercial actualizado alineado al Market Map]\n\n## 5. Conjunto de MRF (Backlog Priorizado)\n### Detalle de Historias de Usuario\n| ID | Título | Estimación (SP) | Prioridad (MoSCoW) |\n|---|---|---|---|\n| [ID] | [Título] | [SP] | Must have |\n| ... | ... | ... | ... |\n| |||**Will have ([Inserta aquí la Capacidad Baja] Story Points)**|\n| [ID] | [Título] | [SP] | Might have |\n| ... | ... | ... | ... |\n| |||**Won't have (+[Inserta aquí la Capacidad Alta] Story Points)**|\n| [ID] | [Título] | [SP] | Won't have |\n| ... | ... | ... | ... |\n\n### Análisis de viabilidad MRF\n- **Total SP Planificado:** [Suma total de Must + Will + Might] SP\n- **Total SP de MRF (Must Have):** [Suma Must Have] SP\n- **Proporción de esfuerzo:** [Porcentaje]% (Recomendado: 60-70%)\n- **Conclusión:** [Breve análisis de riesgo]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1424,
+        48
+      ],
+      "id": "4e71edac-2293-487b-8ce6-a45336c340d6",
+      "name": "3. Agente Refinamiento"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de generar el Release Planning.\nEl equipo puede completar durante el release este rango de SP: \n{{ $('2. Agente Métricas').item.json.output }}\n\nToma las historias de las secciones \"**Must have**\" y \"**Will have**\" de la salida del Agente 2. (Ignora las \"Won't have\" y evalúa \"Might have\" solo si sobra espacio):\n{{ $('3. Agente Refinamiento').item.json.output }}\n\nAcción:\n- Agrupar las historias para los 4 Sprints.\n- Asegurar que el **Sprint 1** contenga las historias habilitadoras básicas.\n- Asegurar que el **Sprint 4** entregue valor de cierre pero no funcionalidades nucleares riesgosas.\n- Calcular la suma total de SP para cada tabla y verifícala contra la velocidad.\n- Redactar el objetivo comercial para cada Sprint.\n",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a generar la sección \"6. Sprint Mapping\". Debes distribuir las Historias de Usuario (Must Have y Will Have) en los 4 Sprints disponibles.\n\nRol: \nActúa como un Product Owner Estratégico con experiencia en redacción de objetivos de negocio y gestión de dependencias técnicas.\n\nREGLAS ESTRATÉGICAS:\n1. **Dependencias:** No programes una funcionalidad dependiente antes que su prerrequisito (ej: \"Ver Oferta\" va antes que \"Reservar Oferta\").\n2. **Capacidad:** La suma de Story Points (SP) de cada Sprint debe estar DENTRO del rango de velocidad del equipo.\n3. **Objetivos:** Redacta objetivos que expliquen \"Qué gana el negocio/usuario\" en ese sprint, no listados de tareas.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 6. Sprint Mapping\n\n### Sprint 1\n**Objetivo:** [Objetivo comercial claro y conciso]\n\n| ID | Título | Estimación (SP) |\n|:---:|---|:---:|\n| [ID] | [Título] | [SP] |\n| ... | ... | ... |\n\n**Total:** [Suma] SP\n\n---\n### Sprint 2\n**Objetivo:** [Objetivo comercial claro y conciso]\n\n| ID | Título | Estimación (SP) |\n|:---:|---|:---:|\n| [ID] | [Título] | [SP] |\n...\n\n**Total:** [Suma] SP\n\n---\n(Repetir para Sprint 3 y 4)"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1760,
+        48
+      ],
+      "id": "279bb228-70ea-4692-807b-7ee927bbab4c",
+      "name": "4. Agente Organizador"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto:\nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de generar el Product Backlog.\nEl Product Backlog refinado y priorizado: \n{{ $('3. Agente Refinamiento').item.json.output }}\n\nAcción:\n- Completar la tabla del refinamiento del product backlog con la descripción de las historias de usuario.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a escribir las descripciones para los títulos de las historias de usuario del Product Backlog.\n\nRol:\nEres un Analista de Requerimientos experto en redacción de Historias de Usuario siguiendo el formato de Gherkin.\n\nREGLAS REDACCIÓN:\n1. NO cambies el orden de las filas.\n2. NO cambies los IDs ni los valores de SP.\n3. Deduce el Rol y el Beneficio.\n4. Seguir estrictamente el formato: Como [rol del usuario], quiero [objetivo que persigue la historia de usuario] para [beneficio].\n5. Manejar nivel de abstracción de usuario. No incluir detalles técnicos específicos de implementación.\n6. Evitar el uso de conectores en las partes \"quiero\" y \"para\" de la descripción. Ejemplo: \"y\" u \"o\". \n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n| ID | Título | Historia de Usuario | Estimación (SP) | \n|---|---|---|---|\n| [ID] | [Título] | [Como ... quiero ... para] | [SP] |"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1744,
+        -272
+      ],
+      "id": "c5d485f8-54b4-4190-89eb-8bf9913a8667",
+      "name": "3.5. Agente Redactor"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "480eaa84-2f15-45de-86a8-d1c5956cef9e",
+              "name": "wiki_content",
+              "value": "=> Redactado por: Anthony Morales  \n> Fecha: {{ $now.format('yyyy-MM-dd') }} \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional\n\n{{ $('2. Agente Métricas').item.json.output }} \n{{ $('3. Agente Refinamiento').item.json.output }}  \n{{ $('4. Agente Organizador').item.json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2112,
+        48
+      ],
+      "id": "668bb5e1-4003-400a-bbc7-12408a00524b",
+      "name": "Generar archivo .md Release Planning"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "480eaa84-2f15-45de-86a8-d1c5956cef9e",
+              "name": "wiki_content",
+              "value": "=> Redactado por: Anthony Morales  \n> Fecha: {{ $now.format('yyyy-MM-dd') }} \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional\n\n{{ $('3.5. Agente Redactor').item.json.output }} ",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2112,
+        -272
+      ],
+      "id": "a0b61a15-f733-47b3-b84f-925c0de69276",
+      "name": "Generar archivo .md Product Backlog"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "status",
+              "name": "status",
+              "value": "completed",
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "name": "wiki_url",
+              "value": "={{ $json.remoteUrl || $json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "response",
+              "name": "tool_response",
+              "value": "=El Product Planning se ha creado correctamente. La Wiki está disponible en: {{ $json.remoteUrl || $json.url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6324ba59-8828-4175-a0fb-cfa805930c60",
+      "name": "Respuesta al Orquestador",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2880,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Product Backlog Release 1 (IA)/Product-Backlog-V0.0-(IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.wiki_content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2336,
+        -272
+      ],
+      "id": "0361a978-1816-47aa-be19-db3ed0e61c32",
+      "name": "5. Guardar Product Backlog",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Release Planning Release 1 (IA)/Release-Planning-V0.0-(IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.wiki_content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        2336,
+        48
+      ],
+      "id": "c7c50036-49f1-4a70-bfee-1e227cd97263",
+      "name": "5. Guardar Release Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1240?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        288,
+        -64
+      ],
+      "id": "bbc4c069-9efe-4f58-b076-68d98227005a",
+      "name": "1. Cargar Product Planning actual",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        80,
+        48
+      ],
+      "id": "a44f6d62-5738-4c8c-a370-a321552f5628",
+      "name": "Merge trigger"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2624,
+        -128
+      ],
+      "id": "04a38a59-14d2-4976-8bf4-549ece56dcd0",
+      "name": "Merge salida datos"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        544,
+        48
+      ],
+      "id": "7365458c-d196-4cf6-8509-d3192e94e871",
+      "name": "Merge entrada datos"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Merge trigger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Merge trigger",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "2. Agente Métricas",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "3. Agente Refinamiento",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "4. Agente Organizador",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "3.5. Agente Redactor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "2. Agente Métricas",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "3. Agente Refinamiento",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "4. Agente Organizador",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "3.5. Agente Redactor",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Cargar ejemplo de Release Planning": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Sanitizar archivos": {
+      "main": [
+        [
+          {
+            "node": "2. Agente Métricas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Agente Métricas": {
+      "main": [
+        [
+          {
+            "node": "3. Agente Refinamiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Agente Refinamiento": {
+      "main": [
+        [
+          {
+            "node": "4. Agente Organizador",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3.5. Agente Redactor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Agente Organizador": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Release Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3.5. Agente Redactor": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Product Backlog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Release Planning": {
+      "main": [
+        [
+          {
+            "node": "5. Guardar Release Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Product Backlog": {
+      "main": [
+        [
+          {
+            "node": "5. Guardar Product Backlog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Respuesta al Orquestador": {
+      "main": [
+        []
+      ]
+    },
+    "5. Guardar Product Backlog": {
+      "main": [
+        [
+          {
+            "node": "Merge salida datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. Guardar Release Planning": {
+      "main": [
+        [
+          {
+            "node": "Merge salida datos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "1. Cargar Product Planning actual": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge trigger": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar Product Planning actual",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar ejemplo de Release Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge salida datos": {
+      "main": [
+        [
+          {
+            "node": "Respuesta al Orquestador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge entrada datos": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar archivos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "1eaf5a6c-059f-4e59-90f5-0c9b6567b7c2",
+  "meta": {
+    "instanceId": "44db048c1710059c55d6133241e5b020ba8aec7b8b293c7aeaaff2b17b3a5235"
+  },
+  "id": "5NnBu5cc-V3FGzhP8VuJc",
+  "tags": []
+}

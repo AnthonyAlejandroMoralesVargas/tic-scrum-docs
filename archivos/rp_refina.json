@@ -1,0 +1,1103 @@
+{
+  "name": "Release Planning - Flujo Refinamiento",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Artefactos Discovery",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Prototipo - Sprint X",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -688,
+        448
+      ],
+      "id": "8efd75b7-b2ee-4261-a4a1-7419b1c53b81",
+      "name": "1. Cargar artefactos de discovery X Sprint",
+      "webhookId": "d8ae95f8-31c7-4238-bdaf-0b37216791c4"
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1647?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        -48
+      ],
+      "id": "d627183e-4ac8-40c2-84f3-0a45d2747ac8",
+      "name": "1. Cargar Entrevistas",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1615?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        128
+      ],
+      "id": "284d7f4b-2b10-48a3-9174-1cfbe4fc368d",
+      "name": "1. Cargar Perfiles Persona",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1617?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        304
+      ],
+      "id": "63f323d0-3cbd-4bcb-a515-6d5d2b47b525",
+      "name": "1. Cargar Story Mapping",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1619?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        464
+      ],
+      "id": "c4fccb8e-8787-43f8-b7c7-82b21c3c5b83",
+      "name": "1. Cargar Journey Map",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutoriasAI.wiki/pages/1645?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        656
+      ],
+      "id": "4e2250b2-eb41-4f17-8c93-448b8d09f978",
+      "name": "1. Cargar Feedback Prueba Usuario",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "5b82c2dc-56d6-4137-9410-a5ec43587039",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        176
+      ]
+    },
+    {
+      "parameters": {
+        "filePath": "/home/node/.n8n-files/prototipo.mp4",
+        "dataPropertyName": "Prototipo___Sprint_X"
+      },
+      "id": "f013c4d6-ed3c-48a8-a0cf-37cb33c763a2",
+      "name": "Leer Video Server",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        176
+      ],
+      "notes": "Nombre de propiedad con 3 guiones bajos para coincidir con el Formulario"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-robotics-er-1.5-preview",
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        2144,
+        672
+      ],
+      "id": "fbd6d1d2-6e98-4f73-b672-560dc7d46a83",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "knGyeqknTHPgTr17",
+          "name": "Gemini Scrum"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $execution.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        2288,
+        672
+      ],
+      "id": "8a047475-5e71-44f7-a0ed-294442ae49e4",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyBjzhihZAR1EiLbJjUaGXOAI6EGZINCyLo"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{\n(() => {\n  const docs = $('Subir video prototipo a Google').item.json;\n  const promptText = `\nObjetivo:\nAnalizar el video del prototipo de alta fidelidad para extraer y documentar las funcionalidades, flujos de usuario y propuestas de valor, convirtiendo la información visual en una especificación funcional textual que sirva de base para la planificación del producto.\n\nRol:\nActúa como un Analista Funcional Senior y Experto en UX con capacidad para realizar ingeniería inversa de prototipos de software. Tienes un ojo crítico para detectar reglas de negocio implícitas en interfaces gráficas y eres capaz de traducir interacciones visuales en requisitos técnicos claros.\n\nContexto:\nEstás trabajando en el proyecto \"PoliTutorías\" (plataforma de tutorías académicas). Se te proporcionará un archivo de video (MP4) que representa el incremento del producto o prototipo del último Sprint.\nActualmente, el Product Backlog y el Roadmap del proyecto son de muy alto nivel y carecen de detalles técnicos o criterios de aceptación. Tu salida será utilizada por otros Agentes de IA (Product Owner y Release Manager) para validar si las Épicas actuales cubren lo que se muestra en el video y para decidir en qué Release debe ir cada funcionalidad.\n\nAcción:\nAnaliza el video paso a paso y realiza las siguientes tareas de extracción:\n\n1. Identificación de Flujos: Describe narrativamente los recorridos del usuario (User Journeys) que se observan (ej: \"El usuario se loguea, busca una materia, filtra por calificación y agenda...\").\n2. Inventario de Funcionalidades (Features): Lista cada capacidad funcional explícita que aparece en pantalla (ej: \"Sistema de notificaciones\", \"Carga de archivos PDF\", \"Chat en tiempo real\", \"Pasarela de pagos\").\n3. Detección de Reglas de Negocio: Deduce las reglas lógicas mostradas (ej: \"No se puede agendar si no hay saldo\", \"El tutor debe aceptar la solicitud manual o automáticamente\").\n4. Análisis de Valor (Wow Factors): Identifica qué elementos visuales o de interacción justifican las \"Áreas de Valor\" (Diferenciadores o Habilitadores) del producto.\n\nSalida:\nGenera ÚNICAMENTE un reporte en formato Markdown con la siguiente estructura estricta:\n\n# Análisis Funcional del Prototipo\n\n## 1. Resumen Ejecutivo del Incremento\n[Breve descripción de 2-3 líneas sobre qué cubre este prototipo a nivel general]\n\n## 2. Flujos de Usuario Críticos (User Journeys)\n* **[Nombre del Flujo 1]:** [Descripción paso a paso de la interacción]\n* **[Nombre del Flujo 2]:** [Descripción paso a paso de la interacción]\n\n## 3. Inventario de Funcionalidades Detectadas\n| Feature Detectada | Complejidad Observada | Evidencia Visual |\n| :--- | :--- | :--- |\n| [Nombre Feature] | [Alta/Media/Baja] | [Ej: \"Se ve un botón de 'Pagar' y una confirmación de banco\"] |\n\n## 4. Elementos de Valor (Justificación de Áreas de Valor)\n* **Diferenciadores:** [Qué hace que el producto destaque según el video]\n* **Habilitadores:** [Qué funcionalidades básicas permiten que el negocio opere]\n\n## 5. Brechas o Riesgos Técnicos\n[Lista funcionalidades que se ven en el video pero que parecen complejas de implementar o que requieren backend robusto no visible]\n`;\n  return {\n    contents: [\n      {\n        parts: [\n          {\n            text: promptText\n          },\n          {\n            fileData: {\n              mimeType: \"video/mp4\",\n              fileUri: docs.file.uri || \"ERROR: NO_VIDEO_URI\" // Fallback para depuración\n            }\n          }\n        ]\n      }\n    ]\n  };\n})()\n}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        848
+      ],
+      "id": "aea1fb3e-27d1-425b-90f7-a7717c84e5ef",
+      "name": "1. Analista Funcional Video",
+      "retryOnFail": true,
+      "waitBetweenTries": 5000
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- 1. FUNCIÓN PARA OBTENER CONTENIDO DE WIKIS AZURE ---\nconst getWikiContent = (nodeName) => {\n  try {\n    // Intenta obtener el primer item del nodo\n    const node = $(nodeName).first();\n    // Retorna el contenido o string vacío si falla\n    return node ? node.json.content : \"\";\n  } catch (error) {\n    return \"\";\n  }\n};\n\n// --- 2. FUNCIÓN PARA OBTENER Y LIMPIAR RESPUESTA GEMINI ---\nconst getGeminiContent = (nodeName) => {\n  try {\n    const node = $(nodeName).first();\n    \n    // Validamos que exista la estructura profunda de Gemini\n    if (!node || !node.json.candidates || !node.json.candidates[0].content) {\n        return \"Información no disponible (Estructura Gemini no encontrada)\";\n    }\n\n    // 1. Extraer el texto crudo\n    const rawContent = node.json.candidates[0].content.parts[0].text;\n\n    // 2. Limpiar etiquetas Markdown (Tu lógica de Regex)\n    // Esto quita ```json, ```markdown, o ``` simples al inicio y final\n    const cleanString = rawContent\n      .replace(/^```[a-z]*\\s*/i, '') // Quita ```json o ```markdown al inicio\n      .replace(/\\s*```$/, '');        // Quita ``` al final\n\n    // 3. Retornar texto limpio\n    // NOTA: Si esperas un JSON objeto, cambia la línea de abajo por: return JSON.parse(cleanString);\n    // Pero para el reporte del video (que es texto), retornamos el string.\n    return cleanString.trim();\n\n  } catch (error) {\n    return \"Error procesando respuesta de Gemini: \" + error.message;\n  }\n};\n\n// --- 3. EJECUCIÓN: OBTENER DATOS DE LOS NODOS ---\n\n// Wikis de Azure\nconst entrevistas = getWikiContent('1. Cargar Entrevistas');\nconst personas = getWikiContent('1. Cargar Perfiles Persona');\nconst storyMap = getWikiContent('1. Cargar Story Mapping');\nconst journeyMap = getWikiContent('1. Cargar Journey Map');\nconst pruebaUsuario = getWikiContent('1. Cargar Feedback Prueba Usuario');\n\n// Respuesta de Gemini (Video) usando la nueva función\nconst analisisPrototipo = getGeminiContent('1. Analista Funcional Video');\n\n// --- 4. RETORNO DEL OBJETO UNIFICADO ---\nreturn [{\n  json: {\n    fecha_proceso: new Date().toISOString(),\n    \n    // Contexto Wiki\n    contexto_entrevistas: entrevistas,\n    contexto_personas: personas,\n    contexto_story_map: storyMap,\n    contexto_journey_map: journeyMap,\n    contexto_prueba_usuario: pruebaUsuario,\n    contexto_analisis_prototipo: analisisPrototipo\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        320
+      ],
+      "id": "601a8a9a-db2e-4aaf-b14d-33694faddcc9",
+      "name": "Sanitizar archivos Discovery"
+    },
+    {
+      "parameters": {
+        "jsCode": "const getWikiContent = (nodeName) => {\n  try {\n    const node = $(nodeName).first();\n    return node ? node.json.content : \"\";\n  } catch (error) {\n    return \"\";\n  }\n};\n\n// --- EXTRAER DATOS LIMPIOS ---\nconst productPlanningActual = getWikiContent('2. Cargar documento product planning');\nconst releasePlanningActual = getWikiContent('3. Cargar el documento release planning');\nconst productBacklogActual = getWikiContent('4. Cargar el documento product backlog');\nconst productBacklogHistorico = getWikiContent('5. Cargar el documento product backlog histórico');\n\n\n// --- RETORNAR OBJETO UNIFICADO ---\nreturn [{\n  json: {\n    // Metadatos para tu control\n    fecha_proceso: new Date().toISOString(),\n    \n    contexto_product_planning_actual: productPlanningActual,\n    contexto_release_planning_actual: releasePlanningActual,\n    contexto_product_backlog_actual: productBacklogActual,\n    contexto_product_backlog_historico: productBacklogHistorico,\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1584,
+        320
+      ],
+      "id": "b6da9985-4440-465f-8b8d-421312355c31",
+      "name": "Sanitizar archivos Scrum"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1d51be1c-15c8-4cde-9485-d0f6f4744dcc",
+              "name": "response",
+              "value": "=✅ Release Planning Refinado Completado.\n\nSe han actualizado los objetivos de los sprints y el backlog.\n\n📄 [Ver Release Plan Final]({{ $('9. Guardar Release Planning').first().json.remoteUrl }})\n📄 [Ver Backlog Final]({{ $('9. Guardar Product Backlog').first().json.remoteUrl }})",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3680,
+        208
+      ],
+      "id": "ad29810a-f82b-4ce5-a9da-ab90c848eeb2",
+      "name": "Respuesta al Orquestador"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: Soy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de actualizar el Release Planning. Los datos para el release 1 son:\n- Fecha Inicio Release: 10 de febrero de 2026.\n- Fecha Fin Release: 07 de abril de 2026.\n- Duración del Release: 8 semanas (2 meses)\n- Velocidad Histórica del Equipo: Rango de 38 a 42 Story Points por Sprint.\n- Cantidad de Sprints: 4.\n- Duración de cada sprint: 2 Semanas (Solo días laborables, inicia y termina los días martes).\n\n\nPara familiarizarte con el formato, tono y estilo lee las secciones \"1. Release de fecha fija\", \"2.Rango de velocidad del equipo\" y \"3.Rango de Story Points del Release\" del documento adjunto a continuación:\n\n- Release PLanning Actual ({{ $('Sanitizar archivos Scrum').item.json.contexto_release_planning_actual || \"N/A\" }})\n\n\nAcción:\n- Calcular las fechas exactas de inicio y fin para los 4 sprints consecutivos. (Recuerda: Sprint 1 termina el día que inicia Sprint 2)\n- Calcular el Rango Total del Release multiplicando la velocidad (Baja y Alta) por el número de sprints (4).\n",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a calcular fechas inicio y fin (release y sprints) y rango de Story Points del equipo para generar las secciones \"1. Release de fecha fija\", \"2. Rango de velocidad del equipo\" y \"Rango de Story Points del Release\"\n\nRol: Eres un Product Owner que tiene experiencia planificando releases según la restricción por fecha fija (Fecha y presupuesto fijos, pero alcance flexible).\n\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\n## 1. Release de fecha fija\n- **Fecha de inicio:** [YYYY-MM-DD]\n- **Fecha de fin:** [YYYY-MM-DD]\n- **Duración de cada sprint:** 2 semanas\n\n### Cronograma de Sprints:\n- **Sprint 1:** Del [Día Mes] al [Día Mes]\n- **Sprint 2:** Del [Día Mes] al [Día Mes]\n- **Sprint 3:** Del [Día Mes] al [Día Mes]\n- **Sprint 4:** Del [Día Mes] al [Día Mes]\n\n## 2. Rango de velocidad del equipo\n- **Velocidad Baja:** [Min] SP/Sprint\n- **Velocidad Alta:** [Max] SP/Sprint\n\n## 3. Rango de Story Points del Release\nSe estima que el equipo podrá completar entre **[Total Min]** y **[Total Max]** Story Points."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        1824,
+        320
+      ],
+      "id": "2f887a76-1077-4291-ac6b-7c0eecf28ba8",
+      "name": "6. Agente Métricas"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: \nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de actualizar el Release Planning. Ya se ha ejecutado y completado el sprint 1 (HU01, HU02, HU03 y HU17), el sprint 2 (HU34, HU41, HU42, HU07, HU32, HU05, HU27, HU26 y HU16) y el sprint 3 (HU06, HU09, HU33, HU08, HU23, HU15, HU11). \nEl equipo puede completar durante el release este rango de SP: \n{{ $('6. Agente Métricas').item.json.output }}\n\nPara tener contexto del producto lee: \n- Product Planning (Conocer el objetivo del release 1): ({{ $('Sanitizar archivos Scrum').item.json.contexto_product_planning_actual || \"N/A\" }})\n- Release Planning (enfócate en la sección 4 y 5): ({{ $('Sanitizar archivos Scrum').item.json.contexto_release_planning_actual || \"N/A\" }})\n- Product Backlog Histórico (útil para estimar en SP y entender lo que es complejo para el equipo): {{ $('Sanitizar archivos Scrum').item.json.contexto_product_backlog_historico || \"N/A\" }}\n\nLos artefactos resultantes del Discovery son:\n\n- Análisis de entrevistas a estudiantes y tutores ({{ $('Sanitizar archivos Discovery').first().json.contexto_entrevistas || \"N/A\" }})\n\n- Story Mapping ({{ $('Sanitizar archivos Discovery').first().json.contexto_story_map || \"N/A\" }})\n\n- Journey Map ({{ $('Sanitizar archivos Discovery').first().json.contexto_journey_map || \"N/A\" }})\n\n- Análisis pruebas de usuario ({{ $('Sanitizar archivos Discovery').first().json.contexto_prueba_usuario || \"N/A\" }})\n\nDebido a limitaciones de la tecnología no te puedo compartir el prototipo directamente, así que apoyado por la IA se generó un análisis del prototipo:\n\n- Análisis del Prototipo ({{ $('Sanitizar archivos Discovery').first().json.contexto_analisis_prototipo || \"N/A\" }})\n\nAcción:\n- Cruzar la información de la planificación con el Discovery para determinar si es necesario actualizar la sección 4 y 5.\n\n- En el caso, que si sea necesario actualiza el product backlog agregando, refinando HUs de acuerdo al Story Mapping del Discovery. Priorizando (Ordenar categorizando su nivel de prioridad) HUs considerando el objetivo del release a la par que se considera la importancia y necesidad de los usuarios. Incluye una justificación comparativa del porque se debe actualizar la sección y una bandera que indique si el product backlog requirió actualización o no.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a actualizar las secciones \"4. Objetivo del Release\" y \"5. Conjunto de MRF (Backlog Priorizado)\" del Release Planning cruzando la planificación actual con la realidad de los usuarios descubierta por el Discovery.\n\nRol: \nEres un Product Owner que tiene en experiencia refinando product backlogs, ordenando y priorizando estratégicamente de acuerdo a lo obtenido del Discovery. Tiene el criterio y visión estratégica suficiente para saber cuando si es necesario actualizar y cuando no los artefactos de SCRUM.\n\nREGLAS DE PRIORIZACIÓN (LÓGICA MoSCoW):\n1. **Must Have (MRF):** Funcionalidades Mínimas liberables alineadas al objetivo comercial del release. Están dentro del grupo Will Have. Su suma NO debe superar el 60-70% de la capacidad mínima.\n2. **Will Have:** Historias importantes. La suma acumulada (Must + Will) debe acercarse al **Límite Inferior (Baja Velocidad)** calculado en el paso 1.\n3. **Might Have:** Historias deseables. La suma acumulada (Must + Will + Might) debe llegar hasta el **Límite Superior (Alta Velocidad)**. Se encuentran entre el separador \" Will have (XX Story Points)\" y \" Won't have (+XX Story Points)\"\n4. **Won't Have:** Todo lo que exceda el Límite Superior se lista aquí.\n5. Recuerda que en el Product Backlog resultante solo hay dos separadores: Will have (XX Story Points) y Won't have (+XX Story Points).\n6. Las HUs etiquetadas como MRFs idealmente no deben superar el separador \" Will have (XX Story Points)\" pero por natulareza del proyecto puede acercarse pero no superar al separador \" Won't have (+XX Story Points)\"\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n\n> **Estado:** [Indicar si se ACTUALIZÓ o se MANTUVO]\n> **Justificación:** [Explicar las razones de las actualizaciones o mantenerse como estaba previamente]\n## 4. Objetivo del Release\n> [Copia aquí el objetivo comercial actualizado alineado al Market Map]\n\n## 5. Conjunto de MRF (Backlog Priorizado)\n### Detalle de Historias de Usuario\n| ID | Título | Estimación (SP) | Prioridad (MoSCoW) |\n|---|---|---|---|\n| [ID] | [Título] | [SP] | Must have |\n| ... | ... | ... | ... |\n| |||**Will have ([Inserta aquí la Capacidad Baja] Story Points)**|\n| [ID] | [Título] | [SP] | Might have |\n| ... | ... | ... | ... |\n| |||**Won't have (+[Inserta aquí la Capacidad Alta] Story Points)**|\n| [ID] | [Título] | [SP] | Won't have |\n| ... | ... | ... | ... |\n\n### Análisis de viabilidad MRF\n- **Total SP Planificado:** [Suma total de Must + Will + Might] SP\n- **Total SP de MRF (Must Have):** [Suma Must Have] SP\n- **Proporción de esfuerzo:** [Porcentaje]% (Recomendado: 60-70%)\n- **Conclusión:** [Breve análisis de riesgo]"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2176,
+        320
+      ],
+      "id": "2dc5c112-964b-4a6e-93a8-ad641320c7ed",
+      "name": "7. Agente Refinamiento"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: \nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de actualizar el Product Backlog luego de la ejecución del Discovery. Ya se ha ejecutado y completado el sprint 1 (HU01, HU02, HU03 y HU17), el sprint 2 (HU34, HU41, HU42, HU07, HU32, HU05, HU27, HU26 y HU16) y el sprint 3 (HU06, HU09, HU33, HU08, HU23, HU15, HU11).\n\nEl Product Backlog refinado y priorizado: \n{{ $('7. Agente Refinamiento').item.json.output }}\n\nLos artefactos resultantes del Discovery son:\n\n- Análisis de entrevistas a estudiantes y tutores ({{ $('Sanitizar archivos Discovery').first().json.contexto_entrevistas || \"N/A\" }})\n\n- Journey Map ({{ $('Sanitizar archivos Discovery').first().json.contexto_journey_map || \"N/A\" }})\n\nDebido a limitaciones de la tecnología no te puedo compartir el prototipo directamente, así que apoyado por la IA se generó un análisis del prototipo:\n\n- Análisis del Prototipo ({{ $('Sanitizar archivos Discovery').first().json.contexto_analisis_prototipo || \"N/A\" }})\n\nAcción:\n- Completar la tabla del refinamiento del product backlog con la descripción de las historias de usuario.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a escribir las descripciones para los títulos de las historias de usuario del Product Backlog.\n\nRol: \nEres un Analista de Requerimientos experto en redacción de Historias de Usuario.\n\nREGLAS REDACCIÓN:\n1. NO cambies el orden de las filas.\n2. NO cambies los IDs ni los valores de SP.\n3. Deduce el Rol y el Beneficio basándote en la información del Discovery.\n4. Seguir estrictamente el formato: Como [rol del usuario], quiero [objetivo que persigue la historia de usuario] para [beneficio].\n5. Manejar nivel de abstracción de usuario. No incluir detalles técnicos específicos de implementación.\n6. Evitar el uso de conectores en \"quiero\" y \"para\" de la descripción. Ejemplo: \"y\" u \"o\". \n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n| ID | Título | Historia de Usuario | Estimación (SP) | \n|---|---|---|---|\n| [ID] | [Título] | [Como ... quiero ... para] | [SP] |"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2528,
+        96
+      ],
+      "id": "8cb4d0ab-4ac2-432c-97f8-f3b83fe63e27",
+      "name": "7.5 Agente Redactor"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Contexto: \nSoy un Product Owner Proxy que va a guiar la construcción del nuevo producto PoliTutorías y soy responsable de actualizar el Release Planning. Ya se ha ejecutado y completado el sprint 1 (HU01, HU02, HU03 y HU17), el sprint 2 (HU34, HU41, HU42, HU07, HU32, HU05, HU27, HU26 y HU16) y el sprint 3 (HU06, HU09, HU33, HU08, HU23, HU15, HU11).\nEl equipo puede completar durante el release este rango de SP: \n{{ $('6. Agente Métricas').item.json.output }}\n\nToma las historias de las secciones \"**Must have**\" y \"**Will have**\" de la salida del Agente 2. (Ignora las \"Won't have\" y evalúa \"Might have\" solo si sobra espacio):\n{{ $('7. Agente Refinamiento').item.json.output }}\n\nUsa el Story Map, Journey Map y Análisis Prototipo para entender qué va primero (Fundamentos) y qué va después (Valor Agregado):\n- Story Map: {{ $('Sanitizar archivos Discovery').first().json.contexto_story_map || \"N/A\" }}\n- Journey Map: {{ $('Sanitizar archivos Discovery').first().json.contexto_journey_map || \"N/A\" }}\n\n- Análisis del Prototipo ({{ $('Sanitizar archivos Discovery').first().json.contexto_analisis_prototipo || \"N/A\" }})\n\nAcción:\n- Agrupar las historias para los 4 Sprints.\n- Asegurar que el **Sprint 1** contenga las historias habilitadoras básicas.\n- Asegurar que el **Sprint 4** entregue valor de cierre pero no funcionalidades nucleares riesgosas.\n- Calcular la suma total de SP para cada tabla y verifícala contra la velocidad.\n- Redactar el objetivo comercial para cada Sprint.",
+        "options": {
+          "systemMessage": "=Objetivo:\nAyudar a generar la sección \"6. Sprint Mapping\". Debes distribuir las Historias de Usuario (Must Have y Will Have) en los 4 Sprints disponibles cruzando la planificación actual con la realidad de los usuarios descubierta por el Discovery.\n\nRol: \nActúa como un Product Owner Estratégico con experiencia en redacción de objetivos de negocio y gestión de dependencias técnicas.\n\nREGLAS ESTRATÉGICAS:\n1. **Dependencias:** No programes una funcionalidad dependiente antes que su prerrequisito (ej: \"Ver Oferta\" va antes que \"Reservar Oferta\").\n2. **Capacidad:** La suma de Story Points (SP) de cada Sprint debe estar DENTRO del rango de velocidad del equipo.\n3. **Objetivos:** Redacta objetivos que expliquen \"Qué gana el negocio/usuario\" en ese sprint, no listados de tareas.\n\nFORMATO DE SALIDA (ESTRICTO MARKDOWN):\nTu respuesta debe ser ÚNICAMENTE el siguiente formato Markdown completado. No añadas introducciones ni texto fuera de esta estructura:\n\n## 6. Sprint Mapping\n\n### Sprint 1\n**Objetivo:** [Objetivo comercial claro y conciso]\n\n| ID | Título | Estimación (SP) |\n|:---:|---|:---:|\n| [ID] | [Título] | [SP] |\n| ... | ... | ... |\n\n**Total:** [Suma] SP\n\n---\n### Sprint 2\n**Objetivo:** [Objetivo comercial claro y conciso]\n\n| ID | Título | Estimación (SP) |\n|:---:|---|:---:|\n| [ID] | [Título] | [SP] |\n...\n\n**Total:** [Suma] SP\n\n---\n(Repetir para Sprint 3 y 4)\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        2528,
+        320
+      ],
+      "id": "d22a4a71-035c-4538-a26d-d3cad915630d",
+      "name": "8. Agente Organizador"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://generativelanguage.googleapis.com/upload/v1beta/files",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "key",
+              "value": "AIzaSyBjzhihZAR1EiLbJjUaGXOAI6EGZINCyLo"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "X-Goog-Upload-Command",
+              "value": "start, upload, finalize"
+            },
+            {
+              "name": "X-Goog-Upload-Header-Content-Meta-Data",
+              "value": "{\"mime_type\": \"video/mp4\", \"display_name\": \"Prototipo Discovery Sprint 1\"}"
+            },
+            {
+              "name": "Content-Type",
+              "value": "video/mp4"
+            },
+            {
+              "name": "X-Goog-Upload-File-Name",
+              "value": "Prototipo_Discovery_Sprint_1.mp4"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "Prototipo___Sprint_X",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -352,
+        288
+      ],
+      "id": "6f4a3514-fe2f-47f6-8e1e-c446d356a0c6",
+      "name": "Subir video prototipo a Google"
+    },
+    {
+      "parameters": {
+        "numberInputs": 6
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        320,
+        256
+      ],
+      "id": "8888bb46-9633-4222-b4fd-b237e9cff055",
+      "name": "Merge entrada datos Discovery"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1360,
+        288
+      ],
+      "id": "2b850593-85d3-4fa0-bc15-3e0668f31b77",
+      "name": "Merge entrada datos Scrum"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a32da865-0f46-49dc-919e-c49ae45c5a92",
+              "name": "content_product_backlog",
+              "value": "=> Redactado por: Anthony Morales  \n> Fecha: {{ $now.format('yyyy-MM-dd') }} \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional\n\n{{ $('7.5 Agente Redactor').item.json.output }}  \n",
+              "type": "string"
+            },
+            {
+              "id": "2b4cbce2-a7c2-4ceb-bcef-abde4918d9f7",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2912,
+        96
+      ],
+      "id": "c76df1d4-b4d3-442a-a63b-fd74c97782bf",
+      "name": "Generar archivo .md Product Backlog"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a32da865-0f46-49dc-919e-c49ae45c5a92",
+              "name": "content_release_planning",
+              "value": "=> Redactado por: Anthony Morales  \n> Fecha: {{ $now.format('yyyy-MM-dd') }} \n> Proyecto: PoliTutorías - Escuela Politécnica Nacional\n\n{{ $('6. Agente Métricas').item.json.output }} \n{{ $('7. Agente Refinamiento').item.json.output }}  \n{{ $('8. Agente Organizador').item.json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "2b4cbce2-a7c2-4ceb-bcef-abde4918d9f7",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2928,
+        320
+      ],
+      "id": "bb2190ed-8e9a-422b-b191-03645f5b3f17",
+      "name": "Generar archivo .md Release Planning"
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Product Backlog Release 1 (IA)/Product-Backlog-V4.0-(IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.content_product_backlog}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3232,
+        96
+      ],
+      "id": "37351305-c785-43a4-8675-8a45b0682de6",
+      "name": "9. Guardar Product Backlog",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "path",
+              "value": "/Scrum (IA)/Index Release Planning Release 1 (IA)/Release-Planning-V4.0-(IA)"
+            },
+            {
+              "name": "api-version",
+              "value": "7.1"
+            },
+            {
+              "name": "versionDescriptor.versionType",
+              "value": "branch"
+            },
+            {
+              "name": "versionDescriptor.version",
+              "value": "main"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "content",
+              "value": "={{ $json.content_release_planning}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        3248,
+        320
+      ],
+      "id": "4a8e9d4c-2606-4e14-adb5-0b99bf473df2",
+      "name": "9. Guardar Release Planning",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3472,
+        208
+      ],
+      "id": "30fe2818-080f-43b0-b39b-edae14ff3ea5",
+      "name": "Merge salida datos"
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1649?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1056,
+        -64
+      ],
+      "id": "a834c9ad-d104-494b-a279-70e7fb2d69ef",
+      "name": "2. Cargar Product Planning actual",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1479?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1056,
+        192
+      ],
+      "id": "9488f06c-f51c-4b99-ba8e-aaab4f94e212",
+      "name": "3. Cargar Release Planning actual",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutoriasAI/_apis/wiki/wikis/PoliTutorias%20AI/pages/1477?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1056,
+        432
+      ],
+      "id": "089c7fb1-b346-49fb-bce4-f0fba6c63151",
+      "name": "4. Cargar Product Backlog actual",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://dev.azure.com/DTIC-2025-B/PoliTutorias/_apis/wiki/wikis/PoliTutorias.wiki/pages/839?includeContent=true&api-version=6.0",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        1056,
+        672
+      ],
+      "id": "3b60f6ac-e740-4381-80e0-da135f7136be",
+      "name": "5. Cargar Product Backlog histórico",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "ww1K4U0Oi3Axoo2Y",
+          "name": "Azure DevOps"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "1. Cargar artefactos de discovery X Sprint": {
+      "main": [
+        [
+          {
+            "node": "Subir video prototipo a Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Cargar Entrevistas": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Discovery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Cargar Perfiles Persona": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Discovery",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "1. Cargar Story Mapping": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Discovery",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "1. Cargar Journey Map": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Discovery",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "1. Cargar Feedback Prueba Usuario": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Discovery",
+            "type": "main",
+            "index": 4
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Leer Video Server",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leer Video Server": {
+      "main": [
+        [
+          {
+            "node": "Subir video prototipo a Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "6. Agente Métricas",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "7. Agente Refinamiento",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "8. Agente Organizador",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "7.5 Agente Redactor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "6. Agente Métricas",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "7. Agente Refinamiento",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "8. Agente Organizador",
+            "type": "ai_memory",
+            "index": 0
+          },
+          {
+            "node": "7.5 Agente Redactor",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. Analista Funcional Video": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Discovery",
+            "type": "main",
+            "index": 5
+          }
+        ]
+      ]
+    },
+    "Sanitizar archivos Discovery": {
+      "main": [
+        [
+          {
+            "node": "2. Cargar Product Planning actual",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "3. Cargar Release Planning actual",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "4. Cargar Product Backlog actual",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "5. Cargar Product Backlog histórico",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitizar archivos Scrum": {
+      "main": [
+        [
+          {
+            "node": "6. Agente Métricas",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. Agente Métricas": {
+      "main": [
+        [
+          {
+            "node": "7. Agente Refinamiento",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7. Agente Refinamiento": {
+      "main": [
+        [
+          {
+            "node": "8. Agente Organizador",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "7.5 Agente Redactor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7.5 Agente Redactor": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Product Backlog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8. Agente Organizador": {
+      "main": [
+        [
+          {
+            "node": "Generar archivo .md Release Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Subir video prototipo a Google": {
+      "main": [
+        [
+          {
+            "node": "1. Cargar Entrevistas",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Perfiles Persona",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Story Mapping",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Journey Map",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Cargar Feedback Prueba Usuario",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "1. Analista Funcional Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge entrada datos Discovery": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar archivos Discovery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge entrada datos Scrum": {
+      "main": [
+        [
+          {
+            "node": "Sanitizar archivos Scrum",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Product Backlog": {
+      "main": [
+        [
+          {
+            "node": "9. Guardar Product Backlog",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generar archivo .md Release Planning": {
+      "main": [
+        [
+          {
+            "node": "9. Guardar Release Planning",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9. Guardar Product Backlog": {
+      "main": [
+        [
+          {
+            "node": "Merge salida datos",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9. Guardar Release Planning": {
+      "main": [
+        [
+          {
+            "node": "Merge salida datos",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge salida datos": {
+      "main": [
+        [
+          {
+            "node": "Respuesta al Orquestador",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Cargar Product Planning actual": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Scrum",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Cargar Release Planning actual": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Scrum",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "4. Cargar Product Backlog actual": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Scrum",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "5. Cargar Product Backlog histórico": {
+      "main": [
+        [
+          {
+            "node": "Merge entrada datos Scrum",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "e874a506-b7a3-4633-91f1-728bb73db1d0",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "44db048c1710059c55d6133241e5b020ba8aec7b8b293c7aeaaff2b17b3a5235"
+  },
+  "id": "F7GEiWCGRerQAb1x",
+  "tags": []
+}
