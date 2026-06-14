@@ -87,8 +87,8 @@ El aspecto más destacable de este ciclo es la evidente maduración del equipo e
 
 ### 5. Riesgos Identificados
 
-| Riesgo                                       | Evidencia                                                                                                                | Consecuencia potencial                                                                                                                                                   |
-| :------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Riesgo                                            | Evidencia                                                                                                      | Consecuencia potencial                                                                                                                                        |
+| :------------------------------------------------ | :------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Regresión visual en componentes globales** | El usuario desaparece del menú superior al entrar al detalle de un curso.                                                | Pérdida de contexto para el usuario final, degradación de la experiencia de navegación (UX).                                                                             |
 | **Acumulación de rediseños pendientes**      | Existen pantallas y tarjetas del A/B test del Sprint 1 pendientes, sumadas a nuevos prototipos aprobados en el Sprint 2. | Posible cuello de botella en el Sprint 3 si la capacidad del equipo no es suficiente para abordar nueva funcionalidad funcional _y_ la refactorización visual acumulada. |
 
