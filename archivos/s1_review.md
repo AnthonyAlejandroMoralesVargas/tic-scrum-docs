@@ -10,7 +10,7 @@ Desde la perspectiva ágil, se observa un equipo con una base sólida de transpa
 
 ### 2. Insights Principales
 
-**Insight 1: Protección efectiva del alcance y segmentación (Slicing) de Historias de Usuario.**
+### Insight 1: Protección efectiva del alcance y segmentación (Slicing) de Historias de Usuario.
 
 - **Descripción:** El Scrum Master demostró madurez al defender el alcance del Sprint frente a la expectativa de un _Stakeholder_ sobre funcionalidades ausentes (filtros). Se evidenció una correcta aplicación del _Vertical Slicing_ (dividir historias grandes en partes entregables).
 
@@ -20,7 +20,7 @@ Desde la perspectiva ágil, se observa un equipo con una base sólida de transpa
 
 - **Recomendación ágil:** Continuar con esta práctica. Para futuras Reviews, el Product Owner o Scrum Master debe presentar brevemente el Product Backlog actualizado al inicio o final de la sesión para gestionar expectativas visualmente.
 
-**Insight 2: Empirismo en acción (Inspección y Adaptación genuinas).**
+### Insight 2: Empirismo en acción (Inspección y Adaptación genuinas).
 
 - **Descripción:** Se detectó un anti-patrón común resuelto de forma ágil: la falacia de que "lo aprobado en diseño no se cambia". Al inspeccionar el Incremento, los stakeholders notaron problemas de usabilidad (colores, layout de 2 columnas). En lugar de defender el diseño original a toda costa, se aceptó la necesidad de iterar.
 
@@ -30,7 +30,7 @@ Desde la perspectiva ágil, se observa un equipo con una base sólida de transpa
 
 - **Recomendación ágil:** Formalizar esta adaptación. El rediseño no debe tratarse como un _bug_, sino como una nueva historia de usuario o un _Spike_ (Prueba de concepto / A/B testing) priorizado para el siguiente Sprint.
 
-**Insight 3: Riesgo de hiper-focalización en micro-diseño durante la Review.**
+### Insight 3: Riesgo de hiper-focalización en micro-diseño durante la Review.
 
 - **Descripción:** Gran parte del _timebox_ de la reunión se consumió discutiendo interacciones a nivel de píxel (el comportamiento del _placeholder_ vs. el valor por defecto en el campo de precio).
 
@@ -40,7 +40,7 @@ Desde la perspectiva ágil, se observa un equipo con una base sólida de transpa
 
 - **Recomendación ágil:** El Scrum Master debe facilitar y aplicar _timeboxing_. Cuando el debate se vuelve muy granular, sugerir: _"Tomamos nota de este hallazgo de usabilidad para refinarlo asíncronamente con el equipo de UI/UX y continuamos con el flujo principal"_.
 
-**Insight 4: Expectativas de velocidad (Velocity) externas no calibradas.**
+### Insight 4: Expectativas de velocidad (Velocity) externas no calibradas.
 
 - **Descripción:** Un _Stakeholder_ asumió explícitamente que la velocidad del equipo debe aumentar debido al uso de herramientas de Inteligencia Artificial, presionando sutilmente sobre la capacidad de entrega.
 
@@ -50,7 +50,7 @@ Desde la perspectiva ágil, se observa un equipo con una base sólida de transpa
 
 - **Recomendación ágil:** El Scrum Master debe educar a los _Stakeholders_ sobre métricas ágiles. La IA puede mejorar la eficiencia técnica, pero la velocidad en puntos de historia se normaliza con el tiempo. Es mejor medir el valor entregado (Outcomes) que la cantidad de historias (Outputs).
 
-**Insight 5: Demostración en entornos mixtos (Riesgo en la Definition of Done).**
+### Insight 5: Demostración en entornos mixtos (Riesgo en la Definition of Done).
 
 - **Descripción:** Durante la demostración técnica, se evidenció que parte de lo mostrado corría en un entorno local (`localhost`).
 
