@@ -1,4 +1,4 @@
-**Informe de Insights Scrum – Sprint 3 – Sprint Retrospective**
+# Informe de Insights Scrum – Sprint 3 – Sprint Retrospective
 
 ### 1. Resumen Ejecutivo
 
@@ -51,13 +51,11 @@ A nivel cultural, este Sprint marcó un hito crítico debido a un comportamiento
 - **Impacto en el equipo/proyecto:** Los desarrolladores pueden estar construyendo sobre versiones desactualizadas de diseño, lo que genera inconsistencias visuales y funcionales al final del Sprint.
 - **Recomendación ágil:** Establecer un proceso de _Design Handoff_ claro. Cualquier alteración al diseño durante el Sprint debe comunicarse en la Daily Scrum y etiquetarse en el ticket correspondiente en Azure Boards.
 
-
 ### 3. Patrones Detectados
 
 - **Delegación ciega a la tecnología:** Se repite el patrón de confiar en que la IA resolverá problemas de arquitectura y lógica, sin darle los límites ("guardrails") necesarios (Reglas de negocio).
 - **Desconexión asíncrona:** Aunque hay apoyo reactivo (_swarming_), falta comunicación proactiva sobre cambios técnicos (endpoints, diseño) que afectan a otros componentes.
 - **Intervenciones de liderazgo emergente:** El Scrum Master Proxy está asumiendo una postura muy fuerte como guardián del proceso y la cultura, lo cual es muy necesario en el nivel actual de madurez del equipo.
-
 
 ### 4. Evaluación de Madurez Scrum
 
@@ -70,7 +68,6 @@ A nivel cultural, este Sprint marcó un hito crítico debido a un comportamiento
 | **Colaboración**        | **Alta**         | La adopción del _Swarming_ es una señal de alta madurez colaborativa técnica.                                                                                                         |
 | **Orientación a valor** | **Media**        | El equipo comienza a darse cuenta de que el código que compila no sirve si no cumple con las "Reglas de Negocio". Están en transición de un enfoque de entrega a un enfoque de valor. |
 
-
 ### 5. Riesgos Identificados
 
 | Riesgo                                             | Evidencia en la Transcripción                                                         | Consecuencia Potencial                                                                                                 |
@@ -79,13 +76,11 @@ A nivel cultural, este Sprint marcó un hito crítico debido a un comportamiento
 | **2. Fractura de la Seguridad Psicológica**        | "Quién lo expulsó a Stefano... por una malcriadez."                                   | Aunque fue gestionado, si este tipo de actitudes subyace, los miembros dejarán de colaborar por miedo o resentimiento. |
 | **3. Cuellos de botella por falta de integración** | "Aparecieron endpoints que no estaban establecidos."                                  | Frontend inoperante al final del Sprint; fracaso en la entrega del Incremento unificado en la Review.                  |
 
-
 ### 6. Oportunidades de Mejora (Priorizadas para próximos Sprints)
 
 1.  **Ingeniería de Prompts Basada en Producto (Inmediato):** Ejecutar el acuerdo de la Retro: Crear una plantilla de _Prompt_ estándar para todo el equipo de desarrollo que obligue a inyectar las reglas de negocio, los Criterios de Aceptación y el alcance de la HU _antes_ de solicitar código a la IA.
 2.  **Acuerdos de Integración Estrictos (Corto plazo):** El Backend y Frontend deben establecer un "Pacto de Sangre" sobre los contratos de API. Si un endpoint necesita cambiar, debe haber una conversación síncrona (breve) entre José (Front) y Emilio (Back) antes de ejecutar el cambio.
 3.  **Redacción de _Working Agreements_ (Corto plazo):** El Scrum Master debe facilitar una breve sesión (puede ser de 15 minutos) para que el equipo documente 5-6 reglas básicas de convivencia y respeto profesional para el trabajo remoto y las ceremonias.
-
 
 ### 7. Conclusión General
 

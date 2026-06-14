@@ -62,11 +62,11 @@ El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y u
 
 ## 3. Patrones Detectados
 
-1.  **Bloqueos por Despliegue (Deploy-Driven Blocks):** El equipo es productivo escribiendo código local, pero el flujo se rompe al intentar llegar al entorno de AWS (Daily #3, #6, #10).
+* **Bloqueos por Despliegue (Deploy-Driven Blocks):** El equipo es productivo escribiendo código local, pero el flujo se rompe al intentar llegar al entorno de AWS (Daily #3, #6, #10).
 
-2.  **Ausentismo con Impacto Técnico:** Las ausencias de Estefano y Emilio no son solo "falta de manos", son bloqueos totales debido a la especialización de tareas.
+* **Ausentismo con Impacto Técnico:** Las ausencias de Estefano y Emilio no son solo "falta de manos", son bloqueos totales debido a la especialización de tareas.
 
-3.  **Refinamiento Reactivo:** Se detectan problemas de lógica (reglas de negocio SOL-02) al final del Sprint (Daily #10), lo que indica que las HUs no fueron suficientemente refinadas antes del Planning.
+* **Refinamiento Reactivo:** Se detectan problemas de lógica (reglas de negocio SOL-02) al final del Sprint (Daily #10), lo que indica que las HUs no fueron suficientemente refinadas antes del Planning.
 
 ---
 

@@ -1,11 +1,10 @@
-**Informe de Insights Scrum – Sprint 4 – Sprint Retrospective**
+# Informe de Insights Scrum – Sprint 4 – Sprint Retrospective
 
 ### 1. Resumen Ejecutivo
 
 El equipo ha alcanzado un nivel de madurez operativa y colaborativa notable en el Sprint 4, evidenciado por la consolidación de prácticas de Integración/Entrega Continua (CI/CD) y el trabajo en enjambre (_Swarming_). Han superado las fricciones de comunicación de Sprints anteriores, logrando una sincronización efectiva que permite a los roles de apoyo (_backups_) asumir responsabilidades sin fricción.
 
 Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pérdida de control arquitectónico frente a la Inteligencia Artificial. La transición hacia un desarrollo basado en agentes (Spec-Driven Development vía OpenCode) ha generado un anti-patrón de "confianza ciega", donde la amnesia temporal de los LLMs (compactación de tokens) provoca la sobreescritura de Incrementos previamente aprobados y la omisión de validaciones críticas. La decisión de adaptar la práctica extrema de _Pair Programming_ para auditar a la IA demuestra un empirismo excepcional y una profunda comprensión de la ingeniería de software moderna.
-
 
 ### 2. Insights Principales
 
@@ -52,14 +51,12 @@ Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pér
 - **Impacto en el equipo/proyecto:** Minimiza el impacto del factor "ausencia", reduce los silos de conocimiento y acelera el _Time to Market_ de la resolución de bugs.
 - **Recomendación ágil:** Celebrar y mantener esta práctica. El Scrum Master debe asegurar que esta fluidez se refleje de manera transparente en el tablero para proteger la carga de trabajo del equipo.
 
-
 ### 3. Patrones Detectados
 
 - **Inspección Técnica Profunda:** El equipo no se queda en quejas superficiales ("la IA falló"); analizan la raíz sistémica ("el gestor de memoria compactó los tokens").
 - **Evolución del Trabajo en Enjambre:** Ha pasado de ser una idea a una realidad operativa ("apoyo por parte de los componentes de backup").
 - **Liderazgo Facilitador Directivo:** El Scrum Master (Julio) sigue dirigiendo fuertemente la mecánica de la ceremonia (agrupar, pedir votos, sugerir soluciones), lo que indica que el equipo, aunque maduro técnicamente, aún confía la facilitación del proceso a una figura de autoridad.
 - **Ausencia de Documentación Asíncrona:** Patrón emergente de falta de documentación para despliegues a producción, síntoma de un equipo enfocado excesivamente en la codificación rápida.
-
 
 ### 4. Evaluación de Madurez Scrum
 
@@ -72,7 +69,6 @@ Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pér
 | **Colaboración**        | **Alta**         | Propuestas transversales, como involucrar a QA y Devs en el área de Discovery (UX/UI).                                                                  |
 | **Orientación a valor** | **Alta**         | Preocupación genuina por proteger las funcionalidades previamente entregadas (evitar regresiones) y asegurar casos borde en la experiencia del usuario. |
 
-
 ### 5. Riesgos Identificados
 
 | Riesgo                                          | Evidencia en la Transcripción                                          | Consecuencia Potencial                                                                                                         |
@@ -81,13 +77,11 @@ Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pér
 | **2. Vulnerabilidades por falta de validación** | "Dejar de omitir las validaciones en formato."                         | Sistemas inestables, fallos de seguridad (inyecciones), o corrupción de la base de datos por datos mal formados.               |
 | **3. Bloqueos por dependencias de despliegue**  | "Falta de documentación para el despliegue en entornos de producción." | Creación de un "Cuello de botella de DevOps". Solo una persona sabrá cómo desplegar el proyecto.                               |
 
-
 ### 6. Oportunidades de Mejora (Priorizadas para próximos Sprints)
 
 1.  **Actualizar la Definition of Done (DoD):** Incluir de forma obligatoria que todo código (especialmente el generado por IA) debe ser revisado por un humano distinto al que operó el _prompt_, verificando que no elimine lógica previa y contenga validaciones de entrada.
 2.  **Shift-Left Testing en Discovery:** Implementar una regla de "Revisión de Casos Borde". El diseño de Figma/Magic Patterns no puede entrar a la Sprint Planning si QA y Backend no han revisado y cuestionado los "caminos tristes" (errores, desconexiones, campos vacíos).
 3.  **Documentación Continua de Despliegues:** Crear un _Working Agreement_ donde cualquier cambio en la infraestructura o CI/CD deba ir acompañado de una actualización en un archivo `README.md` o Wiki, evitando la centralización del conocimiento de despliegue.
-
 
 ### 7. Conclusión General
 

@@ -1,4 +1,4 @@
-**Informe de Insights Scrum – Sprint 2 – Sprint Retrospective**
+# Informe de Insights Scrum – Sprint 2 – Sprint Retrospective
 
 ### 1. Resumen Ejecutivo
 
@@ -10,55 +10,65 @@ Sin embargo, desde la perspectiva metodológica y cultural, el equipo presenta *
 
 ### 2. Insights Principales
 
-**Insight 1: Trabajo en Enjambre (_Swarming_) como acelerador de entrega**
+### Insight 1: Trabajo en Enjambre (_Swarming_) como acelerador de entrega
 
 - **Descripción:** El equipo ha adoptado orgánicamente la práctica de agruparse alrededor de historias de usuario específicas ("colaborar por equipos en cada HU") y realizar reuniones rápidas focalizadas para destrabar impedimentos.
+
 - **Evidencia observada:** Aportes en la columna de continuar: "colaborar por equipos en cada HU", "reuniones para solucionar errores focalizados", y menciones de apoyo cuando el componente principal no está disponible.
+
 - **Impacto en el equipo/proyecto:** Aumenta el flujo de trabajo (Throughput), reduce el trabajo en progreso (WIP) y fomenta la propiedad colectiva del código, mitigando cuellos de botella.
+
 - **Recomendación ágil:** Fomentar esta práctica pero institucionalizarla visualmente en el tablero. Las tareas de apoyo deben reflejarse en Azure Boards para medir el esfuerzo real y evitar dependencias ocultas.
 
-###
-
-**Insight 2: Anti-patrón de asignación de tareas (Sistema _Push_ vs _Pull_)**
+### Insight 2: Anti-patrón de asignación de tareas (Sistema _Push_ vs _Pull_)
 
 - **Descripción:** Los desarrolladores de apoyo (ej. David) experimentan tiempos muertos prolongados porque esperan que un líder o responsable les _asigne_ trabajo, evidenciando una falta de autoorganización y un Sprint Backlog opaco.
+
 - **Evidencia observada:** David menciona: _"nunca recibí ayuda en esta HU nada, sino que tenía que yo preguntar y pues no tenía a alguien que me diga qué estoy haciendo"_.
+
 - **Impacto en el equipo/proyecto:** Subutilización de la capacidad del equipo, frustración personal y creación de un "cuello de botella de gestión" (el responsable de Back/Front tiene que hacer micro-management).
+
 - **Recomendación ágil:** Transicionar a un sistema _Pull_. El Sprint Backlog debe ser lo suficientemente granular y claro para que cualquier miembro disponible pueda "jalar" (_pull_) la siguiente tarea de mayor prioridad sin esperar autorización.
 
-###
-
-**Insight 3: Planificación de Sprint deficiente (Ausencia de Tácticas)**
+### Insight 3: Planificación de Sprint deficiente (Ausencia de Tácticas)
 
 - **Descripción:** El facilitador rechazó una idea de mejora sobre planificar tareas desde el inicio, argumentando que el trabajo se descubre de forma improvisada. Esto es un grave anti-patrón de Scrum. El Sprint Backlog debe contener un plan (táctica) para alcanzar el Sprint Goal.
+
 - **Evidencia observada:** Anthony dice: _"no se tiene un plan de esta historia de usuario se hace este día y así es conforme nuestra velocidad... vamos sobre la marcha iniciando"_.
+
 - **Impacto en el equipo/proyecto:** Altera la previsibilidad, dificulta el seguimiento en la Daily Scrum y justifica el desorden en la delegación de tareas mencionado en el Insight 2.
+
 - **Recomendación ágil:** El Scrum Master debe coachear al equipo en la Sprint Planning. Si bien no se debe planificar cada hora de cada día, sí debe existir una descomposición técnica clara (tareas) de las HU seleccionadas antes de arrancar el Sprint.
 
-###
-
-**Insight 4: Identificación temprana de riesgos técnicos por IA ("Vibe Coding")**
+### Insight 4: Identificación temprana de riesgos técnicos por IA ("Vibe Coding")**
 
 - **Descripción:** El equipo demostró madurez técnica al inspeccionar que el uso indiscriminado de IA sin contexto estructurado estaba rompiendo la arquitectura del software.
+
 - **Evidencia observada:** Emilio y Anthony reportan que la IA _"sobreescribía lo que estaba anteriormente programado porque no había esa memoria"_ y generaba lógicas incoherentes con los tokens.
+
 - **Impacto en el equipo/proyecto:** Generación masiva de deuda técnica y retrabajo (falsos positivos de avance).
+
 - **Recomendación ágil:** Excelente la decisión de pasar a un "Desarrollo basado en Specs". Asegurar que estas especificaciones estén ligadas a los Criterios de Aceptación de la HU en Azure Boards para que la IA actúe como un asistente guiado y no como un ente autónomo.
 
-###
-
-**Insight 5: Comportamiento tóxico que rompe los pilares de Scrum**
+### Insight 5: Comportamiento tóxico que rompe los pilares de Scrum**
 
 - **Descripción:** Se reportó que miembros del equipo están siendo expulsados de la reunión de Daily Scrum. Esto destruye la confianza, el respeto (valor de Scrum) y la transparencia.
+
 - **Evidencia observada:** Anthony pide _"dejar de expulsar a las personas en la Daily... se deben de comportar, porque de igual manera se pierde la transparencia"_.
+
 - **Impacto en el equipo/proyecto:** Rompe la seguridad psicológica, genera resentimientos y sabotea el único evento oficial de sincronización e inspección diaria.
+
 - **Recomendación ágil:** El Scrum Master debe actuar de inmediato como _Facilitador_ y _Servant Leader_, estableciendo normas de convivencia estrictas (Working Agreements). Si el comportamiento persiste, es un problema disciplinario que debe escalarse fuera del marco técnico.
 
 
 ### 3. Patrones Detectados
 
 - **Desalineación entre Comunicación Formal e Informal:** Patrón de depender de WhatsApp ("grupos de WhatsApp") para la gestión del trabajo, dejando la herramienta oficial (Azure Boards) desactualizada, lo que causa confusión.
+
 - **Colaboración Reactiva:** El equipo es excelente ayudando _cuando hay un fuego_ o cuando se les pide, pero no son proactivos al tomar el trabajo del tablero.
+
 - **Liderazgo Centralizado:** Anthony (SM Proxy) actúa más como un Project Manager tradicional (leyendo por los demás, descartando ideas unilateralmente, dirigiendo las votaciones) que como un facilitador neutral.
+
 - **Madurez en Feedback Cross-funcional:** Patrón muy positivo donde el Frontend y el Scrum Master revisan activamente el trabajo de Discovery (UX/UI) de forma continua.
 
 
@@ -86,7 +96,9 @@ Sin embargo, desde la perspectiva metodológica y cultural, el equipo presenta *
 ### 6. Oportunidades de Mejora (Priorizadas para próximos Sprints)
 
 1.  **Establecer "Working Agreements" (Inmediato):** El equipo debe crear y firmar un código de conducta que prohíba estrictamente comportamientos infantiles o disruptivos en los eventos Scrum (como expulsar compañeros).
+
 2.  **Transición a Tablero Pull (Proceso):** Eliminar la delegación informal. Toda tarea técnica, bug o especificación debe existir en Azure Boards. Durante la Daily, el equipo debe responder a la pregunta: _"¿Qué tarea del tablero voy a jalar hoy para acercarnos al Sprint Goal?"_ en lugar de esperar órdenes.
+
 3.  **Refinamiento de la Estrategia IA (Técnica):** Ejecutar el compromiso de Emilio: Definir las "Specs" (especificaciones) claras en el tablero _antes_ de alimentar a los agentes de IA, para limitar su ventana de contexto y evitar la sobreescritura de código.
 
 
