@@ -27,7 +27,7 @@ Publicar ofertas y agendar tutorías acompañadas de la reputación del tutor
 ## 5. Conjunto de MRF (Backlog Priorizado)
 
 
-<img src="archivos/pb_refinado.png" alt="Diagrama" width="750">
+<img src="archivos/pb_refinado.png" alt="Product Backlog detallado, estimado y refinado" width="750">
 
 ## 6. Sprint Mapping
 

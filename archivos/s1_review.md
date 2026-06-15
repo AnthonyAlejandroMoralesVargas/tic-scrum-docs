@@ -6,6 +6,8 @@ El equipo ha finalizado su primer Sprint demostrando un Incremento funcional que
 
 Desde la perspectiva ágil, se observa un equipo con una base sólida de transparencia y un Scrum Master que ejerce su rol de facilitador y protector del alcance de manera efectiva. El pilar del empirismo (transparencia, inspección y adaptación) estuvo plenamente presente: los _Stakeholders_ reconocieron que decisiones de diseño aprobadas previamente en prototipos no funcionaban en el producto real, y el equipo acordó iterar sobre ellas sin fricción. Como punto de atención, existe una fuerte tendencia a convertir la sesión en un taller de diseño y expectativas prematuras sobre el aumento de la velocidad del equipo (Velocity) debido al uso de Inteligencia Artificial.
 
+<img src="archivos/s1_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
+
 ---
 
 ### 2. Insights Principales
@@ -74,24 +76,24 @@ Desde la perspectiva ágil, se observa un equipo con una base sólida de transpa
 
 ### 4. Evaluación de Madurez Scrum
 
-| Dimensión | Valoración | Justificación |
-| :--- | :---: | :--- |
-| **Transparencia** | **Alta** | El equipo muestra el estado real del producto, los errores de entorno y admite cuando algo quedó fuera del alcance para el Backlog. |
-| **Inspección** | **Alta** | Los stakeholders revisan activamente el incremento en tiempo real, solicitando pruebas en vivo (ej. "ponle 1 USD"). |
-| **Adaptación** | **Alta** | Rápido consenso para descartar una vista de tarjetas aprobada previamente al notar que es confusa, proponiendo un _A/B testing_. |
-| **Autoorganización** | **Media** | Los desarrolladores presentan el producto, pero dependen fuertemente del SM para responder preguntas sobre alcance y procesos. |
-| **Colaboración** | **Alta** | Diálogo fluido y constructivo entre el equipo técnico, diseño (Sebastián) y los stakeholders. |
-| **Orientación a valor** | **Alta** | Todo el debate se centró en cómo el estudiante y el tutor van a entender y usar la interfaz, priorizando al usuario final. |
+| Dimensión               | Valoración | Justificación                                                                                                                       |
+| :---------------------- | :--------: | :---------------------------------------------------------------------------------------------------------------------------------- |
+| **Transparencia**       |  **Alta**  | El equipo muestra el estado real del producto, los errores de entorno y admite cuando algo quedó fuera del alcance para el Backlog. |
+| **Inspección**          |  **Alta**  | Los stakeholders revisan activamente el incremento en tiempo real, solicitando pruebas en vivo (ej. "ponle 1 USD").                 |
+| **Adaptación**          |  **Alta**  | Rápido consenso para descartar una vista de tarjetas aprobada previamente al notar que es confusa, proponiendo un _A/B testing_.    |
+| **Autoorganización**    | **Media**  | Los desarrolladores presentan el producto, pero dependen fuertemente del SM para responder preguntas sobre alcance y procesos.      |
+| **Colaboración**        |  **Alta**  | Diálogo fluido y constructivo entre el equipo técnico, diseño (Sebastián) y los stakeholders.                                       |
+| **Orientación a valor** |  **Alta**  | Todo el debate se centró en cómo el estudiante y el tutor van a entender y usar la interfaz, priorizando al usuario final.          |
 
 ---
 
 ### 5. Riesgos Identificados
 
-| Riesgo | Evidencia | Consecuencia potencial |
-| :--- | :--- | :--- |
-| **Corrupción del propósito del evento** | Demasiado tiempo invertido en debatir el color de un texto o el comportamiento de un campo vacío. | La Sprint Review pierde su enfoque estratégico y se convierte en una sesión técnica de UI/UX, descuidando el estado del Backlog. |
-| **Presión por Velocity irreal** | Comentario del Stakeholder asumiendo que la IA debe inflar automáticamente la velocidad de entrega en Puntos de Historia. | Desmotivación del equipo, pérdida de calidad (acumulación de deuda técnica) para cumplir expectativas externas, o inflación artificial de estimaciones. |
-| **Fricción en la Definition of Done** | Presentar el producto desde `localhost`. | Riesgo de que el Incremento no esté realmente integrado ni listo para release, generando falsas expectativas. |
+| Riesgo                                  | Evidencia                                                                                                                 | Consecuencia potencial                                                                                                                                  |
+| :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Corrupción del propósito del evento** | Demasiado tiempo invertido en debatir el color de un texto o el comportamiento de un campo vacío.                         | La Sprint Review pierde su enfoque estratégico y se convierte en una sesión técnica de UI/UX, descuidando el estado del Backlog.                        |
+| **Presión por Velocity irreal**         | Comentario del Stakeholder asumiendo que la IA debe inflar automáticamente la velocidad de entrega en Puntos de Historia. | Desmotivación del equipo, pérdida de calidad (acumulación de deuda técnica) para cumplir expectativas externas, o inflación artificial de estimaciones. |
+| **Fricción en la Definition of Done**   | Presentar el producto desde `localhost`.                                                                                  | Riesgo de que el Incremento no esté realmente integrado ni listo para release, generando falsas expectativas.                                           |
 
 ---
 
