@@ -1,12 +1,7 @@
-// Función de seguridad para mostrar caracteres especiales en los prompts (<, >)
+// Función de seguridad para mostrar caracteres especiales en los prompts
 function escaparHTML(texto) {
     if (!texto) return 'No definido';
-    return texto
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
+    return texto.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -22,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCerrarModal = document.querySelector('.close-modal');
     const containerImg = document.getElementById('modal-img-container');
 
-    // Botones de Zoom
     const btnZoomIn = document.getElementById('btn-zoom-in');
     const btnZoomOut = document.getElementById('btn-zoom-out');
     const btnZoomReset = document.getElementById('btn-zoom-reset');
@@ -33,19 +27,85 @@ document.addEventListener('DOMContentLoaded', () => {
     // 0. Guardar la portada inicial en memoria
     const htmlPortadaInicial = visor.innerHTML;
 
-    // Lógica para regresar a la portada al hacer clic en el nuevo logo
+    // =======================================================
+    // NUEVO MOTOR DE ENRUTAMIENTO NATIVO (100% GITHUB PAGES)
+    // =======================================================
+    function procesarNavegacion() {
+        // Obtenemos el texto de la URL después del '#' (ej. pp-refina&agentes)
+        const hash = window.location.hash.substring(1); 
+        
+        // Si no hay hash en la URL, significa que debemos mostrar la portada
+        if (!hash) {
+            visor.innerHTML = htmlPortadaInicial;
+            menuItems.forEach(i => i.classList.remove('seleccionado'));
+            return;
+        }
+
+        // Separar la página de la sección (si usamos el truco del "&")
+        const hashParts = hash.split('&');
+        const menuId = hashParts[0];      
+        const seccionId = hashParts[1];   
+
+        const itemObjetivo = document.getElementById(menuId);
+        
+        if (itemObjetivo) {
+            // Limpiar selección previa y pintar de dorado el menú actual
+            menuItems.forEach(i => i.classList.remove('seleccionado'));
+            itemObjetivo.classList.add('seleccionado');
+
+            // Desplegar todos los menús padres visualmente
+            let submenu = itemObjetivo.closest('.submenu');
+            while (submenu) {
+                submenu.classList.add('activo');
+                const titulo = submenu.previousElementSibling;
+                if (titulo) titulo.classList.add('abierto');
+                submenu = submenu.parentElement.closest('.submenu'); 
+            }
+
+            // Ocultar barra en móviles para mejorar lectura
+            if(window.innerWidth < 768) {
+                sidebar.classList.add('oculta');
+            }
+
+            // Si hay una sección para auto-scroll (ej. &agentes), la guardamos
+            if (seccionId) {
+                window.seccionPendienteScroll = seccionId;
+            }
+
+            // Determinar qué archivo cargar
+            const tipo = itemObjetivo.getAttribute('data-tipo');
+            visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando documento...</p>';
+
+            if (tipo === 'md') {
+                cargarMarkdown(itemObjetivo.getAttribute('data-md'));
+            } else if (tipo === 'n8n') {
+                cargarN8N(itemObjetivo.getAttribute('data-img'), itemObjetivo.getAttribute('data-json'), itemObjetivo.innerText);
+            }
+        }
+    }
+
+    // Escuchar activamente CADA VEZ que la URL cambie en la barra de direcciones
+    window.addEventListener('hashchange', procesarNavegacion);
+
+    // =======================================================
+    // ASIGNACIÓN DE EVENTOS DE CLIC (Ahora solo cambian la URL)
+    // =======================================================
+
+    // Clic en el Menú Lateral -> Fuerza a la barra del navegador a actualizarse
+    menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+            window.location.hash = item.id;
+        });
+    });
+
+    // Clic en el Logo -> Limpia la URL y vuelve a la portada
     logoBtn.addEventListener('click', () => {
-        visor.innerHTML = htmlPortadaInicial;
-        menuItems.forEach(i => i.classList.remove('seleccionado'));
-        history.pushState(null, null, ' '); // Limpia la URL
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+        procesarNavegacion(); 
     });
 
-    // 1. Lógica para ocultar/mostrar la barra lateral
-    btnToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('oculta');
-    });
+    btnToggle.addEventListener('click', () => { sidebar.classList.toggle('oculta'); });
 
-    // 2. Lógica para desplegar submenús (Acordeón)
     const titulosSeccion = document.querySelectorAll('.section-title, .sprint-title');
     titulosSeccion.forEach(titulo => {
         titulo.addEventListener('click', () => {
@@ -55,35 +115,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Lógica para cargar contenido al hacer clic en un ítem
-    menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            menuItems.forEach(i => i.classList.remove('seleccionado'));
-            item.classList.add('seleccionado');
-
-            if(window.innerWidth < 768) {
-                sidebar.classList.add('oculta');
-            }
-
-            // --- Actualizar URL automáticamente al hacer clic ---
-            if (item.id) {
-                history.pushState(null, null, '#' + item.id);
-            }
-
-            const tipo = item.getAttribute('data-tipo');
-            visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando documento...</p>';
-
-            if (tipo === 'md') {
-                cargarMarkdown(item.getAttribute('data-md'));
-            } else if (tipo === 'n8n') {
-                cargarN8N(item.getAttribute('data-img'), item.getAttribute('data-json'), item.innerText);
-            }
-        });
-    });
-
-    // 4. Lógica del VISOR DE IMÁGENES y CLIC EN ÍNDICE DE PORTADA
+    // Clic dentro del Área de Contenido (Imágenes y Tabla de Portada)
     visor.addEventListener('click', (e) => {
-        // Clic en Imagen N8N
+        // Modal de imágenes
         if (e.target.classList.contains('n8n-image')) {
             modal.style.display = "block";
             modalImg.src = e.target.src; 
@@ -91,33 +125,17 @@ document.addEventListener('DOMContentLoaded', () => {
             modalImg.style.width = `${anchoActual}%`;
         }
 
-        // Clic en el índice de la Portada
+        // Clic en el índice de la Portada -> Actualiza la URL
         const filaIndice = e.target.closest('.indice-item');
         if (filaIndice) {
             const idObjetivo = filaIndice.getAttribute('data-target');
-            const elementoMenu = document.getElementById(idObjetivo);
-            
-            if (elementoMenu) {
-                elementoMenu.click(); // Ejecuta la carga del documento
-                
-                // Despliega el menú visualmente
-                const submenuPadre = elementoMenu.closest('.submenu');
-                if (submenuPadre) {
-                    const tituloSeccion = submenuPadre.previousElementSibling;
-                    if (tituloSeccion && !tituloSeccion.classList.contains('abierto')) {
-                        tituloSeccion.classList.add('abierto');
-                        submenuPadre.classList.add('activo');
-                    }
-                }
-                
-                if (sidebar.classList.contains('oculta') && window.innerWidth >= 768) {
-                    sidebar.classList.remove('oculta');
-                }
-            }
+            window.location.hash = idObjetivo; 
         }
     });
 
-    // 5. Controles de Zoom para Modal
+    // =======================================================
+    // CONTROLES DEL MODAL DE ZOOM
+    // =======================================================
     btnZoomIn.addEventListener('click', (e) => {
         e.stopPropagation();
         anchoActual += zoomPaso;
@@ -140,13 +158,14 @@ document.addEventListener('DOMContentLoaded', () => {
         containerImg.scrollLeft = 0;
     });
 
-    // Cerrar Modal
     btnCerrarModal.addEventListener('click', () => { modal.style.display = "none"; });
     containerImg.addEventListener('click', (e) => {
         if (e.target === containerImg) modal.style.display = "none";
     });
 
-    // --- FUNCIONES DE RENDERIZADO (MD Y N8N) ---
+    // =======================================================
+    // FUNCIONES DE CARGA DE ARCHIVOS
+    // =======================================================
     function cargarMarkdown(rutaArchivo) {
         fetch(rutaArchivo)
             .then(respuesta => {
@@ -172,7 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 const agentes = datosJson.nodes.filter(n => n.type === '@n8n/n8n-nodes-langchain.agent');
                 
                 if (agentes.length > 0) {
-                    // SE ASIGNA EL ID="agentes" PARA PODER HACER SCROLL HASTA AQUÍ
                     htmlAgentes += `<h3 id="agentes" style="margin-top: 40px; margin-bottom: 15px;">Configuración de los Agentes</h3>`;
                     
                     agentes.forEach(ag => {
@@ -216,14 +234,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-                // --- LÓGICA DE AUTO-SCROLL A UNA SECCIÓN ---
+                // Auto-Scroll si la URL lo pide
                 if (window.seccionPendienteScroll) {
                     setTimeout(() => {
                         const elementoScroll = document.getElementById(window.seccionPendienteScroll);
                         if (elementoScroll) {
                             elementoScroll.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
-                        window.seccionPendienteScroll = null; // Se limpia luego de ejecutar
+                        window.seccionPendienteScroll = null; 
                     }, 150);
                 }
             })
@@ -241,35 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     }
 
-    // --- LÓGICA DE ENRUTAMIENTO DESDE LA URL (DEEP LINKING) ---
-    function verificarHashEnURL() {
-        if (window.location.hash) {
-            // Separa la URL, ej: #pp-refina&agentes -> ["pp-refina", "agentes"]
-            const hashParts = window.location.hash.substring(1).split('&');
-            const menuId = hashParts[0];      
-            const seccionId = hashParts[1];   
-
-            const itemObjetivo = document.getElementById(menuId);
-            if (itemObjetivo) {
-                if (seccionId) {
-                    window.seccionPendienteScroll = seccionId;
-                }
-
-                // 1. Simular clic para cargar datos
-                itemObjetivo.click();
-
-                // 2. Desplegar menús padres visualmente
-                let submenu = itemObjetivo.closest('.submenu');
-                while (submenu) {
-                    submenu.classList.add('activo');
-                    const titulo = submenu.previousElementSibling;
-                    if (titulo) titulo.classList.add('abierto');
-                    submenu = submenu.parentElement.closest('.submenu'); 
-                }
-            }
-        }
-    }
-
-    // Ejecutamos la validación apenas cargue la página
-    verificarHashEnURL();
+    // =======================================================
+    // EJECUCIÓN INICIAL AL ABRIR LA PÁGINA
+    // =======================================================
+    procesarNavegacion();
 });
