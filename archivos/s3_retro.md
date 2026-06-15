@@ -6,6 +6,8 @@ El equipo ha llegado a un punto de inflexión en el Sprint 3, evidenciando una f
 
 A nivel cultural, este Sprint marcó un hito crítico debido a un comportamiento inaceptable (la expulsión deliberada de un miembro durante la sesión). Sin embargo, la intervención directiva y firme del Scrum Master Proxy para detener la reunión, exigir responsabilidad y forzar una disculpa pública fue una demostración magistral de defensa de los Valores de Scrum (Respeto, Apertura y Coraje), protegiendo la seguridad psicológica del equipo de manera efectiva.
 
+<img src="archivos/s3_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
+
 ### 2. Insights Principales
 
 ### Insight 1: Defensa activa de los Valores Scrum y Seguridad Psicológica

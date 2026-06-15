@@ -4,6 +4,8 @@
 
 El equipo ha concluido su primer Sprint demostrando una base sólida en los valores de Scrum, particularmente en apertura, coraje y respeto. Durante la Retrospectiva, evidenciaron un alto nivel de transparencia al abordar bloqueos técnicos (limitaciones de herramientas) y problemas de capacidad personal sin buscar culpables. La sesión cumplió con el propósito del empirismo: inspeccionaron un cuello de botella severo en su flujo de diseño (Figma) y adaptaron su proceso colaborativamente hacia una nueva fuente de verdad (Magic Patterns). Sin embargo, se detectaron anti-patrones tempranos relacionados con la comprensión de los Criterios de Aceptación y riesgos emergentes por el uso de Inteligencia Artificial ("alucinaciones") que provocaron retrabajo en la fase de pruebas.
 
+<img src="archivos/s1_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
+
 ### 2. Insights Principales
 
 ### Insight 1: Seguridad psicológica como habilitador de la transparencia

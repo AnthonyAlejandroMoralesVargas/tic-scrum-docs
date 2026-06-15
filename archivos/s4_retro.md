@@ -6,6 +6,8 @@ El equipo ha alcanzado un nivel de madurez operativa y colaborativa notable en e
 
 Sin embargo, el equipo se enfrenta a un desafío sociotécnico avanzado: la pérdida de control arquitectónico frente a la Inteligencia Artificial. La transición hacia un desarrollo basado en agentes (Spec-Driven Development vía OpenCode) ha generado un anti-patrón de "confianza ciega", donde la amnesia temporal de los LLMs (compactación de tokens) provoca la sobreescritura de Incrementos previamente aprobados y la omisión de validaciones críticas. La decisión de adaptar la práctica extrema de _Pair Programming_ para auditar a la IA demuestra un empirismo excepcional y una profunda comprensión de la ingeniería de software moderna.
 
+<img src="archivos/s4_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
+
 ### 2. Insights Principales
 
 ### Insight 1: Adaptación del "Pair Programming" al paradigma de IA

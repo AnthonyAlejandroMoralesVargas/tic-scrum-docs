@@ -6,8 +6,6 @@ La Sprint Review del Sprint 4 marcó el cierre funcional del Release 1 (MVP). El
 
 Sin embargo, el evento pivotó rápidamente de una revisión puramente funcional a una profunda auditoría de madurez del producto (Release Management). Se evidenció un choque de perspectivas: el equipo de desarrollo operaba bajo un _mindset_ técnico y de "proyecto" (enfocado en CI/CD, Vercel, AWS), mientras que los stakeholders exigieron un _mindset_ de "producto comercial" (empaquetado, handover y despliegue agnóstico). Esta sesión fue crucial para identificar que la actual _Definition of Done (DoD)_ no contempla la viabilidad de entrega al cliente final.
 
-<img src="archivos/s4_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
-
 ---
 
 ### 2. Insights Principales

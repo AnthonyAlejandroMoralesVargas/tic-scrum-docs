@@ -6,6 +6,7 @@ El equipo demostr처 durante este Sprint 2 una excelente capacidad de **inspecci�
 
 Sin embargo, desde la perspectiva metodol처gica y cultural, el equipo presenta **disfunciones y anti-patrones severos**. La falta de una planificaci처n s처lida en el Sprint Backlog genera un sistema de trabajo empujado (_Push_) donde los miembros quedan inactivos esperando que se les asigne trabajo de forma informal (WhatsApp), limitando la autoorganizaci처n. Adicionalmente, comportamientos poco profesionales durante la Daily Scrum amenazan la seguridad psicol처gica y la transparencia del equipo.
 
+<img src="archivos/s2_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
 
 
 ### 2. Insights Principales

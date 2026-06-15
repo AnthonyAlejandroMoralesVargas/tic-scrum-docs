@@ -6,8 +6,6 @@ El equipo ha ejecutado una Sprint Review altamente efectiva, demostrando un Incr
 
 El aspecto más destacable de este ciclo es la evidente maduración del equipo en la gestión de límites y la protección del Sprint. El Scrum Master demostró un liderazgo excepcional al evitar la corrupción del alcance (_scope creep_), negándose a incluir cambios estéticos no planificados a mitad del Sprint y gestionándolos correctamente hacia el Product Backlog para el Sprint 3. Esta acción marca una clara evolución respecto a iteraciones anteriores y fortalece la previsibilidad del equipo.
 
-<img src="archivos/s2_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
-
 ---
 
 ### 2. Insights Principales

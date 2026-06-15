@@ -6,8 +6,6 @@ La Sprint Review del Sprint 3 evidencia un equipo maduro, enfocado en el valor y
 
 Un hito destacable en esta sesión fue la revelación de la adopción de herramientas de Inteligencia Artificial combinadas con _Playwright_ para la automatización de pruebas, lo cual demuestra un alto nivel de innovación y autoorganización por parte de los desarrolladores. La conversación final giró de manera saludable hacia la planificación de la capacidad para el Sprint final y la definición de expectativas claras para la entrega del Producto Mínimo Viable (MVP).
 
-<img src="archivos/s3_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
-
 ---
 
 ### 2. Insights Principales

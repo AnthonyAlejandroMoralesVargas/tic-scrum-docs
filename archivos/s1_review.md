@@ -6,8 +6,6 @@ El equipo ha finalizado su primer Sprint demostrando un Incremento funcional que
 
 Desde la perspectiva ágil, se observa un equipo con una base sólida de transparencia y un Scrum Master que ejerce su rol de facilitador y protector del alcance de manera efectiva. El pilar del empirismo (transparencia, inspección y adaptación) estuvo plenamente presente: los _Stakeholders_ reconocieron que decisiones de diseño aprobadas previamente en prototipos no funcionaban en el producto real, y el equipo acordó iterar sobre ellas sin fricción. Como punto de atención, existe una fuerte tendencia a convertir la sesión en un taller de diseño y expectativas prematuras sobre el aumento de la velocidad del equipo (Velocity) debido al uso de Inteligencia Artificial.
 
-<img src="archivos/s1_retro.png" alt="Product Backlog detallado, estimado y refinado" width="750">
-
 ---
 
 ### 2. Insights Principales
