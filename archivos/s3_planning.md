@@ -1,10 +1,10 @@
 # Sprint 3 – Sprint Planning
 
-## 1. Sprint Goal
+### 1. Sprint Goal
 
 Gestionar solicitudes de tutorías y consultar agenda de tutorías.
 
-## 2. Capacidad del Equipo (Effort-Hours)
+### 2. Capacidad del Equipo (Effort-Hours)
 
 | Person    | Days Available (Less Personal Time) | Days for Other Scrum Activities | Hours per Day | Available Effort-Hours |
 | --------- | ----------------------------------- | ------------------------------- | ------------- | ---------------------- |
@@ -16,7 +16,7 @@ Gestionar solicitudes de tutorías y consultar agenda de tutorías.
 | Anthony   | 11                                  | 5                               | 2 a 3         | 12 a 18                |
 | **Total** |                                     |                                 |               | **48 a 93**            |
 
-## 3. Sprint Backlog
+### 3. Sprint Backlog
 
 ### Nro. HU06 Título: Enviar solicitud de tutoría
 
@@ -329,29 +329,15 @@ Gestionar solicitudes de tutorías y consultar agenda de tutorías.
 
 ---
 
-## Resumen del Sprint Backlog
-
----
-
-### Resumen de Tareas y Horas de Esfuerzo
-
-| **Historia de usuario (HUXX)**            | **Suma Total de Effort-Hours** |
-| :---------------------------------------- | :----------------------------- |
-| HU06                                      | 12.50H                         |
-| HU09                                      | 24.50H                         |
-| HU33                                      | 11.50H                         |
-| HU08                                      | 11.00H                         |
-| HU23                                      | 17.50H                         |
-| HU15                                      | 11.00H                         |
-| **Total Sum of effort – Hours Estimates** | 88H                            |
+### Resumen del Sprint Backlog
 
 
-| Historia de usuario  | Título                              | Story Points (SP) |
-| -------------------- | ----------------------------------- | ----------------- |
-| HU06                 | Enviar solicitud de tutoría         | 13                |
-| HU09                 | Ver solicitudes recibidas           | 5                 |
-| HU33                 | Ver solicitudes de tutoría enviadas | 5                 |
-| HU08                 | Aceptar solicitud de tutoría        | 5                 |
-| HU23                 | Rechazar solicitud de tutoría       | 5                 |
-| HU15                 | Ver tutorías agendadas del tutor    | 8                 |
-| **Suma total de SP** |                                     | **41**            |
+| **Historia de usuario** | **Título**                          | **Story Points (SP)** | **Effort-Hours** |
+| ----------------------- | ----------------------------------- | --------------------- | ---------------- |
+| HU06                    | Enviar solicitud de tutoría         | 13 SP                 | 12.50H           |
+| HU09                    | Ver solicitudes recibidas           | 5 SP                  | 24.50H           |
+| HU33                    | Ver solicitudes de tutoría enviadas | 5 SP                  | 11.50H           |
+| HU08                    | Aceptar solicitud de tutoría        | 5 SP                  | 11.00H           |
+| HU23                    | Rechazar solicitud de tutoría       | 5 SP                  | 17.50H           |
+| HU15                    | Ver tutorías agendadas del tutor    | 8 SP                  | 11.00H           |
+| **Suma total de SP**    |                                     | **41 SP**             | **88H**          |

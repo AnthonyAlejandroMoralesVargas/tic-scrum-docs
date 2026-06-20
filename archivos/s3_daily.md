@@ -1,12 +1,12 @@
 # Informe de Insights Scrum – Sprint 3 – Daily Scrum
 
-## 1. Resumen Ejecutivo
+### 1. Resumen Ejecutivo
 
 El Sprint 3 representó un punto de inflexión en la **autoorganización** del equipo. Se implementó una estrategia de **"Swarming"** (trabajo en enjambre), donde roles de QA, DevOps y Scrum Master asumieron tareas de desarrollo para mitigar cuellos de botella. Aunque el equipo demostró una alta capacidad de respuesta ante impedimentos externos (cortes de luz, cambios en APIs de IA), se detectó un patrón crítico de **disparidad de entornos**, con bugs que solo se manifiestan en producción, lo que puso en riesgo la estabilidad del incremento.
 
 ---
 
-## 2. Insights Principales
+### 2. Insights Principales
 
 ### Insight 1: Colaboración Radical ("Swarming") como Fortaleza y Riesgo
 
@@ -21,7 +21,6 @@ El Sprint 3 representó un punto de inflexión en la **autoorganización** del e
 ### Insight 2: Fragilidad del Stack Tecnológico basado en IA Externa
 
 - **Descripción:** La dependencia de herramientas de IA externas (GitHub Copilot/OpenAI) generó bloqueos operativos fuera del control del equipo.
-  
 - **Evidencia observada:** El equipo perdió acceso a los modelos de Claude en Copilot (Daily #3). Anthony reportó saturación de la API de OpenAI por el uso intensivo de agentes (Daily #5). José reportó resultados incompletos de la IA en la HU11 (Daily #10).
 
 - **Impacto:** Incertidumbre en la capacidad de entrega y necesidad de retrabajo manual cuando la automatización falla.
@@ -60,7 +59,7 @@ El Sprint 3 representó un punto de inflexión en la **autoorganización** del e
 
 ---
 
-## 3. Patrones Detectados
+### 3. Patrones Detectados
 
 - **Bloqueos por Factores Externos Reincidentes:** Cortes de luz e inestabilidad de internet (Estefano y Emilio) afectaron el 40% de las Dailies.
 
@@ -70,7 +69,7 @@ El Sprint 3 representó un punto de inflexión en la **autoorganización** del e
 
 ---
 
-## 4. Evaluación de Madurez Scrum
+### 4. Evaluación de Madurez Scrum
 
 - **Transparencia (Alta):** El equipo es brutalmente honesto sobre sus errores, falta de luz o fallos de la IA.
 
@@ -88,7 +87,7 @@ El Sprint 3 representó un punto de inflexión en la **autoorganización** del e
 
 ---
 
-## 5. Riesgos Identificados
+### 5. Riesgos Identificados
 
 | Riesgo                                  | Evidencia                                                        | Consecuencia potencial                                              |
 | :-------------------------------------- | :--------------------------------------------------------------- | :------------------------------------------------------------------ |
@@ -98,7 +97,7 @@ El Sprint 3 representó un punto de inflexión en la **autoorganización** del e
 
 ---
 
-## 6. Oportunidades de Mejora
+### 6. Oportunidades de Mejora
 
 1.  **Contratos de API (Contract-First):** Definir el JSON de entrada/salida _antes_ de programar para evitar discusiones como la de la Daily #3 sobre métodos HTTP.
 
@@ -108,6 +107,6 @@ El Sprint 3 representó un punto de inflexión en la **autoorganización** del e
 
 ---
 
-## Conclusión General
+### 7. Conclusión General
 
 El equipo del Sprint 3 es un ejemplo de **resiliencia y polivalencia**. Han logrado integrar a todos los miembros en la construcción del producto, superando barreras de rol. Sin embargo, esta agilidad es "heroica" y depende mucho del esfuerzo individual de Anthony y Emilio. Para el Sprint 4, el equipo debe dejar de "apagar incendios" en producción y enfocarse en la **estandarización de su infraestructura** y la robustez de sus pruebas para que la velocidad ganada con la IA sea sostenible.
