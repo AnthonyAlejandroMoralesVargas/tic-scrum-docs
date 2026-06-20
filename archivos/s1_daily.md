@@ -1,12 +1,12 @@
 # Informe de Insights Scrum – Sprint 1 – Daily Scrum
 
-## 1. Resumen Ejecutivo
+### 1. Resumen Ejecutivo
 
 El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y una dependencia crítica en la infraestructura de automatización (IA y N8N). El equipo logró completar hitos funcionales (HU01, HU03, HU17), pero operó bajo un modelo de **dependencia secuencial** (cascada interna) más que en una colaboración orgánica. Se detectó una vulnerabilidad crítica en el rol de DevOps y una gestión reactiva de los impedimentos técnicos. A pesar de esto, el equipo demostró capacidad de adaptación al pivotar herramientas y mejorar el versionamiento de su documentación tras un incidente de pérdida de datos.
 
 ---
 
-## 2. Insights Principales
+### 2. Insights Principales
 
 ### Insight 1: Riesgo del "Bus Factor" en DevOps e Infraestructura
 
@@ -60,7 +60,7 @@ El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y u
 
 ---
 
-## 3. Patrones Detectados
+### 3. Patrones Detectados
 
 * **Bloqueos por Despliegue (Deploy-Driven Blocks):** El equipo es productivo escribiendo código local, pero el flujo se rompe al intentar llegar al entorno de AWS (Daily #3, #6, #10).
 
@@ -70,7 +70,7 @@ El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y u
 
 ---
 
-## 4. Evaluación de Madurez Scrum
+### 4. Evaluación de Madurez Scrum
 
 - **Transparencia (Media):** Los miembros son honestos sobre lo que no saben y sus errores (como PRs olvidados o Wiki borrada), pero falta visibilidad sobre la infraestructura AWS para el resto del equipo.
 
@@ -86,7 +86,7 @@ El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y u
 
 ---
 
-## 5. Riesgos Identificados
+### 5. Riesgos Identificados
 
 | Riesgo                                 | Evidencia                                                    | Consecuencia potencial                                                                 |
 | :------------------------------------- | :----------------------------------------------------------- | :------------------------------------------------------------------------------------- |
@@ -96,7 +96,7 @@ El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y u
 
 ---
 
-## 6. Oportunidades de Mejora
+### 6. Oportunidades de Mejora
 
 1.  **Pair Programming Interfuncional:** Emilio y Estefano deben hacer sesiones con el equipo para transferir conocimientos básicos de despliegue.
 
@@ -106,6 +106,6 @@ El Sprint 1 se caracterizó por una fuerte curva de aprendizaje tecnológica y u
 
 ---
 
-## Conclusión General
+### 7. Conclusión General
 
 El equipo ha demostrado resiliencia técnica pero sufre de una **fragilidad operativa** alta debido a silos de conocimiento y una excesiva dependencia de herramientas de automatización inestables. Han superado la fase inicial de configuración, pero para el Sprint 2 deben enfocarse en **desacoplar el desarrollo de Frontend y Backend** y **democratizar el acceso a la infraestructura**. El rol del SM ha sido clave para salvar el Sprint desde lo técnico, pero debe evolucionar hacia un coach que empodere al equipo a resolver sus propios cuellos de botella.

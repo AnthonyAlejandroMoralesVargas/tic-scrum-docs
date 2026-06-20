@@ -358,6 +358,39 @@ ul {
     line-height: 1.6;
     margin-bottom: 15px;
     color: var(--text-dark);
+    text-align: justify;
+    hyphens: auto;
+}
+
+/* --- RESTAURAR VIÑETAS Y LISTAS EN EL MARKDOWN --- */
+#visor-contenido ul {
+    list-style-type: disc;
+    /* Vuelve a poner el punto redondo */
+    padding-left: 25px;
+    /* Empuja la lista un poco a la derecha para que el punto se vea */
+    margin-bottom: 15px;
+}
+
+#visor-contenido ol {
+    list-style-type: decimal;
+    /* Vuelve a poner los números (1., 2., 3.) */
+    padding-left: 25px;
+    margin-bottom: 15px;
+}
+
+#visor-contenido li {
+    margin-bottom: 8px;
+    /* Separación sutil entre cada punto de la lista */
+    text-align: justify;
+    /* Mantiene la justificación formal que configuramos antes */
+    line-height: 1.6;
+}
+
+/* Si tienes sub-listas (listas dentro de listas), cambiamos el punto por un círculo vacío para que se vea más profesional */
+#visor-contenido ul ul {
+    list-style-type: circle;
+    margin-bottom: 0;
+    margin-top: 5px;
 }
 
 #visor-contenido table {

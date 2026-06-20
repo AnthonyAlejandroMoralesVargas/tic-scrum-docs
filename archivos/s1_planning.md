@@ -1,10 +1,10 @@
 # Sprint 1 – Sprint Planning
 
-## 1. Sprint Goal
+### 1. Sprint Goal
 
 Publicar y encontrar ofertas de tutoría.
 
-## 2. Capacidad del Equipo (Effort-Hours)
+### 2. Capacidad del Equipo (Effort-Hours)
 
 | Person    | Days Available (Less Personal Time) | Days for Other Scrum Activities | Hours per Day | Available Effort-Hours |
 | --------- | ----------------------------------- | ------------------------------- | ------------- | ---------------------- |
@@ -13,7 +13,7 @@ Publicar y encontrar ofertas de tutoría.
 | José      | 11                                  | 4                               | 2 a 3         | 14 a 21                |
 | **Total** |                                     |                                 |               | **36 a 54**            |
 
-## 3. Sprint Backlog
+### 3. Sprint Backlog
 
 ### Nro. HU01 Título: Publicar oferta de tutoría
 
@@ -177,25 +177,12 @@ Publicar y encontrar ofertas de tutoría.
 
 ---
 
-## Resumen del Sprint Backlog
+### Resumen del Sprint Backlog
 
----
-
-### Resumen de Tareas y Horas de Esfuerzo
-
-| **Historia de usuario (HUXX)**            | **Suma Total de Effort-Hours** |
-| :---------------------------------------- | :----------------------------- |
-| HU01                                      | 12.5H                          |
-| HU02                                      | 10.75H                         |
-| HU03                                      | 11.75H                         |
-| HU17                                      | 9.25H                          |
-| **Total Sum of effort – Hours Estimates** | 44.25H                         |
-
-
-| **Historia de usuario** | **Título**                             | **Story Points (SP)** |
-| ----------------------- | -------------------------------------- | --------------------- |
-| HU01                    | Publicar oferta de tutoría             | 13 SP                 |
-| HU02                    | Ver mis ofertas (Dashboard)            | 8 SP                  |
-| HU03                    | Ver ofertas de tutorías                | 8 SP                  |
-| HU17                    | Buscar tutoría por título de la oferta | 8 SP                  |
-| **Suma total de SP**    |                                        | **37**                |
+| **Historia de usuario** | **Título**                             | **Story Points (SP)** | **Effort-Hours** |
+| ----------------------- | -------------------------------------- | --------------------- |--------------------- |
+| HU01                    | Publicar oferta de tutoría             | 13 SP                 |12.5H                  |
+| HU02                    | Ver mis ofertas (Dashboard)            | 8 SP                  |10.75H                  |
+| HU03                    | Ver ofertas de tutorías                | 8 SP                  |11.75H                 |
+| HU17                    | Buscar tutoría por título de la oferta | 8 SP                  |9.25H               |
+| **Suma total de SP**    |                                        | **37**                |**44.25H**                |
