@@ -1,4 +1,5 @@
-## 1. Release de fecha fija
+# Release Planning - Release 1
+### 1. Release de fecha fija
 
 - **Fecha de inicio:** 10/02/2026
 - **Fecha de fin:** 07/04/2026
@@ -11,25 +12,25 @@
 - **Sprint 3:** Del 10 de marzo al 24 de marzo
 - **Sprint 4:** Del 24 de marzo al 07 de abril
 
-## 2. Rango de velocidad del equipo
+### 2. Rango de velocidad del equipo
 
 - **Velocidad Baja:** 38 SP/Sprint
 - **Velocidad Alta:** 46 SP/Sprint
 
-## 3. Rango de Story Points del Release
+### 3. Rango de Story Points del Release
 
 Se estima que el equipo podrá completar entre **152** y **184** Story Points.
 
-## 4. Objetivo del Release
+### 4. Objetivo del Release
 
 Publicar ofertas y agendar tutorías acompañadas de la reputación del tutor
 
-## 5. Conjunto de MRF (Backlog Priorizado)
+### 5. Conjunto de MRF (Backlog Priorizado)
 
 
 <img src="archivos/pb_refinado.png" alt="Product Backlog detallado, estimado y refinado" width="750">
 
-## 6. Sprint Mapping
+### 6. Sprint Mapping
 
 ### Sprint 1
 

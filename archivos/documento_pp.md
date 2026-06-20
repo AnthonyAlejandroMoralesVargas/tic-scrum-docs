@@ -1,4 +1,5 @@
-## 1. Visión del producto
+# Product Planning - PoliTutorías
+### 1. Visión del producto
 
 ### 1.1 Áreas de valor
 
@@ -18,7 +19,7 @@
 - **A diferencia de:** Learning Center USFQ
 - **Nuestro producto:** permite construir una reputación para los tutores a través de reseñas que ayudan a los estudiantes a tomar decisiones.
 
-## 2. Product Backlog de alto nivel
+### 2. Product Backlog de alto nivel
 
 | Nro. | Título                          | Historia de Usuario                                                                                                                                     |
 | ---- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -34,7 +35,7 @@
 | EP10 | Material apoyo del tutor        | Como tutor, quiero proporcionar material de apoyo a los estudiantes para que puedan repasar los temas por su cuenta.                                    |
 | EP11 | Chat conversacional             | Como estudiante, quiero conversar con el tutor para agilizar la coordinación de la tutoría.                                                             |
 
-## 3. Product Roadmap (Releases)
+### 3. Product Roadmap (Releases)
 
 |                  | Release 1                                                                                                           | Release 2                                                                        | Release 3                                                                                                             |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |

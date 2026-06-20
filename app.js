@@ -1,7 +1,8 @@
-// Función de seguridad para mostrar caracteres especiales en los prompts
-function escaparHTML(texto) {
-    if (!texto) return 'No definido';
-    return texto.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+// NUEVA FUNCIÓN: Protege etiquetas como <rol> pero permite el Markdown
+function protegerEtiquetas(texto) {
+    if (!texto) return '';
+    // Reemplaza <algo> por &lt;algo&gt; sin dañar los blockquotes (>) de Markdown
+    return texto.replace(/<([^>]+)>/g, "&lt;$1&gt;");
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,24 +25,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let anchoActual = 90;
     const zoomPaso = 25;
 
-    // 0. Guardar la portada inicial en memoria
     const htmlPortadaInicial = visor.innerHTML;
 
-    // =======================================================
-    // NUEVO MOTOR DE ENRUTAMIENTO NATIVO (100% GITHUB PAGES)
-    // =======================================================
     function procesarNavegacion() {
-        // Obtenemos el texto de la URL después del '#' (ej. pp-refina&agentes)
         const hash = window.location.hash.substring(1); 
         
-        // Si no hay hash en la URL, significa que debemos mostrar la portada
         if (!hash) {
             visor.innerHTML = htmlPortadaInicial;
             menuItems.forEach(i => i.classList.remove('seleccionado'));
             return;
         }
 
-        // Separar la página de la sección (si usamos el truco del "&")
         const hashParts = hash.split('&');
         const menuId = hashParts[0];      
         const seccionId = hashParts[1];   
@@ -49,11 +43,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const itemObjetivo = document.getElementById(menuId);
         
         if (itemObjetivo) {
-            // Limpiar selección previa y pintar de dorado el menú actual
             menuItems.forEach(i => i.classList.remove('seleccionado'));
             itemObjetivo.classList.add('seleccionado');
 
-            // Desplegar todos los menús padres visualmente
             let submenu = itemObjetivo.closest('.submenu');
             while (submenu) {
                 submenu.classList.add('activo');
@@ -62,17 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 submenu = submenu.parentElement.closest('.submenu'); 
             }
 
-            // Ocultar barra en móviles para mejorar lectura
             if(window.innerWidth < 768) {
                 sidebar.classList.add('oculta');
             }
 
-            // Si hay una sección para auto-scroll (ej. &agentes), la guardamos
             if (seccionId) {
                 window.seccionPendienteScroll = seccionId;
             }
 
-            // Determinar qué archivo cargar
             const tipo = itemObjetivo.getAttribute('data-tipo');
             visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando documento...</p>';
 
@@ -84,21 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Escuchar activamente CADA VEZ que la URL cambie en la barra de direcciones
     window.addEventListener('hashchange', procesarNavegacion);
 
-    // =======================================================
-    // ASIGNACIÓN DE EVENTOS DE CLIC (Ahora solo cambian la URL)
-    // =======================================================
-
-    // Clic en el Menú Lateral -> Fuerza a la barra del navegador a actualizarse
     menuItems.forEach(item => {
-        item.addEventListener('click', () => {
-            window.location.hash = item.id;
-        });
+        item.addEventListener('click', () => { window.location.hash = item.id; });
     });
 
-    // Clic en el Logo -> Limpia la URL y vuelve a la portada
     logoBtn.addEventListener('click', () => {
         history.pushState("", document.title, window.location.pathname + window.location.search);
         procesarNavegacion(); 
@@ -115,9 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Clic dentro del Área de Contenido (Imágenes y Tabla de Portada)
     visor.addEventListener('click', (e) => {
-        // Modal de imágenes
         if (e.target.classList.contains('n8n-image')) {
             modal.style.display = "block";
             modalImg.src = e.target.src; 
@@ -125,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
             modalImg.style.width = `${anchoActual}%`;
         }
 
-        // Clic en el índice de la Portada -> Actualiza la URL
         const filaIndice = e.target.closest('.indice-item');
         if (filaIndice) {
             const idObjetivo = filaIndice.getAttribute('data-target');
@@ -133,9 +110,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // =======================================================
-    // CONTROLES DEL MODAL DE ZOOM
-    // =======================================================
     btnZoomIn.addEventListener('click', (e) => {
         e.stopPropagation();
         anchoActual += zoomPaso;
@@ -163,9 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.target === containerImg) modal.style.display = "none";
     });
 
-    // =======================================================
-    // FUNCIONES DE CARGA DE ARCHIVOS
-    // =======================================================
     function cargarMarkdown(rutaArchivo) {
         fetch(rutaArchivo)
             .then(respuesta => {
@@ -178,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => mostrarError(error.message, rutaArchivo));
     }
 
+    // --- FUNCIÓN N8N ACTUALIZADA ---
     function cargarN8N(rutaImg, rutaJson, titulo) {
         visor.innerHTML = '<p style="text-align:center; padding: 40px;">Cargando flujo, agentes y configuraciones...</p>';
 
@@ -195,23 +167,31 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     agentes.forEach(ag => {
                         const nombreAgente = ag.name || 'Agente Desconocido';
-                        const sysPrompt = ag.parameters?.options?.systemMessage || '';
-                        const userPrompt = ag.parameters?.text || '';
+                        let sysPrompt = ag.parameters?.options?.systemMessage || '';
+                        let userPrompt = ag.parameters?.text || '';
+
+                        // 1. ELIMINAR EL SÍMBOLO '=' DE N8N
+                        if (sysPrompt.trim().startsWith('=')) sysPrompt = sysPrompt.trim().substring(1);
+                        if (userPrompt.trim().startsWith('=')) userPrompt = userPrompt.trim().substring(1);
                         
+                        // 2. PROTEGER ETIQUETAS Y RENDERIZAR MARKDOWN
+                        const sysPromptHTML = sysPrompt ? marked.parse(protegerEtiquetas(sysPrompt)) : '';
+                        const userPromptHTML = userPrompt ? marked.parse(protegerEtiquetas(userPrompt)) : '';
+
                         htmlAgentes += `
                             <div class="agent-card">
                                 <div class="agent-header">
                                     <span>${nombreAgente}</span>
                                 </div>
                                 <div class="agent-body">
-                                    ${sysPrompt ? `
+                                    ${sysPromptHTML ? `
                                     <div class="prompt-label">Prompt de Sistema (System Message)</div>
-                                    <div class="prompt-content">${escaparHTML(sysPrompt)}</div>
+                                    <div class="prompt-content">${sysPromptHTML}</div>
                                     ` : ''}
                                     
-                                    ${userPrompt ? `
+                                    ${userPromptHTML ? `
                                     <div class="prompt-label">Prompt de Tarea (Contexto y Acción)</div>
-                                    <div class="prompt-content">${escaparHTML(userPrompt)}</div>
+                                    <div class="prompt-content">${userPromptHTML}</div>
                                     ` : ''}
                                 </div>
                             </div>
@@ -230,11 +210,10 @@ document.addEventListener('DOMContentLoaded', () => {
                         ${htmlAgentes}
                         
                         <h3 style="margin-top: 40px;">Código JSON Exportado</h3>
-                        <pre class="json-viewer" id="caja-json">${escaparHTML(JSON.stringify(datosJson, null, 2))}</pre>
+                        <pre class="json-viewer" id="caja-json">${protegerEtiquetas(JSON.stringify(datosJson, null, 2)).replace(/&lt;/g, '<').replace(/&gt;/g, '>')}</pre>
                     </div>
                 `;
 
-                // Auto-Scroll si la URL lo pide
                 if (window.seccionPendienteScroll) {
                     setTimeout(() => {
                         const elementoScroll = document.getElementById(window.seccionPendienteScroll);
@@ -249,6 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 mostrarError(error.message, rutaJson);
             });
     }
+
 
     function mostrarError(mensaje, ruta) {
         visor.innerHTML = `

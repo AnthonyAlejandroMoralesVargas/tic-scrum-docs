@@ -604,19 +604,21 @@ ul {
 }
 
 .prompt-content {
-    background-color: #f8f9fa;
-    padding: 15px;
-    border-left: 3px solid #ccc;
-    font-family: 'Consolas', 'Courier New', monospace;
-    white-space: pre-wrap;
-    /* Respeta los saltos de línea del prompt */
-    font-size: 0.85rem;
-    color: #444;
+    background-color: #f4f6f8;
+    padding: 20px;
+    border-radius: 4px;
+    border-left: 4px solid var(--bg-mid);
+    font-size: 0.9rem;
+    color: var(--text-dark);
     margin-bottom: 25px;
-    line-height: 1.6;
     overflow-x: auto;
 }
 
-.prompt-content:last-child {
+.prompt-content p:last-child {
     margin-bottom: 0;
+}
+
+/* Evita que las tablas dentro de los prompts rompan los márgenes */
+.prompt-content table {
+    margin: 15px 0;
 }
