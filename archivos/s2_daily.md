@@ -1,6 +1,6 @@
 # Informe de Insights Scrum – Sprint 2 – Daily Scrum
 
-## 1. Resumen Ejecutivo
+### 1. Resumen Ejecutivo
 
 El Sprint 2 estuvo marcado por una alta volatilidad técnica y una paradoja de productividad: mientras el equipo intentaba automatizar procesos con IA para satisfacer la demanda de velocidad del Product Owner (PO), la inestabilidad de las herramientas (Gemini) y fallos críticos de integración (JWT) actuaron como anclas.
 
@@ -8,7 +8,7 @@ A nivel humano, el equipo demostró una notable **colaboración interdisciplinar
 
 ---
 
-## 2. Insights Principales
+### 2. Insights Principales
 
 ### Insight 1: La IA como Impedimento ("Hallucinations Trap")
 
@@ -60,7 +60,7 @@ A nivel humano, el equipo demostró una notable **colaboración interdisciplinar
 
 ---
 
-## 3. Patrones Detectados
+### 3. Patrones Detectados
 
 - **Bloqueos por Dependencia Serial:** El Frontend (José) termina tareas rápido pero queda bloqueado esperando confirmaciones de Backend (Daily #2, #4, #8). **(Anti-patrón: Cascada dentro del Sprint)**.
 
@@ -72,7 +72,7 @@ A nivel humano, el equipo demostró una notable **colaboración interdisciplinar
 
 ---
 
-## 4. Evaluación de Madurez Scrum
+### 4. Evaluación de Madurez Scrum
 
 | Valor                   | Nivel     | Justificación                                                                                                           |
 | :---------------------- | :-------- | :---------------------------------------------------------------------------------------------------------------------- |
@@ -85,7 +85,7 @@ A nivel humano, el equipo demostró una notable **colaboración interdisciplinar
 
 ---
 
-## 5. Riesgos Identificados
+### 5. Riesgos Identificados
 
 | Riesgo                   | Evidencia                                                                 | Consecuencia potencial                                             |
 | :----------------------- | :------------------------------------------------------------------------ | :----------------------------------------------------------------- |
@@ -95,7 +95,7 @@ A nivel humano, el equipo demostró una notable **colaboración interdisciplinar
 
 ---
 
-## 6. Oportunidades de Mejora
+### 6. Oportunidades de Mejora
 
 1.  **Implementar Contratos de API (Mocks):** Para que José no espere a Emilio, deben definir el JSON de respuesta antes de codificar.
 
@@ -107,6 +107,6 @@ A nivel humano, el equipo demostró una notable **colaboración interdisciplinar
 
 ---
 
-## Conclusión General
+## 7. Conclusión General
 
 El Sprint 2 fue un ciclo de **aprendizaje duro sobre los límites de la automatización**. El equipo tiene una cultura de colaboración excepcional, pero está siendo saboteado por la inestabilidad técnica y la falta de un entorno de despliegue sólido. La evolución de "Storming" a "Norming" dependerá de que en el Sprint 3 el equipo priorice la **estabilidad del núcleo (Seguridad/JWT)** sobre la **velocidad de nuevas funcionalidades**, y que el Scrum Master logre soltar la carga técnica para enfocarse en la salud del proceso ágil.

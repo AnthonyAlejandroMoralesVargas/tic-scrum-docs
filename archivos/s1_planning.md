@@ -180,9 +180,9 @@ Publicar y encontrar ofertas de tutoría.
 ### Resumen del Sprint Backlog
 
 | **Historia de usuario** | **Título**                             | **Story Points (SP)** | **Effort-Hours** |
-| ----------------------- | -------------------------------------- | --------------------- |--------------------- |
-| HU01                    | Publicar oferta de tutoría             | 13 SP                 |12.5H                  |
-| HU02                    | Ver mis ofertas (Dashboard)            | 8 SP                  |10.75H                  |
-| HU03                    | Ver ofertas de tutorías                | 8 SP                  |11.75H                 |
-| HU17                    | Buscar tutoría por título de la oferta | 8 SP                  |9.25H               |
-| **Suma total de SP**    |                                        | **37**                |**44.25H**                |
+| ----------------------- | -------------------------------------- | --------------------- | ---------------- |
+| HU01                    | Publicar oferta de tutoría             | 13 SP                 | 12.5H            |
+| HU02                    | Ver mis ofertas (Dashboard)            | 8 SP                  | 10.75H           |
+| HU03                    | Ver ofertas de tutorías                | 8 SP                  | 11.75H           |
+| HU17                    | Buscar tutoría por título de la oferta | 8 SP                  | 9.25H            |
+| **Suma total de SP**    |                                        | **37 SP**                | **44.25H**       |

@@ -1,10 +1,10 @@
 # Sprint 2 – Sprint Planning
 
-## 1. Sprint Goal
+### 1. Sprint Goal
 
 Conocer al tutor y filtrar las ofertas.
 
-## 2. Capacidad del Equipo (Effort-Hours)
+### 2. Capacidad del Equipo (Effort-Hours)
 
 | Person    | Days Available (Less Personal Time) | Days for Other Scrum Activities | Hours per Day | Available Effort-Hours |
 | --------- | ----------------------------------- | ------------------------------- | ------------- | ---------------------- |
@@ -16,7 +16,7 @@ Conocer al tutor y filtrar las ofertas.
 | Anthony   | 11                                  | 5                               | 1 a 2         | 6 a 12                 |
 | **Total** |                                     |                                 |               | **61 a 91**            |
 
-## 3. Sprint Backlog
+### 3. Sprint Backlog
 
 ### Nro. HU34 Título: Registrar información personal de tutor
 
@@ -391,35 +391,17 @@ Conocer al tutor y filtrar las ofertas.
 
 ---
 
-## Resumen del Sprint Backlog
+### Resumen del Sprint Backlog
 
----
-
-### Resumen de Tareas y Horas de Esfuerzo
-
-| **Historia de usuario (HUXX)**            | **Suma Total de Effort-Hours** |
-| :---------------------------------------- | :----------------------------- |
-| HU34                                      | 9.20H                          |
-| HU41                                      | 8.70H                          |
-| HU42                                      | 14.15H                         |
-| HU07                                      | 5.70H                          |
-| HU32                                      | 9.20H                          |
-| HU05                                      | 7.35H                          |
-| HU27                                      | 6.45H                          |
-| HU26                                      | 6.80H                          |
-| HU16                                      | 10.75H                         |
-| **Total Sum of effort – Hours Estimates** | 78.30H                         |
-
-
-| Historia de usuario  | Título                                  | Story Points (SP) |
-| -------------------- | --------------------------------------- | ----------------- |
-| HU34                 | Registrar información personal de tutor | 5 SP              |
-| HU41                 | Registrar mi disponibilidad             | 5 SP              |
-| HU42                 | Registrar información académica         | 5 SP              |
-| HU07                 | Consultar mi disponibilidad             | 3 SP              |
-| HU32                 | Ver detalles de la oferta               | 3 SP              |
-| HU05                 | Ver información sobre el tutor          | 3 SP              |
-| HU27                 | Filtrar ofertas por precio              | 8 SP              |
-| HU26                 | Filtrar ofertas por modalidad           | 3 SP              |
-| HU16                 | Filtrar ofertas por disponibilidad      | 3 SP              |
-| **Suma total de SP** |                                         | **38**            |
+| **Historia de usuario** | **Título**                              | **Story Points (SP)** | **Effort-Hours** |
+| ----------------------- | --------------------------------------- | --------------------- | ---------------- |
+| HU34                    | Registrar información personal de tutor | 5 SP                  | 9.20H            |
+| HU41                    | Registrar mi disponibilidad             | 5 SP                  | 8.70H            |
+| HU42                    | Registrar información académica         | 5 SP                  | 14.15H           |
+| HU07                    | Consultar mi disponibilidad             | 3 SP                  | 5.70H            |
+| HU32                    | Ver detalles de la oferta               | 3 SP                  | 9.20H            |
+| HU05                    | Ver información sobre el tutor          | 3 SP                  | 7.35H            |
+| HU27                    | Filtrar ofertas por precio              | 8 SP                  | 6.45H            |
+| HU26                    | Filtrar ofertas por modalidad           | 3 SP                  | 6.80H            |
+| HU16                    | Filtrar ofertas por disponibilidad      | 3 SP                  | 10.75H           |
+| **Suma total de SP**    |                                         | **38 SP**                | **78.30H**       |
