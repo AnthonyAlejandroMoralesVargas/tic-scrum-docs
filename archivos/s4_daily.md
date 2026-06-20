@@ -1,10 +1,10 @@
 # Informe de Insights Scrum – Sprint 4 – Daily Scrum
 
-## 1. Resumen Ejecutivo
+### 1. Resumen Ejecutivo
 
 El Sprint 4 representó la fase de consolidación y cierre del Release 1. El equipo demostró una **resiliencia excepcional y una colaboración interfuncional (Swarming)** de alto nivel, con roles no técnicos apoyando directamente el desarrollo para cumplir con los plazos. Sin embargo, el cierre se vio amenazado por **bloqueos técnicos recurrentes en los datos de prueba (Seed/SIT)**, inestabilidad en las herramientas de IA y fallos de hardware individuales. El Scrum Master (Anthony) tuvo que intervenir técnicamente para estabilizar el incremento final, evidenciando una transición exitosa de un equipo reactivo a uno altamente colaborativo, aunque todavía dependiente de "héroes" técnicos.
 
-## 2. Insights Principales
+### 2. Insights Principales
 
 ### Insight 1: Swarming Extremo como Estrategia de Mitigación
 
@@ -56,7 +56,7 @@ El Sprint 4 representó la fase de consolidación y cierre del Release 1. El equ
 
 - **Recomendación ágil:** Transferencia de conocimiento formal. Anthony debe guiar a Emilio y José en la resolución de esos bugs de lógica de horarios para que el equipo gane autonomía técnica real.
 
-## 3. Patrones Detectados
+### 3. Patrones Detectados
 
 - **Confusión de Identificadores (IDs):** Se reportó confusión repetida entre los números de las HU (40, 43, 48). Esto sugiere una falta de claridad en el radiador de información (Azure Boards).
 
@@ -64,7 +64,7 @@ El Sprint 4 representó la fase de consolidación y cierre del Release 1. El equ
 
 - **Mantenimiento de Pruebas Reactivo:** David pasó gran parte del sprint actualizando pruebas de sprints pasados que se rompieron, indicando una baja resiliencia en la arquitectura de pruebas automatizadas.
 
-## 4. Evaluación de Madurez Scrum
+### 4. Evaluación de Madurez Scrum
 
 - **Transparencia (Akta):** David y Anthony son muy claros sobre lo que falla (Seed, alucinaciones de IA).
 
@@ -78,7 +78,7 @@ El Sprint 4 representó la fase de consolidación y cierre del Release 1. El equ
 
 - **Orientación a valor (Alta):** Se priorizó el cierre de la funcionalidad de "Reseñas" (HU22) como cierre de impacto.
 
-## 5. Riesgos Identificados
+### 5. Riesgos Identificados
 
 | Riesgo                         | Evidencia                                                     | Consecuencia potencial                                                         |
 | :----------------------------- | :------------------------------------------------------------ | :----------------------------------------------------------------------------- |
@@ -86,7 +86,7 @@ El Sprint 4 representó la fase de consolidación y cierre del Release 1. El equ
 | **Regresiones en Producción**  | David descubre errores en flujos viejos al final (Daily #10). | El Release Review puede mostrar fallos en funcionalidades "ya terminadas".     |
 | **Dependencia de Hardware**    | Emilio sin PC por mantenimiento (Daily #7).                   | Cuellos de botella si el responsable de una rama crítica pierde acceso físico. |
 
-## 6. Oportunidades de Mejora
+### 6. Oportunidades de Mejora
 
 1.  **Estandarización de la Nomenclatura del Board:** Usar nombres descriptivos obligatorios, no solo números, para evitar la confusión reportada entre HU40/43/48.
 
@@ -94,6 +94,6 @@ El Sprint 4 representó la fase de consolidación y cierre del Release 1. El equ
 
 3.  **Post-mortem de IA:** Realizar una sesión específica para analizar qué modelos funcionaron mejor y por qué, ajustando el stack tecnológico para el próximo release.
 
-## Conclusión General
+### 7. Conclusión General
 
 El equipo cierra el Release 1 en un estado de **alta cohesión humana pero fatiga técnica**. La estrategia de "Swarming" salvó el compromiso del release, lo cual es una señal de alta madurez en el valor de _Compromiso_ y _Respeto_. Sin embargo, el equipo debe trabajar en la **estabilidad de sus cimientos** (datos de prueba, infraestructura y arquitectura de IA) para evitar que el próximo release se convierta nuevamente en una carrera contra los bloqueos técnicos de "última milla". El éxito de este cierre es un triunfo de la voluntad del equipo sobre las limitaciones de sus herramientas.

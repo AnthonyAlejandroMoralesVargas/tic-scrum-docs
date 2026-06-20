@@ -1,10 +1,10 @@
 # Sprint 4 – Sprint Planning
 
-## 1. Sprint Goal
+### 1. Sprint Goal
 
 Finalizar las tutorías agendadas y registrar reseñas.
 
-## 2. Capacidad del Equipo (Effort-Hours)
+### 2. Capacidad del Equipo (Effort-Hours)
 
 | Person    | Days Available (Less Personal Time) | Days for Other Scrum Activities | Hours per Day | Available Effort-Hours |
 | --------- | ----------------------------------- | ------------------------------- | ------------- | ---------------------- |
@@ -16,7 +16,7 @@ Finalizar las tutorías agendadas y registrar reseñas.
 | Anthony   | 11                                  | 8                               | 2 a 3         | 6 a 9                  |
 | **Total** |                                     |                                 |               | **32 a 65**            |
 
-## 3. Sprint Backlog
+### 3. Sprint Backlog
 
 ### Nro. HU39 Título: Ver historial de tutorías impartidas
 
@@ -299,29 +299,15 @@ Finalizar las tutorías agendadas y registrar reseñas.
 
 ---
 
-## Resumen del Sprint Backlog
-
----
-
-### Resumen de Tareas y Horas de Esfuerzo
-
-| **Historia de usuario (HUXX)**            | **Suma Total de Effort-Hours** |
-| :---------------------------------------- | :----------------------------- |
-| HU39                                      | 10.05H                         |
-| HU43                                      | 9.70H                          |
-| HU48                                      | 8.10H                          |
-| HU40                                      | 9.75H                          |
-| HU10                                      | 11.05H                         |
-| HU22                                      | 10.20H                         |
-| **Total Sum of effort – Hours Estimates** | 58.85H                         |
+### Resumen del Sprint Backlog
 
 
-| Historia de usuario  | Título                                | Story Points (SP) |
-| -------------------- | ------------------------------------- | ----------------- |
-| HU39                 | Ver historial de tutorías impartidas  | 5                 |
-| HU43                 | Registrar la tutoría completada       | 5                 |
-| HU48                 | Registrar inasistencia del estudiante | 5                 |
-| HU40                 | Ver historial de tutorías recibidas   | 5                 |
-| HU10                 | Dejar reseña a tutor                  | 13                |
-| HU22                 | Ver reseñas sobre el tutor            | 5                 |
-| **Suma total de SP** |                                       | **38**            |
+| **Historia de usuario** | **Título**                            | **Story Points (SP)** | **Effort-Hours** |
+| ----------------------- | ------------------------------------- | --------------------- | ---------------- |
+| HU39                    | Ver historial de tutorías impartidas  | 5 SP                  | 10.05H           |
+| HU43                    | Registrar la tutoría completada       | 5 SP                  | 9.70H            |
+| HU48                    | Registrar inasistencia del estudiante | 5 SP                  | 8.10H            |
+| HU40                    | Ver historial de tutorías recibidas   | 5 SP                  | 9.75H            |
+| HU10                    | Dejar reseña a tutor                  | 13 SP                 | 11.05H           |
+| HU22                    | Ver reseñas sobre el tutor            | 5 SP                  | 10.20H           |
+| **Suma total de SP**    |                                       | **38 SP**             | **58.85H**       |
