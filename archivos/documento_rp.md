@@ -14,12 +14,12 @@
 
 ### 2. Rango de velocidad del equipo
 
-- **Velocidad Baja:** 38 SP/Sprint
+- **Velocidad Baja:** 37 SP/Sprint
 - **Velocidad Alta:** 46 SP/Sprint
 
 ### 3. Rango de Story Points del Release
 
-Se estima que el equipo podrá completar entre **152** y **184** Story Points.
+Se estima que el equipo podrá completar entre **148** y **184** Story Points.
 
 ### 4. Objetivo del Release
 
